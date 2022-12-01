@@ -6,17 +6,18 @@
  * @return Array with names of all folders in destination folder
  */
 function gerAllFoldersNamesInReqiredFolder_(destinationFolderID) {
-  let destinationFolder = DriveApp.getFolderById(destinationFolderID);
-  let allFoldersNames = [];
-  let allFoldersIterator = destinationFolder.getFolders();
+    let destinationFolder = DriveApp.getFolderById(destinationFolderID);
+    let allFoldersNames = [];
+    let allFoldersIterator = destinationFolder.getFolders();
 
-  while (allFoldersIterator.hasNext()) {
-    let folder = allFoldersIterator.next();
-    allFoldersNames.unshift(folder.getName());
-  }
+    while (allFoldersIterator.hasNext()) {
+        let folder = allFoldersIterator.next();
+        allFoldersNames.unshift(folder.getName());
+    }
 
-  return allFoldersNames;
+    return allFoldersNames;
 }
+
 
 /**
  * *****************************************************************************
@@ -47,4 +48,22 @@ function setFolderToSetData_(folderName, mainFolderID) {
   folderID = folder.getId();
 
   return folderID; // New Folder ID
+}
+
+
+/**
+ * *****************************************************************************
+ * Function creates new folder with desired name in required localization
+ * *****************************************************************************
+ * @param destinationFolderID {string} Main folder ID where new folder will be created
+ * @param folderName {newFolderName} Folder name
+ * @return newly created folder ID
+ */
+
+function createSingleFolderAndRename_(destinationFolderID, newFolderName) {
+  let destinationFolder = DriveApp.getFolderById(destinationFolderID);
+  let newFolder = destinationFolder.createFolder(newFolderName);
+  let newFolderID = newFolder.getId();
+
+  return newFolderID;
 }
