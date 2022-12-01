@@ -1,3 +1,4 @@
+/*
 //Get all dropdowns from the document
 const dropdowns = document.querySelectorAll('.dropdown');
 
@@ -6,8 +7,8 @@ dropdowns.forEach(dropdown => {
     //get inner elements from each dropDown
     const select = dropdown.querySelector('.select');
     const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li');
+    const listOfElements = dropdown.querySelector('.listOfElements');
+    const options = dropdown.querySelectorAll('.listOfElements li');
     const selected = dropdown.querySelector('.selected');
 
     //Add a click event to the select element
@@ -16,8 +17,8 @@ dropdowns.forEach(dropdown => {
         select.classList.toggle('select-clicked');
         //Add the rotate styles to the caret emenent
         caret.classList.toggle('caret-rotate');
-        //Add the open styles to the menu element
-        menu.classList.toggle('menu-open');
+        //Add the open styles to the listOfElements element
+        listOfElements.classList.toggle('listOfElements-open');
 
     });
 
@@ -31,8 +32,8 @@ dropdowns.forEach(dropdown => {
             select.classList.remove('select-clicked');
             //Add the rotate styles to the caret element
             caret.classList.remove('caret-rotate');
-            //Add the open style to the menu element
-            menu.classList.remove('menu-open');
+            //Add the open style to the listOfElements element
+            listOfElements.classList.remove('listOfElements-open');
             //Remove active class from all option elements
             options.forEach(option => {
                 option.classList.remove('active');
@@ -41,4 +42,4 @@ dropdowns.forEach(dropdown => {
             option.classList.add('active');
         });
     });
-});
+});*/
