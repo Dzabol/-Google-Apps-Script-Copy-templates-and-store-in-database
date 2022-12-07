@@ -5,7 +5,7 @@
  * @param destinationFolderID {string} Folder ID  where new folder will be created
  * @return Array with names of all folders in destination folder
  */
-function gerAllFoldersNamesInReqiredFolder_(destinationFolderID) {
+function getAllFoldersNamesInReqiredFolder_(destinationFolderID) {
     let destinationFolder = DriveApp.getFolderById(destinationFolderID);
     let allFoldersNames = [];
     let allFoldersIterator = destinationFolder.getFolders();

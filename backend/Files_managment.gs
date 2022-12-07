@@ -8,9 +8,9 @@
  * @param duplicateFileFromShortcut {string} Yes / No
  */
 
-/* sourceFolder, destinationFolder, prefixforTheFileName = "none", duplicateFileFromShortcut = "No" */
+/* */
 
-function copyAllFilesInFolder(sourceFolder = DriveApp.getFolderById("1zIZDyO5V9mfY6dVAPXdK1_-ToigvNofu"), destinationFolder = DriveApp.getFolderById("1fI6tUlRsgbyaQp1o4ESw14cUHftrwU6d"), prefixforTheFileName = "Nowa", duplicateFileFromShortcut = "Yes") {
+function copyAllFilesInFolder_(sourceFolder, destinationFolder, prefixforTheFileName, duplicateFileFromShortcut = "No") {
 
   let fileName = "";
   const allFilesInFolder = sourceFolder.getFiles();
@@ -18,11 +18,20 @@ function copyAllFilesInFolder(sourceFolder = DriveApp.getFolderById("1zIZDyO5V9m
   while (allFilesInFolder.hasNext()) {
     const file = allFilesInFolder.next();
 
-    //Duplicate shortcuts
-    fileName = file.getName();
-    file.makeCopy(fileName, destinationFolder);
+    if (file.getMimeType() == MimeType.SHORTCUT) {
+      //Duplicate shortcuts
+      fileName = file.getName();
+      file.makeCopy(fileName, destinationFolder);
+    }
+
+    else {
+      //copy for nomal file
+      fileName = setNewFileName_(file, prefixforTheFileName);
+      file.makeCopy(fileName, destinationFolder);
+    }
 
     if ((file.getMimeType() == MimeType.SHORTCUT) && (duplicateFileFromShortcut == "Yes")) {
+      //duplicate file from shortcut
       let parentFileFromShortcutID = file.getTargetId();
       let parentFileFromShortcut = DriveApp.getFileById(parentFileFromShortcutID);
 
@@ -67,8 +76,31 @@ function setNewFileName_(file, prefixforTheFileName) {
  */
 
 function getFileIDfromShortcut_(file) {
-  
- let fileID = file.getMimeType() == MimeType.SHORTCUT ? file.getTargetId() : file.getId();
 
-return fileID;
+  let fileID = file.getMimeType() == MimeType.SHORTCUT ? file.getTargetId() : file.getId();
+
+  return fileID;
+}
+
+/**
+ * *****************************************************************************
+ * Return Folder / File URL from ID
+ * *****************************************************************************
+ * @param {string} Folder / File ID
+ * @return {string} URL
+ */
+
+function returFileOrFolderURLfromID(fileOrFolderID = "1Sl9GKp-lE-aEheB-rkXuc7wEEczJof6hhRTp-GBDowY") {
+  let url = "";
+  let file = DriveApp.getFileById(fileOrFolderID);
+
+  if (file.getMimeType() == MimeType.FOLDER) {
+    let folder = DriveApp.getFolderById(fileOrFolderID);
+    url = folder.getUrl();
+  }
+  else {
+    url = file.getUrl();
+  }
+
+  return url;
 }
