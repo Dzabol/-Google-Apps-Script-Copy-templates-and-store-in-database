@@ -31,6 +31,49 @@ function copyFoldersAndFiles_(
   }
 }
 
+/**
+ * *****************************************************************************
+ * Create package of Folders an files in desired localization 
+ * Folders and files organization is based on the template folder 
+ * *****************************************************************************
+ * @param customerName {string} Customer Name
+ * @param folderAndFileNamePrefix {string} prefix which will be added to all files and project folder
+ * @param sourceFolderID {string} ID of the folder with templates 
+ * @param targetMainFolderID {string} ID of the folder where project will be added
+ * @return {string} message with information if the files where created correctly
+ */
+
+function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, sourceFolderID, targetMainFolderID) {
+
+  let message = "";
+
+  try {
+
+    const template = DriveApp.getFolderById(sourceFolderID);
+    const customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
+    let allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
+
+    let existenceOfProjectInDataBase = allProjectsInDataBase.indexOf(folderAndFileNamePrefix) ? false : true;
+
+    if (!existenceOfProjectInDataBase) {
+      const projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
+      const folderToSetDataFromTemplate = DriveApp.getFolderById(projectFolderID);
+
+      copyFoldersAndFiles_(template, folderToSetDataFromTemplate, folderAndFileNamePrefix, "Yes", true);
+
+      message = "New Project has been added to the data base";
+    }
+
+    if (existenceOfProjectInDataBase) {
+      message = "This Project exists in your database";
+    }
+  } catch (e) {
+    message = "Something went wrong, please contact with my master Sebastian Jablecki \n Error Message: \n" + e.stack;
+    Logger.log(e.stack);
+  }
+  return message;
+}
+
 
 
 

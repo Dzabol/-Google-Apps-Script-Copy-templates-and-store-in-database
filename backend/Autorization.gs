@@ -15,7 +15,6 @@ function scriptAutorizationCheck() {
     const autorizationURL = autorizationInfo.getAuthorizationUrl();
     return autorizationURL;
   }
-
   return autorizationMessage;
 }
 
@@ -24,32 +23,72 @@ function scriptAutorizationCheck() {
  * Check user permisions to acces a folder and files
  * ***************************************************************************** 
  * @folderID {string} ID of the folder to check acces righst 
- * @return {string}
+ * @return {string} acces information
  */
 
-function checkAccesToFolder(folderID = "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip"){
+function checkAccesToFolder_(folderID) {
+
+  let userAccesPermision = true;
   let folder = DriveApp.getFileById(folderID);
   let currentUserEmail = Session.getActiveUser().getEmail();
   let accesRights = folder.getAccess(currentUserEmail);
 
-  Logger.log(accesRights);
-
-}
-
-/**
- * *****************************************************************************
- * Function decides if user can work in required folder
- * ***************************************************************************** 
- * @folderID {string} ID of the folder to check acces righst 
- * @return {bool}
- */
-
-function informationIfUserCanWorkInRequiredFolder(accesRightsInformation){
-  let userAccesPermision = true;
-
-  if ((accesRightsInformation == "VIEW") || (accesRightsInformation == "COMMENT") || (accesRightsInformation =="NONE")){
+  if ((accesRights == "VIEW") || (accesRights == "COMMENT") || (accesRights == "NONE")) {
     userAccesPermision = false;
   }
 
   return userAccesPermision;
 }
+
+/**
+ * *****************************************************************************
+ * Function check acces rights on desired servers
+ * ***************************************************************************** 
+ * @serversInformation {arr} array with server informations: Server name, Template folder ID, Source folder ID
+ * @return {arr} acces information to requested server
+ */
+
+function serversAccesInformation(serversInformation) {
+
+  let accesRightsToFolders = [];
+  let accesInformationTemplate;
+  let accesinformationTargetFolder;
+
+  for (var i = 0; i < serversInformation.length; i++) {
+
+    accesInformationTemplate = checkAccesToFolder_(serversInformation[i].sourceFolderID);
+    accesinformationTargetFolder = checkAccesToFolder_(serversInformation[i].targetFolderID);
+    accesRightsToFolders.push(
+      {
+        "server": serversInformation[i].serverName,
+        "template": accesInformationTemplate,
+        "destination": accesinformationTargetFolder
+      }
+    );
+  }
+
+  return accesRightsToFolders;
+}
+
+/**
+ * *****************************************************************************
+ * Function check if user has an acces to all servers
+ * ***************************************************************************** 
+ * @serversInformation {array} array with server informations: Server name, Template folder ID, Source folder ID
+ * @return {boolean} 
+ */
+
+function checkIfOtherFunctionsCanBeRun_(accesToServersInformation){
+
+   for(let i = 0; i < accesToServersInformation.length; i++){
+    if ((accesToServersInformation[i].template == false) || (accesToServersInformation[i].destination == false)){
+            return false;
+    }
+  }
+  return true;
+}
+
+
+
+
+

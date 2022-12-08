@@ -3,63 +3,68 @@
                       IMPUT AND OUTPUT FOLDERS 
 *********************************************************************
 */
-//RD
-const sourceFolderIDforRD = "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip";
-const targetFolderIDforRD = "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH";
+let serversInformation = [
+  {
+    "serverName": "RD",
+    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
+    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
+  },
+  {
+    "serverName": "Mechanical",
+    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
+    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
+  },
+  {
+    "serverName": "Simulation",
+    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
+    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
+  }
+];
 
-//CAD
-const sourceFolderIDforCAD = "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip";
-const targetFolderIDforCAD = "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH";
-
-//Simulation
-const sourceFolderIDforSimulation = "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip";
-const targetFolderIDforSimulation = "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH";
 
 /* ****************************************************************** */
 
 
 function start() {
 
-  let strCode = "123";
-  let projectName = "AU270";
-  let customerName = "Audi";
+  
 
-  let filesAndFoldersPrefix = strCode + " - " + projectName;
+  let projectInformation = {
+    strCode: "123",
+    projectName: "AU270",
+    customerName: "AUDI"
+  }
 
-  let messageRD = "";
-  let messageCAD = "";
-  let messageSimulation = "";
+  let accesToServerInformation = serversAccesInformation(serversInformation);
+  let correctAccesForUser = checkIfOtherFunctionsCanBeRun_(accesToServerInformation);
+  Logger.log(correctAccesForUser);
+
+  
+
+  /*  for (let i = 0; i < servers.length(); i++) {
+     for(key in servers[i]){
+       Logger.log
+     }
+   } */
+
+
+  /*let filesAndFoldersPrefix = projectInformation.strCode + " - " + projectInformation.projectName;
+
+  let messages = {
+    fileCreationRD: "",
+    fileCreationMechanical: "",
+    fileCreationSimulation: "",
+
+    autorizationRD: "",
+    autorizationCAD: "",
+    autorizationSimulation: ""
+  }
 
   //Prepare data for RD
-  messageRD = createPackageOfFoldersAndFiles_(customerName, filesAndFoldersPrefix, sourceFolderIDforRD, targetFolderIDforRD);
+  messages.fileCreationRD = createPackageOfFoldersAndFiles_(projectInformation.customerName, filesAndFoldersPrefix, sourceFolderIDforRD, targetFolderIDforRD);
 
-  Logger.log("RD = " + messageRD);
-  Logger.log("CAD = " + messageCAD);
-  Logger.log("Simulation = " + messageSimulation);
+  Logger.log("RD = " + messages.fileCreationRD);
+  // Logger.log("CAD = " + messageCAD);
+  // Logger.log("Simulation = " + messageSimulation);*/
 }
 
-function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, sourceFolderID, targetMainFolderID) {
-
-  let message ="";
-
-  const template = DriveApp.getFolderById(sourceFolderID);
-  const customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
-  let allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
-
-  let projectInDataBase = allProjectsInDataBase.indexOf(folderAndFileNamePrefix) ? false : true;
-
-  if (!projectInDataBase) {
-    const projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
-    const folderToSetDataFromTemplate = DriveApp.getFolderById(projectFolderID);
-
-    copyFoldersAndFiles_(template,folderToSetDataFromTemplate,folderAndFileNamePrefix,"Yes", true);
-
-    message = "done";
-  }
-
-  else {
-    message = "Projekt juz jest w bazie";
-  }
-
-  return message;
-}
