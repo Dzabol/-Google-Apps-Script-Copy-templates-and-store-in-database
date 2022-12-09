@@ -25,46 +25,42 @@ let serversInformation = [
 /* ****************************************************************** */
 
 
-function start() {
-
-  
+function createNewProject() {
 
   let projectInformation = {
     strCode: "123",
     projectName: "AU270",
     customerName: "AUDI"
   }
+  let fileCreationMessage = [];
+  let temporarryMessage = "";
 
+  let numberOfServersToPrepareTemplate = serversInformation.length;
   let accesToServerInformation = serversAccesInformation(serversInformation);
-  let correctAccesForUser = checkIfOtherFunctionsCanBeRun_(accesToServerInformation);
-  Logger.log(correctAccesForUser);
+  let correctAccesToServersForUser = checkIfOtherFunctionsCanBeRun_(accesToServerInformation);
 
-  
+  if (correctAccesToServersForUser) {
 
-  /*  for (let i = 0; i < servers.length(); i++) {
-     for(key in servers[i]){
-       Logger.log
-     }
-   } */
+    let filesAndFoldersPrefix = projectInformation.strCode + " - " + projectInformation.projectName;
 
+    for (let serverNumber = 0; serverNumber < numberOfServersToPrepareTemplate; serverNumber++) {
 
-  /*let filesAndFoldersPrefix = projectInformation.strCode + " - " + projectInformation.projectName;
+      temporarryMessage = createPackageOfFoldersAndFiles_(
+        projectInformation.customerName,
+        filesAndFoldersPrefix,
+        serversInformation[serverNumber].sourceFolderID,
+        serversInformation[serverNumber].targetFolderID
+      );
 
-  let messages = {
-    fileCreationRD: "",
-    fileCreationMechanical: "",
-    fileCreationSimulation: "",
+      fileCreationMessage.push({
+        serverName: serversInformation[serverNumber].serverName,
+        fileCreationStatus: temporarryMessage
+      });
 
-    autorizationRD: "",
-    autorizationCAD: "",
-    autorizationSimulation: ""
+      temporarryMessage = "";
+    }
+    Logger.log(fileCreationMessage);
   }
 
-  //Prepare data for RD
-  messages.fileCreationRD = createPackageOfFoldersAndFiles_(projectInformation.customerName, filesAndFoldersPrefix, sourceFolderIDforRD, targetFolderIDforRD);
-
-  Logger.log("RD = " + messages.fileCreationRD);
-  // Logger.log("CAD = " + messageCAD);
-  // Logger.log("Simulation = " + messageSimulation);*/
 }
 
