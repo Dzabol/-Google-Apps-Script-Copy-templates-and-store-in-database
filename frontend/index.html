@@ -1,31 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>R&D PROJECT MANAGMENT</title>
-    <link rel="stylesheet" href="CSS/styles.css" />
-  </head>
-  <body>
-    <!-- ---------------------------------------------------------------------------- -->
-    <div class="dropdown">
-      <div class="select">
-        <span class="selected">Chose Customer</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="listOfElements">
-        <li>Audi</li>
-        <li>BMW</li>
-        <li>Arrival</li>
-        <li>DAF</li>
-        <li>Volta</li>
-        <li>Opel</li>
-        <li>VW</li>
-        <li>Renault</li>
-      </ul>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!----------------https://tabulator.info/----------------------------->
+  <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet" />
+  <!----------------------------------------------------------------->
+  <title>RD New Projects</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgb(130, 230, 0);
+      height: 100vh;
+      width: 100vw;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 24px;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 1);
+      border-radius: 20px;
+      box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
+      max-width: 80%;
+      padding: 36px 24px;
+    }
+
+    img {
+      width: 200px;
+      display: block;
+      margin: 0 auto 30px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <img
+        src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Valeo_Logo.svg"
+        alt="Valeo logo"
+      />
+    <div id="alerts"></div>
+    <div class="projectList">
+      <div id="data-table"></div>
     </div>
-    <!-------------------------------------------------------------------------------->
-    <script src="scripts/dropDownMenu.js"></script>
-  </body>
+  </form>
+  <!----------------https://tabulator.info/----------------------------->
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
+  <!----------------------------------------------------------------->
+  <script>
+    const websiteElements = {};
+      document.addEventListener("DOMContentLoaded", pageLoad);
+
+      function pageLoad() {
+        websiteElements.alerts = document.getElementById("alerts");
+        loadData();
+      }
+
+      function clearAlerts(element){
+        setTimeout(() => {
+          element.textContent = "";
+        }, 2500);
+      }
+
+      //*****************************************************************************/
+      function loadData() {
+        google.script.run
+          .withSuccessHandler((dataForTable) => {
+            //if data sucessfully returner
+
+            //create Tabulator on DOM element with id "example-table"
+            const table = new Tabulator("#data-table", {
+              data: dataForTable, // data to table
+              
+              height: "auto",
+              columnHeaderVertAlign: "middle",
+              headerHozAlign: "center",
+              hozAlign:"center",
+              
+              layout: "fitDataFill",
+              pagination: "local",
+              paginationSize: 25,
+              paginationSizeSelector:[25, 50, 75, 100],
+
+              columns: [
+                {
+                  title: "STR Code",
+                  field: "STR", hozAlign:"center"
+                },
+                {
+                  title: "Customer",
+                  field: "Customer", hozAlign:"center"
+                },
+                {
+                  title: "Project Name",
+                  field: "Project Name", hozAlign:"center", frozen:true
+                },
+                {
+                  title: "System Type",
+                  field: "System Type", hozAlign:"center"
+                },
+                {
+                  title: "Project Status",
+                  field: "Project Status", hozAlign:"center"
+                },
+                {
+                  title: "Links",
+                  headerHozAlign: "center",
+                  columns: [
+                    { 
+                      title: "BOM", 
+                      field: "BOM", width: 100, headerHozAlign: "center", formatter:"link" },
+                    { 
+                      title: "RD Folder", 
+                      field: "RD Folder",width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link" },
+                    {
+                      title: "Mechanical Folder",
+                      field: "Mechanical Folder", width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link"
+                    },
+                    {
+                      title: "Simulation Folder",
+                      field: "Simulation Folder", width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link"
+                    },
+                  ],
+                },
+                {
+                  title: "Team Members",
+                  headerHozAlign: "center",
+                  columns: [
+                    {
+                      title: "Project Manager",
+                      field: "Project Manager", hozAlign:"center"
+                    },
+                    {
+                      title: "Product Technical Engineer",
+                      field: "Product Technical Engineer", hozAlign:"center"
+                    },
+                    {
+                      title: "Mechanical Engineer",
+                      field: "Mechanical Engineer", hozAlign:"center"
+                    },
+                    {
+                      title: "Process PTM",
+                      field: "Process PTM", hozAlign:"center"
+                    },
+                    {
+                      title: "Quality PTM",
+                      field: "Quality PTM", hozAlign:"center"
+                    },
+                    {
+                      title: "Purchasing PTM",
+                      field: "Purchasing PTM", hozAlign:"center"
+                    },
+                  ],
+                },
+                {
+                  title: "Tool Go",
+                  headerHozAlign: "center",
+                  columns: [
+                    {
+                      title: "Date",
+                      field: "Date of Tool Go", hozAlign:"center"
+                    },
+                    {
+                      title: "Days left",
+                      field: "Days left to Tool Go", hozAlign:"center"
+                    },
+                    {
+                      title: "Progress",
+                      field: "Progress Tool Go",
+                      formatter: "progress",
+                      formatterParams: {
+                        color: ["#00dd00", "orange", "rgb(255,0,0)"],
+                      },
+                    },
+                    {
+                      title: "OnTimeIndicator",
+                      field: "OnTimeIndicator of Tool Go",
+                      formatter: "color",
+                    },
+                    {
+                      title: "Completed",
+                      field: "Completed Tool Go",
+                      hozAlign: "center",
+                      formatter: "tickCross", formatterParams:{allowEmpty:"null"}
+                    },
+                  ],
+                },
+              ],
+            });
+
+            // //trigger an alert message when the row is clicked
+            // table.on("rowClick", function (e, row) {
+            //   alert("Row " + row.getData().STR + " Clicked!!!!");
+            // });
+
+            //end if data sucessfully returned
+          })
+          .withFailureHandler((error = {}))
+          .getDataFromGoogleSheet();
+      }
+
+  </script>
+</body>
+
 </html>
