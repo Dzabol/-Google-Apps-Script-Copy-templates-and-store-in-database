@@ -40,6 +40,11 @@
       display: block;
       margin: 0 auto 30px auto;
     }
+
+    data-table{
+
+    }
+
   </style>
 </head>
 
@@ -51,7 +56,7 @@
       />
     <div id="alerts"></div>
     <div class="projectList">
-      <div id="data-table"></div>
+      <div id="data-table" class="data-table"></div>
     </div>
   </form>
   <!----------------https://tabulator.info/----------------------------->
@@ -78,8 +83,7 @@
           .withSuccessHandler((dataForTable) => {
             //if data sucessfully returner
 
-            //create Tabulator on DOM element with id "example-table"
-            const table = new Tabulator("#data-table", {
+              websiteElements.table = new Tabulator("#data-table", {
               data: dataForTable, // data to table
               
               height: "auto",
