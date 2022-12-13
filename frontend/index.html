@@ -1,69 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RD New Projects</title>
+    <!----------------https://tabulator.info/----------------------------->
+    <link
+      href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <!----------------------------------------------------------------->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!----------------https://tabulator.info/----------------------------->
-  <link href="https://unpkg.com/tabulator-tables@5.4.3/dist/css/tabulator.min.css" rel="stylesheet" />
-  <!----------------------------------------------------------------->
-  <title>RD New Projects</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgb(130, 230, 0);
-      height: 100vh;
-      width: 100vw;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 24px;
-    }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(130, 230, 0);
+        height: 100vh;
+        width: 100vw;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
+      }
 
-    form {
-      background: rgba(255, 255, 255, 1);
-      border-radius: 20px;
-      box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
-      max-width: 80%;
-      padding: 36px 24px;
-    }
+      form {
+        background: rgba(255, 255, 255, 1);
+        border-radius: 20px;
+        box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
+        max-width: 80%;
+        padding: 36px 24px;
+        text-align: left;
+        min-width: 450px;
+      }
 
-    img {
-      width: 200px;
-      display: block;
-      margin: 0 auto 30px auto;
-    }
+      img {
+        width: 200px;
+        display: block;
+        margin: 0 auto 30px auto;
+      }
 
-    data-table{
+      .newProjectInformation {
+        display: flex;
+      }
 
-    }
+      .syncButton-container,
+      .addProjectButton-container {
+        display: flex;
+        margin-left: 15px;
+        align-items: center;
+      }
 
-  </style>
-</head>
+      .syncButton,
+      .addProjectButton {
+        background: white;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
+        padding: 11px;
+        cursor: pointer;
+        font-weight: 1000;
+        height: 50%;
+      }
 
-<body>
-  <form>
-    <img
+      .syncButton:focus,
+      .addProjectButton:focus {
+        outline: solid 3px rgb(0, 0, 0);
+      }
+
+      /*Sync icon*/
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 200, "opsz" 48;
+      }
+
+      .form_input-container {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      input {
+        background: white;
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        color: black;
+        padding: 12px 24px;
+        width: 200px;
+        transition: box-shadow 0.3s outline 0.3s;
+      }
+      input:hover,
+      .syncButton:hover,
+      .addProjectButton:hover {
+        box-shadow: 0px 8px 12px 0;
+      }
+
+      label {
+        color: black;
+        cursor: text;
+        font-size: 20px;
+        position: relative;
+      }
+
+      .projectImputs-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .foldersAccesInformation {
+        display: flex;
+        justify-content: space-between;
+        padding: 0px;
+        min-width: 80%;
+        border-radius: 5px;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        margin-top: 15px;
+        margin-bottom: 15px;
+        width: auto;
+      }
+
+      .serverAcces-text {
+        font-size: 15px;
+        font-weight: bold;
+        justify-content: center;
+      }
+
+      .led-box-RD,
+      .led-box-Mechanical,
+      .led-box-Simulation {
+        font-size: 12px;
+        margin: 1em;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        width: auto;
+      }
+
+      .serverFiles,
+      .templateFiles {
+        padding: 1px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .server-description {
+        font-size: 10px;
+        margin-left: 5px;
+      }
+
+      .led {
+        margin: 0 auto;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 5px,
+          rgba(255, 0, 0, 0.5) 0 2px 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <img
         src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Valeo_Logo.svg"
         alt="Valeo logo"
       />
-    <div id="alerts"></div>
-    <div class="projectList">
-      <div id="data-table" class="data-table"></div>
-    </div>
-  </form>
-  <!----------------https://tabulator.info/----------------------------->
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"></script>
-  <!----------------------------------------------------------------->
-  <script>
-    const websiteElements = {};
+      <div class="addNewProject-container">
+        <div class="newProjectInformation">
+          <div class="projectImputs-container">
+            <div class="form_input-container">
+              <label for="strCode">STR Code</label>
+              <input id="strCode" type="text" />
+            </div>
+            <div class="form_input-container">
+              <label for="projectName">Project Name</label>
+              <input id="strCode" type="text" />
+            </div>
+          </div>
+
+          <div class="syncButton-container">
+            <button id="syncButton" class="syncButton">
+              <span class="material-symbols-outlined"> sync </span>
+            </button>
+          </div>
+
+          <div class="addProjectButton-container">
+            <button id="addProjectButton" class="addProjectButton">
+              <span class="material-symbols-outlined"> docs_add_on </span>
+            </button>
+          </div>
+        </div>
+        <div class="foldersAccesInformation">
+          <div class="led-box-RD">
+            <div class="serverFiles">
+              <div class="led"></div>
+              <p class="server-description">R&D Folder</p>
+            </div>
+            <div class="templateFiles">
+              <div class="led"></div>
+              <p class="server-description">R&D Templates</p>
+            </div>
+          </div>
+          <div class="led-box-Mechanical">
+            <div class="serverFiles">
+              <div class="led"></div>
+              <p class="server-description">Mechanical Folder</p>
+            </div>
+            <div class="templateFiles">
+              <div class="led"></div>
+              <p class="server-description">Mechanical Templates</p>
+            </div>
+          </div>
+          <div class="led-box-Simulation">
+            <div class="serverFiles">
+              <div class="led"></div>
+              <p class="server-description">Simulation Folder</p>
+            </div>
+            <div class="templateFiles">
+              <div class="led"></div>
+              <p class="server-description">Simulation Templates</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="projectList-container" class="projectList-container">
+        <div id="alerts"></div>
+        <!-- ---------------------------------------------- -->
+        <template>
+          <div class="projectList">
+            <div id="data-table" class="data-table"></div>
+          </div>
+        </template>
+        <!-- ---------------------------------------------- -->
+      </div>
+    </form>
+    <!--------------------- Projects List ----------------------------->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"
+    ></script>
+    <!-- add separate file with Table scripts -->
+    <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
+    <!----------------------------------------------------------------->
+    <script>
+      const websiteElements = {};
       document.addEventListener("DOMContentLoaded", pageLoad);
 
       function pageLoad() {
@@ -71,7 +262,7 @@
         loadData();
       }
 
-      function clearAlerts(element){
+      function clearAlerts(element) {
         setTimeout(() => {
           element.textContent = "";
         }, 2500);
@@ -83,138 +274,12 @@
           .withSuccessHandler((dataForTable) => {
             //if data sucessfully returner
 
-              websiteElements.table = new Tabulator("#data-table", {
-              data: dataForTable, // data to table
-              
-              height: "auto",
-              columnHeaderVertAlign: "middle",
-              headerHozAlign: "center",
-              hozAlign:"center",
-              
-              layout: "fitDataFill",
-              pagination: "local",
-              paginationSize: 25,
-              paginationSizeSelector:[25, 50, 75, 100],
-
-              columns: [
-                {
-                  title: "STR Code",
-                  field: "STR", hozAlign:"center"
-                },
-                {
-                  title: "Customer",
-                  field: "Customer", hozAlign:"center"
-                },
-                {
-                  title: "Project Name",
-                  field: "Project Name", hozAlign:"center", frozen:true
-                },
-                {
-                  title: "System Type",
-                  field: "System Type", hozAlign:"center"
-                },
-                {
-                  title: "Project Status",
-                  field: "Project Status", hozAlign:"center"
-                },
-                {
-                  title: "Links",
-                  headerHozAlign: "center",
-                  columns: [
-                    { 
-                      title: "BOM", 
-                      field: "BOM", width: 100, headerHozAlign: "center", formatter:"link" },
-                    { 
-                      title: "RD Folder", 
-                      field: "RD Folder",width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link" },
-                    {
-                      title: "Mechanical Folder",
-                      field: "Mechanical Folder", width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link"
-                    },
-                    {
-                      title: "Simulation Folder",
-                      field: "Simulation Folder", width: 100, headerWordWrap:true, headerHozAlign: "center", formatter:"link"
-                    },
-                  ],
-                },
-                {
-                  title: "Team Members",
-                  headerHozAlign: "center",
-                  columns: [
-                    {
-                      title: "Project Manager",
-                      field: "Project Manager", hozAlign:"center"
-                    },
-                    {
-                      title: "Product Technical Engineer",
-                      field: "Product Technical Engineer", hozAlign:"center"
-                    },
-                    {
-                      title: "Mechanical Engineer",
-                      field: "Mechanical Engineer", hozAlign:"center"
-                    },
-                    {
-                      title: "Process PTM",
-                      field: "Process PTM", hozAlign:"center"
-                    },
-                    {
-                      title: "Quality PTM",
-                      field: "Quality PTM", hozAlign:"center"
-                    },
-                    {
-                      title: "Purchasing PTM",
-                      field: "Purchasing PTM", hozAlign:"center"
-                    },
-                  ],
-                },
-                {
-                  title: "Tool Go",
-                  headerHozAlign: "center",
-                  columns: [
-                    {
-                      title: "Date",
-                      field: "Date of Tool Go", hozAlign:"center"
-                    },
-                    {
-                      title: "Days left",
-                      field: "Days left to Tool Go", hozAlign:"center"
-                    },
-                    {
-                      title: "Progress",
-                      field: "Progress Tool Go",
-                      formatter: "progress",
-                      formatterParams: {
-                        color: ["#00dd00", "orange", "rgb(255,0,0)"],
-                      },
-                    },
-                    {
-                      title: "OnTimeIndicator",
-                      field: "OnTimeIndicator of Tool Go",
-                      formatter: "color",
-                    },
-                    {
-                      title: "Completed",
-                      field: "Completed Tool Go",
-                      hozAlign: "center",
-                      formatter: "tickCross", formatterParams:{allowEmpty:"null"}
-                    },
-                  ],
-                },
-              ],
-            });
-
-            // //trigger an alert message when the row is clicked
-            // table.on("rowClick", function (e, row) {
-            //   alert("Row " + row.getData().STR + " Clicked!!!!");
-            // });
-
+            websiteElements.table = tableWithProjects(dataForTable);
             //end if data sucessfully returned
           })
           .withFailureHandler((error = {}))
           .getDataFromGoogleSheet();
       }
-
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

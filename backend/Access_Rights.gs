@@ -26,7 +26,7 @@ function scriptAutorizationCheck() {
  * @return {string} acces information
  */
 
-function checkAccesToFolder_(folderID) {
+function checkAccesToFolder(folderID = "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip") {
 
   let userAccesPermision = true;
   let folder = DriveApp.getFileById(folderID);
@@ -36,7 +36,7 @@ function checkAccesToFolder_(folderID) {
   if ((accesRights == "VIEW") || (accesRights == "COMMENT") || (accesRights == "NONE")) {
     userAccesPermision = false;
   }
-
+  Logger.log(userAccesPermision)
   return userAccesPermision;
 }
 

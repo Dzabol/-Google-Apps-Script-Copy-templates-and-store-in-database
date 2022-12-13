@@ -1,0 +1,157 @@
+<script>
+  function tableWithProjects(dataForTable) {
+    table = new Tabulator("#data-table", {
+      data: dataForTable, // data to table
+
+      height: "auto",
+      columnHeaderVertAlign: "middle",
+      headerHozAlign: "center",
+      hozAlign: "center",
+
+      layout: "fitDataFill",
+      pagination: "local",
+      paginationSize: 25,
+      paginationSizeSelector: [25, 50, 75, 100],
+      groupBy: "",
+
+      columns: [
+        {
+          title: "STR Code",
+          field: "STR",
+          hozAlign: "center",
+        },
+        {
+          title: "Customer",
+          field: "Customer",
+          hozAlign: "center",
+        },
+        {
+          title: "Project Name",
+          field: "Project Name",
+          hozAlign: "center",
+          frozen: true,
+        },
+        {
+          title: "System Type",
+          field: "System Type",
+          hozAlign: "center",
+        },
+        {
+          title: "Project Status",
+          field: "Project Status",
+          hozAlign: "center",
+        },
+        {
+          title: "Links",
+          headerHozAlign: "center",
+          columns: [
+            {
+              title: "BOM",
+              field: "BOM",
+              width: 100,
+              headerHozAlign: "center",
+              formatter: "link",
+            },
+            {
+              title: "RD Folder",
+              field: "RD Folder",
+              width: 100,
+              headerWordWrap: true,
+              headerHozAlign: "center",
+              formatter: "link",
+            },
+            {
+              title: "Mechanical Folder",
+              field: "Mechanical Folder",
+              width: 100,
+              headerWordWrap: true,
+              headerHozAlign: "center",
+              formatter: "link",
+            },
+            {
+              title: "Simulation Folder",
+              field: "Simulation Folder",
+              width: 100,
+              headerWordWrap: true,
+              headerHozAlign: "center",
+              formatter: "link",
+            },
+          ],
+        },
+        {
+          title: "Team Members",
+          headerHozAlign: "center",
+          columns: [
+            {
+              title: "Project Manager",
+              field: "Project Manager",
+              hozAlign: "center",
+            },
+            {
+              title: "Product Technical Engineer",
+              field: "Product Technical Engineer",
+              hozAlign: "center",
+            },
+            {
+              title: "Mechanical Engineer",
+              field: "Mechanical Engineer",
+              hozAlign: "center",
+            },
+            {
+              title: "Process PTM",
+              field: "Process PTM",
+              hozAlign: "center",
+            },
+            {
+              title: "Quality PTM",
+              field: "Quality PTM",
+              hozAlign: "center",
+            },
+            {
+              title: "Purchasing PTM",
+              field: "Purchasing PTM",
+              hozAlign: "center",
+            },
+          ],
+        },
+        {
+          title: "Tool Go",
+          headerHozAlign: "center",
+          columns: [
+            {
+              title: "Date",
+              field: "Date of Tool Go",
+              hozAlign: "center",
+            },
+            {
+              title: "Days left",
+              field: "Days left to Tool Go",
+              hozAlign: "center",
+            },
+            {
+              title: "Progress",
+              field: "Progress Tool Go",
+              formatter: "progress",
+              formatterParams: {
+                color: ["#00dd00", "orange", "rgb(255,0,0)"],
+              },
+            },
+            {
+              title: "OnTimeIndicator",
+              field: "OnTimeIndicator of Tool Go",
+              formatter: "color",
+            },
+            {
+              title: "Completed",
+              field: "Completed Tool Go",
+              hozAlign: "center",
+              formatter: "tickCross",
+              formatterParams: { allowEmpty: "null" },
+            },
+          ],
+        },
+      ],
+    });
+    return table;
+  }
+</script>

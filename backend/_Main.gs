@@ -11,8 +11,8 @@ let serversInformation = [
   },
   {
     "serverName": "Mechanical",
-    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
-    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
+    "sourceFolderID": "1KgpbRoyp8XvsxmQCln6MDQBGP9EAJUxP",
+    "targetFolderID": "edpu4ENpYaP-hu0OQF8jbvqW_bDdOF9C",
   },
   {
     "serverName": "Simulation",
