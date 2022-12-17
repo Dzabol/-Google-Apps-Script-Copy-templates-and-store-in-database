@@ -52,12 +52,14 @@
 
       .newProjectInformation {
         display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .syncButton-container,
       .addProjectButton-container {
         display: flex;
-        margin-left: 15px;
+        margin: 5px;
         align-items: center;
       }
 
@@ -69,12 +71,12 @@
         padding: 11px;
         cursor: pointer;
         font-weight: 1000;
-        height: 50%;
+        height: 50px;
       }
 
       .syncButton:focus,
       .addProjectButton:focus {
-        outline: solid 3px rgb(0, 0, 0);
+        outline: solid 3px rgb(86, 228, 10);
       }
 
       /*Sync icon*/
@@ -93,9 +95,10 @@
         border-radius: 18px;
         box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
         color: black;
-        padding: 12px 24px;
+        padding: 24px 20px 5px 20px;
         width: 200px;
         transition: box-shadow 0.3s outline 0.3s;
+        text-align: center;
       }
       input:hover,
       .syncButton:hover,
@@ -106,32 +109,51 @@
       label {
         color: black;
         cursor: text;
-        font-size: 20px;
-        position: relative;
+        font-size: 15px;
+        position: absolute;
+        left: 15px;
+        top: 2px;
+        font-weight: 500;
       }
 
       .projectImputs-container {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
+        align-items: center;
+      }
+
+      .buttons-addProject {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
       }
 
       .foldersAccesInformation {
         display: flex;
-        justify-content: space-between;
         padding: 0px;
         min-width: 80%;
-        border-radius: 5px;
+        border-radius: 10px;
         box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
         margin-top: 15px;
         margin-bottom: 15px;
         width: auto;
+        flex-direction: column;
       }
 
       .serverAcces-text {
         font-size: 15px;
+        text-decoration-line: underline;
         font-weight: bold;
         justify-content: center;
+        display: flex;
+        align-items: flex-start;
+        margin: 10px 0 0 0;
+      }
+
+      .servers-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
       }
 
       .led-box-RD,
@@ -188,48 +210,54 @@
               <input id="strCode" type="text" />
             </div>
           </div>
+          <div class="buttons-addProject">
+            <div class="syncButton-container">
+              <button id="syncButton" class="syncButton">
+                <span class="material-symbols-outlined"> sync </span>
+              </button>
+            </div>
 
-          <div class="syncButton-container">
-            <button id="syncButton" class="syncButton">
-              <span class="material-symbols-outlined"> sync </span>
-            </button>
-          </div>
-
-          <div class="addProjectButton-container">
-            <button id="addProjectButton" class="addProjectButton">
-              <span class="material-symbols-outlined"> docs_add_on </span>
-            </button>
+            <div class="addProjectButton-container">
+              <button id="addProjectButton" class="addProjectButton">
+                <span class="material-symbols-outlined"> docs_add_on </span>
+              </button>
+            </div>
           </div>
         </div>
         <div class="foldersAccesInformation">
-          <div class="led-box-RD">
-            <div class="serverFiles">
-              <div class="led"></div>
-              <p class="server-description">R&D Folder</p>
+          <span class="serverAcces-text">Server acces information</span>
+          <div class="servers-box">
+            <div class="led-box-RD">
+              <div class="serverFiles">
+                <div class="led"></div>
+                <p class="server-description">R&D Folder</p>
+              </div>
+              <div class="templateFiles">
+                <div class="led"></div>
+                <p class="server-description">R&D Templates</p>
+              </div>
             </div>
-            <div class="templateFiles">
-              <div class="led"></div>
-              <p class="server-description">R&D Templates</p>
+
+            <div class="led-box-Mechanical">
+              <div class="serverFiles">
+                <div class="led"></div>
+                <p class="server-description">Mechanical Folder</p>
+              </div>
+              <div class="templateFiles">
+                <div class="led"></div>
+                <p class="server-description">Mechanical Templates</p>
+              </div>
             </div>
-          </div>
-          <div class="led-box-Mechanical">
-            <div class="serverFiles">
-              <div class="led"></div>
-              <p class="server-description">Mechanical Folder</p>
-            </div>
-            <div class="templateFiles">
-              <div class="led"></div>
-              <p class="server-description">Mechanical Templates</p>
-            </div>
-          </div>
-          <div class="led-box-Simulation">
-            <div class="serverFiles">
-              <div class="led"></div>
-              <p class="server-description">Simulation Folder</p>
-            </div>
-            <div class="templateFiles">
-              <div class="led"></div>
-              <p class="server-description">Simulation Templates</p>
+
+            <div class="led-box-Simulation">
+              <div class="serverFiles">
+                <div class="led"></div>
+                <p class="server-description">Simulation Folder</p>
+              </div>
+              <div class="templateFiles">
+                <div class="led"></div>
+                <p class="server-description">Simulation Templates</p>
+              </div>
             </div>
           </div>
         </div>
