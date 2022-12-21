@@ -39,9 +39,8 @@
         border-radius: 20px;
         box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
         max-width: 80%;
-        padding: 36px 24px;
-        text-align: left;
-        min-width: 450px;
+        padding: 36px 24px 10px;
+        min-width: 400px;
       }
 
       img {
@@ -89,6 +88,14 @@
         margin-top: 5px;
         margin-bottom: 5px;
       }
+      .addNewProject-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+      }
+
       input {
         background: white;
         border: none;
@@ -130,49 +137,66 @@
 
       .foldersAccesInformation {
         display: flex;
-        padding: 0px;
-        min-width: 80%;
-        border-radius: 10px;
-        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        padding: 3px;
         margin-top: 15px;
         margin-bottom: 15px;
-        width: auto;
+        width: fit-content;
         flex-direction: column;
       }
 
       .serverAcces-text {
         font-size: 15px;
-        text-decoration-line: underline;
         font-weight: bold;
         justify-content: center;
         display: flex;
         align-items: flex-start;
-        margin: 10px 0 0 0;
+        margin: 3px 3px 5px 3px;
+        border-radius: 10px;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        padding: 5px;
       }
 
       .servers-box {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
+        width: auto;
       }
 
-      .led-box-RD,
-      .led-box-Mechanical,
-      .led-box-Simulation {
+      .led-box {
         font-size: 12px;
-        margin: 1em;
+        padding: 5px;
+        margin: 5px;
         display: flex;
-        align-items: flex-start;
         flex-direction: column;
         width: auto;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+        align-items: flex-start;
+      }
+
+      .server {
+        position: relative;
+        justify-content: left;
       }
 
       .serverFiles,
       .templateFiles {
+        width: auto;
         padding: 1px;
         display: flex;
-        align-items: center;
         flex-direction: row;
+        align-items: left;
+      }
+
+      .serverName-Box {
+        position: relative;
+        text-align: center;
+        width: 100%;
+        margin: 5px;
+        font-size: 12px;
+        font-weight: 600;
       }
 
       .server-description {
@@ -180,7 +204,7 @@
         margin-left: 5px;
       }
 
-      .led {
+      .led-red {
         margin: 0 auto;
         width: 20px;
         height: 20px;
@@ -188,6 +212,16 @@
         border-radius: 50%;
         box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 5px,
           rgba(255, 0, 0, 0.5) 0 2px 10px;
+      }
+
+      .led-green {
+        margin: 0 auto;
+        width: 20px;
+        height: 20px;
+        background-color: rgb(3, 235, 3);
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #204413 0 -1px 5px,
+          rgba(17, 255, 0, 0.5) 0 2px 10px;
       }
     </style>
   </head>
@@ -213,7 +247,7 @@
           <div class="buttons-addProject">
             <div class="syncButton-container">
               <button id="syncButton" class="syncButton">
-                <span class="material-symbols-outlined"> sync </span>
+                <span class="material-symbols-outlined"> search </span>
               </button>
             </div>
 
@@ -225,40 +259,34 @@
           </div>
         </div>
         <div class="foldersAccesInformation">
-          <span class="serverAcces-text">Server acces information</span>
-          <div class="servers-box">
-            <div class="led-box-RD">
-              <div class="serverFiles">
-                <div class="led"></div>
-                <p class="server-description">R&D Folder</p>
-              </div>
-              <div class="templateFiles">
-                <div class="led"></div>
-                <p class="server-description">R&D Templates</p>
-              </div>
-            </div>
+          <div class="serverAcces-text">Server acces</div>
 
-            <div class="led-box-Mechanical">
-              <div class="serverFiles">
-                <div class="led"></div>
-                <p class="server-description">Mechanical Folder</p>
-              </div>
-              <div class="templateFiles">
-                <div class="led"></div>
-                <p class="server-description">Mechanical Templates</p>
-              </div>
-            </div>
+          <div class="servers-box" id="servers-box">
+            <!------------ Template for server leds --------------------->
+            <template id="ledBox-template">
+              <div class="led-box">
+                <div class="serverName-Box">
+                  <p class="server-title">Server Name</p>
+                </div>
 
-            <div class="led-box-Simulation">
-              <div class="serverFiles">
-                <div class="led"></div>
-                <p class="server-description">Simulation Folder</p>
+                <div class="serverFiles">
+                  <div class="led"></div>
+                  <p class="server-description" id="serverWithFilesDescription">
+                    Projects Folder
+                  </p>
+                </div>
+                <div class="templateFiles">
+                  <div class="led"></div>
+                  <p
+                    class="server-description"
+                    id="serverWithTemplatesDescription"
+                  >
+                    Template Folder
+                  </p>
+                </div>
               </div>
-              <div class="templateFiles">
-                <div class="led"></div>
-                <p class="server-description">Simulation Templates</p>
-              </div>
-            </div>
+            </template>
+            <!------------------------------------------------>
           </div>
         </div>
       </div>
@@ -281,13 +309,76 @@
     <!-- add separate file with Table scripts -->
     <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
     <!----------------------------------------------------------------->
+
+    <!-- add separate file with Led scripts -->
+    <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
+    <script>
+      function populateServersAcces_Led() {
+        let serversInformation = [
+          {
+            serverName: "RD",
+            sourceFolderID: true,
+            targetFolderID: false,
+          },
+          {
+            serverName: "Mechanical",
+            sourceFolderID: true,
+            targetFolderID: true,
+          },
+          {
+            serverName: "Simulation",
+            sourceFolderID: false,
+            targetFolderID: false,
+          },
+        ];
+        let numberOfServers = serversInformation.length;
+        let serversSectionTemplateName = "ledBox-template";
+        let sectionNameInHTMLToSetTemplate = "servers-box";
+
+        let sectionToInsertTemplate = document.getElementById(
+          sectionNameInHTMLToSetTemplate
+        );
+
+        const templateFromHTML = document.getElementById(
+          serversSectionTemplateName
+        ).content;
+
+        serversInformation.forEach((server, index) => {
+          let copyOfTemplate = document.importNode(templateFromHTML, true);
+          copyOfTemplate.querySelector(".server-title").textContent =
+            serversInformation[index].serverName;
+
+          let serverFileClass = copyOfTemplate.querySelector(".serverFiles");
+          let templateFilesClass =
+            copyOfTemplate.querySelector(".templateFiles");
+
+          let projectsLed = serverFileClass.querySelector(".led");
+          let templatesLed = templateFilesClass.querySelector(".led");
+
+          if (serversInformation[index].sourceFolderID == true) {
+            projectsLed.className = "led-green";
+          } else {
+            projectsLed.className = "led-red";
+          }
+          if (serversInformation[index].targetFolderID == true) {
+            templatesLed.className = "led-green";
+          } else {
+            templatesLed.className = "led-red";
+          }
+
+          sectionToInsertTemplate.appendChild(copyOfTemplate);
+        });
+      }
+    </script>
+    <!----------------------------------------------------------------->
     <script>
       const websiteElements = {};
       document.addEventListener("DOMContentLoaded", pageLoad);
 
       function pageLoad() {
         websiteElements.alerts = document.getElementById("alerts");
-        loadData();
+        //loadData();
+        populateServersAcces_Led();
       }
 
       function clearAlerts(element) {
