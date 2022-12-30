@@ -34,3 +34,6 @@ function getDataFromGoogleSheet() {
     console.log(dataForTable);
     return dataForTable;
 } //end getDataFromGoogleSheet
+
+
+

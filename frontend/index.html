@@ -74,7 +74,9 @@
       }
 
       .syncButton:focus,
-      .addProjectButton:focus {
+      .addProjectButton:focus,
+      select:focus,
+      input:focus {
         outline: solid 3px rgb(86, 228, 10);
       }
 
@@ -88,6 +90,7 @@
         margin-top: 5px;
         margin-bottom: 5px;
       }
+
       .addNewProject-container {
         display: flex;
         flex-direction: column;
@@ -96,7 +99,8 @@
         width: auto;
       }
 
-      input {
+      input,
+      select {
         background: white;
         border: none;
         border-radius: 18px;
@@ -106,7 +110,14 @@
         width: 200px;
         transition: box-shadow 0.3s outline 0.3s;
         text-align: center;
+        text-align-last: center;
       }
+
+      option {
+        background: white;
+        text-align: left;
+      }
+
       input:hover,
       .syncButton:hover,
       .addProjectButton:hover {
@@ -135,10 +146,19 @@
         align-items: center;
       }
 
+      .alertsWindow {
+        font-size: 13px;
+        color: red;
+        align-items: center;
+        text-align: center;
+        padding-top: 5px;
+        max-width: 350px;
+      }
+
       .foldersAccesInformation {
         display: flex;
         padding: 3px;
-        margin-top: 15px;
+        margin-top: 10px;
         margin-bottom: 15px;
         width: fit-content;
         flex-direction: column;
@@ -243,6 +263,16 @@
               <label for="projectName">Project Name</label>
               <input id="strCode" type="text" />
             </div>
+            <div class="form_input-container">
+              <label for="customer">Customer</label>
+              <select name="customer" id="customer">
+                <option></option>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
+            </div>
           </div>
           <div class="buttons-addProject">
             <div class="syncButton-container">
@@ -258,6 +288,7 @@
             </div>
           </div>
         </div>
+        <div class="alertsWindow" id="alertsWindow"></div>
         <div class="foldersAccesInformation">
           <div class="serverAcces-text">Server acces</div>
 
@@ -291,7 +322,6 @@
         </div>
       </div>
       <div id="projectList-container" class="projectList-container">
-        <div id="alerts"></div>
         <!-- ---------------------------------------------- -->
         <template>
           <div class="projectList">
@@ -312,73 +342,18 @@
 
     <!-- add separate file with Led scripts -->
     <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
-    <script>
-      function populateServersAcces_Led() {
-        let serversInformation = [
-          {
-            serverName: "RD",
-            sourceFolderID: true,
-            targetFolderID: false,
-          },
-          {
-            serverName: "Mechanical",
-            sourceFolderID: true,
-            targetFolderID: true,
-          },
-          {
-            serverName: "Simulation",
-            sourceFolderID: false,
-            targetFolderID: false,
-          },
-        ];
-        let numberOfServers = serversInformation.length;
-        let serversSectionTemplateName = "ledBox-template";
-        let sectionNameInHTMLToSetTemplate = "servers-box";
-
-        let sectionToInsertTemplate = document.getElementById(
-          sectionNameInHTMLToSetTemplate
-        );
-
-        const templateFromHTML = document.getElementById(
-          serversSectionTemplateName
-        ).content;
-
-        serversInformation.forEach((server, index) => {
-          let copyOfTemplate = document.importNode(templateFromHTML, true);
-          copyOfTemplate.querySelector(".server-title").textContent =
-            serversInformation[index].serverName;
-
-          let serverFileClass = copyOfTemplate.querySelector(".serverFiles");
-          let templateFilesClass =
-            copyOfTemplate.querySelector(".templateFiles");
-
-          let projectsLed = serverFileClass.querySelector(".led");
-          let templatesLed = templateFilesClass.querySelector(".led");
-
-          if (serversInformation[index].sourceFolderID == true) {
-            projectsLed.className = "led-green";
-          } else {
-            projectsLed.className = "led-red";
-          }
-          if (serversInformation[index].targetFolderID == true) {
-            templatesLed.className = "led-green";
-          } else {
-            templatesLed.className = "led-red";
-          }
-
-          sectionToInsertTemplate.appendChild(copyOfTemplate);
-        });
-      }
-    </script>
     <!----------------------------------------------------------------->
     <script>
+      let allFoldersAccessRights = false;
+      let serverAccesInformation = [];
       const websiteElements = {};
+
       document.addEventListener("DOMContentLoaded", pageLoad);
+      websiteElements.alertsWindow = document.getElementById("alertsWindow");
 
       function pageLoad() {
-        websiteElements.alerts = document.getElementById("alerts");
-        //loadData();
-        populateServersAcces_Led();
+        //loadData(); //projects table underconstruction
+        getServerAccesInformationForTheUser();
       }
 
       function clearAlerts(element) {
@@ -387,18 +362,21 @@
         }, 2500);
       }
 
-      //*****************************************************************************/
-      function loadData() {
-        google.script.run
-          .withSuccessHandler((dataForTable) => {
-            //if data sucessfully returner
-
-            websiteElements.table = tableWithProjects(dataForTable);
-            //end if data sucessfully returned
-          })
-          .withFailureHandler((error = {}))
-          .getDataFromGoogleSheet();
+      /* ------------------------------------------------------------------------------------------ */
+      function runGoogleScriptWithPromises(serverFunctionName, variables = "") {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((data) => {
+              resolve(data);
+            })
+            .withFailureHandler((er) => {
+              reject(er);
+            })
+            [serverFunctionName](variables);
+        });
       }
+
+      /* ------------------------------------------------------------------------------------------ */
     </script>
   </body>
 </html>

@@ -34,8 +34,9 @@ function checkAccesToFolder_(folderID) {
  * @return {arr} acces information to requested server
  */
 
-function serversAccesInformation(arrayWithServers) {
+function serversAccesInformation() {
 
+  let arrayWithServers = serversInformation
   let accesRightsToFolders = [];
   let accesInformationTemplate;
   let accesinformationTargetFolder;
@@ -46,9 +47,9 @@ function serversAccesInformation(arrayWithServers) {
     accesinformationTargetFolder = checkAccesToFolder_(arrayWithServers[i].targetFolderID);
     accesRightsToFolders.push(
       {
-        "server": arrayWithServers[i].serverName,
-        "template": accesInformationTemplate,
-        "destination": accesinformationTargetFolder
+        "serverName": arrayWithServers[i].serverName,
+        "sourceFolder": accesInformationTemplate,
+        "targetFolder": accesinformationTargetFolder
       }
     );
   }
@@ -64,16 +65,16 @@ function serversAccesInformation(arrayWithServers) {
  */
 
 function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
-
-  for (let i = 0; i < accesToServersInformation.length; i++) {
-    if ((accesToServersInformation[i].template == false) || (accesToServersInformation[i].destination == false)) {
+  let numberOfServers = accesToServersInformation.length;
+  console.log("ilosc serv: " + numberOfServers);
+  console.log(accesToServersInformation);
+  for (let i = 0; i < numberOfServers; i++) {
+    console.log("jestem");
+    if ((accesToServersInformation[i].sourceFolder == false) || (accesToServersInformation[i].targetFolder == false)) {
       return false;
     }
   }
   return true;
 }
-
-
-
 
 

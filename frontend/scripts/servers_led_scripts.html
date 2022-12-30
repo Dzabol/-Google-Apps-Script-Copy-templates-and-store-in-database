@@ -1,24 +1,70 @@
 <script>
-  function populateServersAcces_Led() {
-    let serversInformation = [
-      {
-        serverName: "RD",
-        sourceFolderID: true,
-        targetFolderID: false,
-      },
-      {
-        serverName: "Mechanical",
-        sourceFolderID: true,
-        targetFolderID: true,
-      },
-      {
-        serverName: "Simulation",
-        sourceFolderID: false,
-        targetFolderID: true,
-      },
-    ];
+  /* ------------------------------------------------------------------*/
+  async function getServerAccesInformationForTheUser() {
+    websiteElements.alertsWindow.textContent =
+      "Please wait, loading server access information...";
+    try {
+      serverAccesInformation = await runGoogleScriptWithPromises(
+        "serversAccesInformation"
+      );
 
+      websiteElements.alertsWindow.textContent =
+        "Server information successfully loaded";
+
+      populateServersAcces_Led(serverAccesInformation);
+      allFoldersAccessRights = await runGoogleScriptWithPromises(
+        "checkIfOtherFunctionsCanBeRun",
+        serverAccesInformation
+      );
+
+      if (!allFoldersAccessRights) {
+        websiteElements.alertsWindow.textContent =
+          "You can't add new project to the database because you don't have an read/write rights to all servers";
+      } else {
+        clearAlerts(websiteElements.alertsWindow);
+      }
+    } catch (error) {
+      "Can't load server information" + "\n\n" + error;
+    }
+  }
+
+  /* ------------------------------------------------------------------*/
+  function populateServersAcces_Led(serversInformation) {
+    let numberOfServers = serversInformation.length;
     let serversSectionTemplateName = "ledBox-template";
     let sectionNameInHTMLToSetTemplate = "servers-box";
+
+    let sectionToInsertTemplate = document.getElementById(
+      sectionNameInHTMLToSetTemplate
+    );
+
+    const templateFromHTML = document.getElementById(
+      serversSectionTemplateName
+    ).content;
+
+    serversInformation.forEach((server, index) => {
+      let copyOfTemplate = document.importNode(templateFromHTML, true);
+      copyOfTemplate.querySelector(".server-title").textContent =
+        serversInformation[index].serverName;
+
+      let serverFileClass = copyOfTemplate.querySelector(".serverFiles");
+      let templateFilesClass = copyOfTemplate.querySelector(".templateFiles");
+
+      let projectsLed = serverFileClass.querySelector(".led");
+      let templatesLed = templateFilesClass.querySelector(".led");
+
+      if (serversInformation[index].sourceFolder == true) {
+        projectsLed.className = "led-green";
+      } else {
+        projectsLed.className = "led-red";
+      }
+      if (serversInformation[index].targetFolder == true) {
+        templatesLed.className = "led-green";
+      } else {
+        templatesLed.className = "led-red";
+      }
+
+      sectionToInsertTemplate.appendChild(copyOfTemplate);
+    });
   }
 </script>

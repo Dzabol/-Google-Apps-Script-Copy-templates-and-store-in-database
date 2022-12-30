@@ -9,3 +9,4 @@ function doGet() {
 function includeExternalFile(fileName) {
   return HtmlService.createHtmlOutputFromFile(fileName).getContent(); //Function gets as a string CSS file
 }
+

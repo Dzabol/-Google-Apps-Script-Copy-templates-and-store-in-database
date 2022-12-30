@@ -1,4 +1,17 @@
 <script>
+  //UNDERCONSTRUCTION Table with projects
+  function loadData() {
+    google.script.run
+      .withSuccessHandler((dataForTable) => {
+        //if data sucessfully returner
+
+        websiteElements.table = tableWithProjects(dataForTable);
+        //end if data sucessfully returned
+      })
+      .withFailureHandler((error = {}))
+      .getDataFromGoogleSheet();
+  }
+
   function tableWithProjects(dataForTable) {
     table = new Tabulator("#data-table", {
       data: dataForTable, // data to table
