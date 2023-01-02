@@ -1,0 +1,32 @@
+<script>
+  function afterButtonAddSubmit(e) {
+    clearImputBox();
+    e.preventDefault();
+    websiteElements.alertsWindow.textContent = "click submit";
+  }
+
+  function getDataFromImputBox() {
+    var strCode = document.getElementById("strCode");
+    var projectName = document.getElementById("projectName");
+    var customer = document.getElementById("customer");
+
+    var imputData = {
+      strCode: strCode.value,
+      projectName: projectName.value,
+      customer: customer.value,
+    };
+
+    return imputData;
+  }
+
+  function clearImputBox() {
+    var fieldsToClear = document.querySelectorAll("#input, #select, #checkbox");
+
+    Array.prototype.forEach.call(fieldsToClear, function (eachElement) {
+      if (eachElement.type === "checkbox") {
+        eachElement.checked = false;
+      }
+      eachElement.value = "";
+    });
+  }
+</script>

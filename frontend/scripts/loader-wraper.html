@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* ===============================================================================
+                                            LOADER
+         =============================================================================== */
+
+      :root {
+        --loaderThickness: 5px;
+        --loaderFirstLinesOffset: 15px;
+        --loaderSecondLinesOffset: 15px;
+        --loaderThickness: 5px;
+
+        --loaderFirstLineColor: #3498db;
+        --loaderSecondLineColor: #e74c3c;
+        --loaderThirdLineColor: #22f949;
+
+        --loaderFirstSpinTime: 5s;
+        --loaderSectondSpinTime: 6s;
+        --loaderThirdSpinTime: 3s;
+      }
+      #loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        background: black;
+      }
+
+      #loader {
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 150px;
+        height: 150px;
+        margin: -45px 0 0 -75px;
+
+        border-radius: 50%;
+        border: var(--loaderThickness) solid transparent;
+        border-top-color: var(--loaderFirstLineColor);
+        border-bottom-color: var(--loaderFirstLineColor);
+
+        -webkit-animation: spin var(--loaderFirstSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+        animation: spin var(--loaderFirstSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+      }
+
+      #loader:before {
+        content: "";
+        position: absolute;
+        top: var(--loaderFirstLinesOffset);
+        left: var(--loaderFirstLinesOffset);
+        right: var(--loaderFirstLinesOffset);
+        bottom: var(--loaderFirstLinesOffset);
+
+        border-radius: 50%;
+        border: var(--loaderThickness) solid transparent;
+        border-top-color: var(--loaderSecondLineColor);
+        border-bottom-color: var(--loaderSecondLineColor);
+
+        -webkit-animation: spin var(--loaderSectondSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+        animation: spin var(--loaderSectondSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+      }
+
+      #loader:after {
+        content: "";
+        position: absolute;
+        top: calc(
+          var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+            var(--loaderThickness)
+        );
+        left: calc(
+          var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+            var(--loaderThickness)
+        );
+        right: calc(
+          var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+            var(--loaderThickness)
+        );
+        bottom: calc(
+          var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+            var(--loaderThickness)
+        );
+
+        border-radius: 50%;
+        border: var(--loaderThickness) solid transparent;
+        border-top-color: var(--loaderThirdLineColor);
+        border-bottom-color: var(--loaderThirdLineColor);
+
+        -webkit-animation: spin var(--loaderThirdSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+        animation: spin var(--loaderThirdSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+      }
+
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+          -ms-transform: rotate(0deg); /* IE 9 */
+          transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+        }
+
+        100% {
+          -webkit-transform: rotate(
+            -360deg
+          ); /* Chrome, Opera 15+, Safari 3.1+ */
+          -ms-transform: rotate(360deg); /* IE 9 */
+          transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+          -ms-transform: rotate(0deg); /* IE 9 */
+          transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+        }
+
+        100% {
+          -webkit-transform: rotate(
+            360deg
+          ); /* Chrome, Opera 15+, Safari 3.1+ */
+          -ms-transform: rotate(360deg); /* IE 9 */
+          transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader-wrapper" id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+  </body>
+</html>
