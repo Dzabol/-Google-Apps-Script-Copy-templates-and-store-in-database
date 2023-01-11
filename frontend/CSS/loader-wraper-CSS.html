@@ -1,0 +1,131 @@
+<style>
+  /* ===============================================================================
+                                            LOADER 360
+         =============================================================================== */
+
+  :root {
+    --loaderThickness: 5px;
+    --loaderFirstLinesOffset: 15px;
+    --loaderSecondLinesOffset: 15px;
+    --loaderThickness: 5px;
+    --loaderSize: 250px;
+
+    --loaderFirstLineColor: #3498db;
+    --loaderSecondLineColor: #e74c3c;
+    --loaderThirdLineColor: #22f949;
+
+    --loaderFirstSpinTime: 5s;
+    --loaderSectondSpinTime: 6s;
+    --loaderThirdSpinTime: 3s;
+  }
+  #loader-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+
+    background: rgba(128, 128, 128, 0.5);
+    /*border-radius: 50%;*/
+    width: 100%;
+    height: 100%;
+  }
+
+  #loader {
+    display: block;
+    position: relative;
+    width: var(--loaderSize);
+    height: var(--loaderSize);
+    margin: 15px;
+
+    border-radius: 50%;
+    border: var(--loaderThickness) solid transparent;
+    border-top-color: var(--loaderFirstLineColor);
+    border-bottom-color: var(--loaderFirstLineColor);
+
+    -webkit-animation: spin var(--loaderFirstSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+    animation: spin var(--loaderFirstSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+  }
+
+  #loader:before {
+    content: "";
+    position: absolute;
+    top: var(--loaderFirstLinesOffset);
+    left: var(--loaderFirstLinesOffset);
+    right: var(--loaderFirstLinesOffset);
+    bottom: var(--loaderFirstLinesOffset);
+
+    border-radius: 50%;
+    border: var(--loaderThickness) solid transparent;
+    border-top-color: var(--loaderSecondLineColor);
+    border-bottom-color: var(--loaderSecondLineColor);
+
+    -webkit-animation: spin var(--loaderSectondSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+    animation: spin var(--loaderSectondSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+  }
+
+  #loader:after {
+    content: "";
+    position: absolute;
+    top: calc(
+      var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+        var(--loaderThickness)
+    );
+    left: calc(
+      var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+        var(--loaderThickness)
+    );
+    right: calc(
+      var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+        var(--loaderThickness)
+    );
+    bottom: calc(
+      var(--loaderFirstLinesOffset) + var(--loaderSecondLinesOffset) +
+        var(--loaderThickness)
+    );
+
+    border-radius: 50%;
+    border: var(--loaderThickness) solid transparent;
+    border-top-color: var(--loaderThirdLineColor);
+    border-bottom-color: var(--loaderThirdLineColor);
+
+    -webkit-animation: spin var(--loaderThirdSpinTime) linear infinite; /*Chrome, opera 15+, Safari 5+*/
+    animation: spin var(--loaderThirdSpinTime) linear infinite; /*Chrome, firefox 16+, IE10+, opera*/
+  }
+
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: rotate(0deg); /* IE 9 */
+      transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+      -webkit-transform: rotate(-360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: rotate(360deg); /* IE 9 */
+      transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: rotate(0deg); /* IE 9 */
+      transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: rotate(360deg); /* IE 9 */
+      transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+  }
+
+  .loaderText {
+    position: absolute;
+    align-items: center;
+    font-size: 13px;
+    color: white;
+  }
+  /* =============================================================================== */
+</style>

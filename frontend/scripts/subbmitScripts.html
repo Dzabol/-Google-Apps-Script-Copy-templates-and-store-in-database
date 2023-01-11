@@ -1,8 +1,11 @@
 <script>
   function afterButtonAddSubmit(e) {
-    clearImputBox();
     e.preventDefault();
-    websiteElements.alertsWindow.textContent = "click submit";
+    let allFieldsAreFilledAndFunctionsCanBeCun = validateIfAllFieldsAreFilled();
+
+    if (allFieldsAreFilledAndFunctionsCanBeCun) {
+      clearInputBox();
+    }
   }
 
   function getDataFromImputBox() {
@@ -19,14 +22,32 @@
     return imputData;
   }
 
-  function clearImputBox() {
-    var fieldsToClear = document.querySelectorAll("#input, #select, #checkbox");
+  function clearInputBox() {
+    var element = document.getElementById("userForm");
+    element.reset();
+  }
 
-    Array.prototype.forEach.call(fieldsToClear, function (eachElement) {
-      if (eachElement.type === "checkbox") {
-        eachElement.checked = false;
+  function validateIfAllFieldsAreFilled() {
+    let allAreFilled = true;
+    let fieldsToCheck = document
+      .getElementById("userForm")
+      .querySelectorAll("[required]");
+    console.log(fieldsToCheck);
+
+    fieldsToCheck.forEach(function (element) {
+      if (!element.value) {
+        allAreFilled = false;
+        element.classList.add("is-invalid");
+      } else {
+        element.classList.remove("is-invalid");
       }
-      eachElement.value = "";
     });
+
+    if (!allAreFilled) {
+      websiteElements.alertsWindow.textContent =
+        "Please fullfiel all marked on red fields";
+    }
+
+    return allAreFilled;
   }
 </script>

@@ -1,0 +1,237 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(130, 230, 0);
+    height: 100vh;
+    width: 100vw;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+  }
+
+  .form {
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
+    max-width: 80%;
+    padding: 36px 24px 10px;
+    min-width: 400px;
+  }
+
+  img {
+    width: 200px;
+    display: block;
+    margin: 0 auto 30px auto;
+  }
+
+  .newProjectInformation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .searchButton-container,
+  .addProjectButton-container {
+    display: flex;
+    margin: 5px;
+    align-items: center;
+  }
+
+  .searchButton,
+  .addProjectButton {
+    background: white;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+    border-radius: 18px;
+    padding: 11px;
+    cursor: pointer;
+    font-weight: 1000;
+    height: 50px;
+  }
+
+  select:focus,
+  input:focus {
+    outline: solid 3px rgb(86, 228, 10);
+  }
+
+  /*Sync icon*/
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 200, "opsz" 48;
+  }
+
+  .form_input-container {
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .addNewProject-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+  }
+
+  input,
+  select {
+    background: white;
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    color: black;
+    padding: 24px 20px 5px 20px;
+    width: 200px;
+    transition: box-shadow 0.3s outline 0.3s;
+    text-align: center;
+    text-align-last: center;
+  }
+
+  option {
+    background: white;
+    text-align: left;
+  }
+
+  input:hover,
+  .searchButton:hover,
+  .addProjectButton:hover {
+    box-shadow: 0px 8px 12px 0;
+  }
+
+  .addProjectButton:active,
+  .searchButton:active {
+    outline: solid 3px rgb(86, 228, 10, 0.5);
+  }
+
+  label {
+    color: black;
+    cursor: text;
+    font-size: 15px;
+    position: absolute;
+    left: 15px;
+    top: 2px;
+    font-weight: 500;
+  }
+
+  .projectImputs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons-addProject {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .alertsWindow {
+    font-size: 13px;
+    color: red;
+    align-items: center;
+    text-align: center;
+    padding-top: 5px;
+    max-width: 350px;
+  }
+
+  .foldersAccesInformation {
+    display: flex;
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: fit-content;
+    flex-direction: column;
+  }
+
+  .serverAcces-text {
+    font-size: 15px;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    align-items: flex-start;
+    margin: 3px 3px 5px 3px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    padding: 5px;
+  }
+
+  .servers-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+
+  .led-box {
+    font-size: 12px;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    align-items: flex-start;
+  }
+
+  .server {
+    position: relative;
+    justify-content: left;
+  }
+
+  .serverFiles,
+  .templateFiles {
+    width: auto;
+    padding: 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+  }
+
+  .serverName-Box {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    margin: 5px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .server-description {
+    font-size: 10px;
+    margin-left: 5px;
+  }
+
+  .led-red {
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 5px,
+      rgba(255, 0, 0, 0.5) 0 2px 10px;
+  }
+
+  .led-green {
+    margin: 0 auto;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(3, 235, 3);
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #204413 0 -1px 5px,
+      rgba(17, 255, 0, 0.5) 0 2px 10px;
+  }
+
+  .is-invalid {
+    border: 2px solid red;
+  }
+</style>
