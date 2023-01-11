@@ -1,15 +1,3 @@
-/*
-*********************************************************************
-                      Main Variables
-*********************************************************************
-*/
-
-const projectsSpreadSheetURL =
-    "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=0";
-const dataTabName = "Skawina";
-
-/* ****************************************************************** */
-
 function getDataFromGoogleSheet() {
     const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
     const dataTab = spreadsheetWithData.getSheetByName(dataTabName);

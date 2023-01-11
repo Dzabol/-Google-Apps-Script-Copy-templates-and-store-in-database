@@ -1,28 +1,4 @@
-/* 
-*********************************************************************
-                      IMPUT AND OUTPUT FOLDERS 
-*********************************************************************
-*/
-let serversInformation = [
-  {
-    "serverName": "RD",
-    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
-    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
-  },
-  {
-    "serverName": "Mechanical",
-    "sourceFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH", //1KgpbRoyp8XvsxmQCln6MDQBGP9EAJUxP
-    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
-  },
-  {
-    "serverName": "Simulation",
-    "sourceFolderID": "13wio10rwCuPL6aSxCgKXPdY2-RS6pGip",
-    "targetFolderID": "1Xp4RqEUJaSEIZJDTCMGWymXl9f_6M_sH",
-  }
-];
 
-
-/* ****************************************************************** */
 
 
 function createNewProject() {
