@@ -22,7 +22,7 @@ let serversInformation = [
 ];
 
 
-/* ****************************************************************** */
+
 
 /*
 *********************************************************************
@@ -33,5 +33,6 @@ let serversInformation = [
 const projectsSpreadSheetURL =
     "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=0";
 const dataTabName = "Skawina";
+const projectsInformationTb = "DataFromStr";
+const projectBasicInformations = ["Project_Code", "Project_Name", "test"];
 
-/* ****************************************************************** */

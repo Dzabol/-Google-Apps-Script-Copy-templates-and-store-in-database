@@ -118,19 +118,12 @@
       type="text/javascript"
       src="https://unpkg.com/tabulator-tables@5.4.3/dist/js/tabulator.min.js"
     ></script>
-    <!-- add separate file with Table scripts -->
+
+    <!-- separate files with scripts -->
+
     <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
-    <!----------------------------------------------------------------->
-
-    <!-- add separate file with Led scripts -->
     <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
-    <!----------------------------------------------------------------->
-
-    <!-- add separate file subbmit scripts -->
     <?!=includeExternalFile("frontend/scripts/subbmitScripts") ?>
-    <!----------------------------------------------------------------->
-
-    <!-- add separate file search scripts -->
     <?!=includeExternalFile("frontend/scripts/searchButtonScripts") ?>
     <!----------------------------------------------------------------->
 
@@ -138,13 +131,21 @@
       let allFoldersAccessRights = false;
       let serverAccesInformation = [];
       const websiteElements = {};
+      let projectsInformations = [];
 
       document.addEventListener("DOMContentLoaded", pageLoad);
       websiteElements.alertsWindow = document.getElementById("alertsWindow");
+      websiteElements.strCodeInputBox = document.getElementById("strCode");
+      websiteElements.projectNameInputBox =
+        document.getElementById("projectName");
+      websiteElements.customerInputBox = document.getElementById("customer");
 
-      function pageLoad() {
+      async function pageLoad() {
         //loadData(); //projects table underconstruction
         getServerAccesInformationForTheUser();
+        projectsInformations = await runGoogleScriptWithPromises(
+          "getProjectsInformation"
+        );
       }
 
       function clearAlerts(element) {

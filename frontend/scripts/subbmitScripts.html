@@ -1,53 +1,46 @@
 <script>
   function afterButtonAddSubmit(e) {
     e.preventDefault();
-    let allFieldsAreFilledAndFunctionsCanBeCun = validateIfAllFieldsAreFilled();
+    let inputValues = getDataFromImputBox();
 
-    if (allFieldsAreFilledAndFunctionsCanBeCun) {
+    if (validateFormFields()) {
       clearInputBox();
     }
   }
 
+  /**************************************************************************************/
   function getDataFromImputBox() {
-    var strCode = document.getElementById("strCode");
-    var projectName = document.getElementById("projectName");
-    var customer = document.getElementById("customer");
-
-    var imputData = {
-      strCode: strCode.value,
-      projectName: projectName.value,
-      customer: customer.value,
-    };
-
-    return imputData;
+    return (inputValues = {
+      strCode: websiteElements.strCodeInputBox.value.toString(),
+      projectName: websiteElements.projectNameInputBox.value.toString(),
+      customer: websiteElements.customerInputBox.value.toString(),
+    });
   }
-
+  /**************************************************************************************/
   function clearInputBox() {
     var element = document.getElementById("userForm");
     element.reset();
   }
-
-  function validateIfAllFieldsAreFilled() {
-    let allAreFilled = true;
+  /**************************************************************************************/
+  function validateFormFields() {
     let fieldsToCheck = document
       .getElementById("userForm")
       .querySelectorAll("[required]");
-    console.log(fieldsToCheck);
 
-    fieldsToCheck.forEach(function (element) {
-      if (!element.value) {
-        allAreFilled = false;
-        element.classList.add("is-invalid");
-      } else {
-        element.classList.remove("is-invalid");
-      }
+    let invalidFields = Array.from(fieldsToCheck).filter(function (element) {
+      element.classList.remove("is-invalid");
+      return !element.value;
     });
 
-    if (!allAreFilled) {
-      websiteElements.alertsWindow.textContent =
-        "Please fullfiel all marked on red fields";
-    }
+    invalidFields.forEach(function (element) {
+      element.classList.add("is-invalid");
+    });
 
-    return allAreFilled;
+    if (invalidFields.length) {
+      websiteElements.alertsWindow.textContent =
+        "Please fullfiel all fields marked on red";
+      return false;
+    }
+    return true;
   }
 </script>

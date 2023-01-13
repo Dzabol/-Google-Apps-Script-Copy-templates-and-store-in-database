@@ -1,4 +1,11 @@
-function getDataFromGoogleSheet() {
+/**
+ * *****************************************************************************
+ * Collect all data from google sheet
+ * *****************************************************************************  
+ * @returns 
+ */
+
+function getDataFromGoogleSheet_() {
     const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
     const dataTab = spreadsheetWithData.getSheetByName(dataTabName);
 
@@ -23,5 +30,48 @@ function getDataFromGoogleSheet() {
     return dataForTable;
 } //end getDataFromGoogleSheet
 
+/**
+ * *****************************************************************************
+ * Get All Project codes and project names
+ * *****************************************************************************  
+ *  
+ * @retuns {array} data from sheet 
+ */
+
+function getProjectsInformation() {
+
+    const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
+    const tabWithData = spreadsheetWithData.getSheetByName(projectsInformationTb);
+
+    let dataFromSheet = [];
+    let values = [];
+    let oneDimensionalArray = [];
+
+    let dataToCollect = projectBasicInformations;
+    let numberOfColumnsToCollect = dataToCollect.length;
+    const headerPosition = findRowNumberByName(spreadsheetWithData, dataToCollect[0]);
+    let numberOfRownsWithData = tabWithData.getLastRow();
+
+    for (let i = 0; i < numberOfColumnsToCollect; i++) {
+        columnPosition = findColumnByName(spreadsheetWithData, dataToCollect[i]);
+        //if there is no data in google sheet
+        if (columnPosition == -1) {
+            values = Array.from({ length: numberOfRownsWithData }, () => null);
+        }
+        else {
+            values = tabWithData.getRange(headerPosition, columnPosition, numberOfRownsWithData, 1).getValues();
+            oneDimensionalArray = values.map(function (e) {
+                return e[0].toString();
+            });
+        }
+
+        dataFromSheet.push(oneDimensionalArray);
+
+        values = [];
+        oneDimensionalArray = [];
+    }
+
+    return dataFromSheet;
+}
 
 
