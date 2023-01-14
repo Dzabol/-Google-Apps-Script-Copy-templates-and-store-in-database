@@ -1,0 +1,31 @@
+<script>
+  function afterButtonAddCustomerSubmit() {
+    e.preventDefault();
+
+    websiteElements.alertsWindow.textContent = "Add Customer";
+  }
+
+  // Otwórz modal
+  document.getElementById("addCustomerButton").onclick = function () {
+    document.getElementById("addCustomerModal").style.display = "block";
+  };
+
+  // Zamykanie modala
+  document.getElementsByClassName("close")[0].onclick = function () {
+    document.getElementById("addCustomerModal").style.display = "none";
+  };
+
+  // Obsługa przycisku OK
+  document.getElementById("okButton").onclick = function () {
+    var customerName = document.getElementById("customerName").value;
+    if (customerName != "") {
+      // tutaj możesz dodać kod do przetwarzania nowego klienta
+      document.getElementById("addCustomerModal").style.display = "none";
+    }
+  };
+
+  // Obsługa przycisku Cancel
+  document.getElementById("cancelButton").onclick = function () {
+    document.getElementById("addCustomerModal").style.display = "none";
+  };
+</script>
