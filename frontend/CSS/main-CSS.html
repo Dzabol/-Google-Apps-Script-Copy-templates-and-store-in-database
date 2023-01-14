@@ -1,4 +1,8 @@
 <style>
+  :root {
+    --inputBox-width: 280px;
+    --buttons-widthAndHight: 50px;
+  }
   * {
     box-sizing: border-box;
     margin: 0;
@@ -23,8 +27,9 @@
     border-radius: 20px;
     box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.8);
     max-width: 80%;
+    min-width: 300px;
+    min-height: auto;
     padding: 36px 24px 10px;
-    min-width: 400px;
   }
 
   img {
@@ -40,21 +45,23 @@
   }
 
   .searchButton-container,
-  .addProjectButton-container {
+  .addProjectButton-container,
+  .addCustomer-container {
     display: flex;
     margin: 5px;
     align-items: center;
   }
 
   .searchButton,
-  .addProjectButton {
+  .addProjectButton,
+  .addCustomerButton {
     background: white;
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
     border-radius: 18px;
     padding: 11px;
     cursor: pointer;
     font-weight: 1000;
-    height: 50px;
+    height: var(--buttons-widthAndHight);
   }
 
   select:focus,
@@ -89,25 +96,31 @@
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
     color: black;
     padding: 24px 20px 5px 20px;
-    width: 260px;
+    width: var(--inputBox-width);
     transition: box-shadow 0.3s outline 0.3s;
     text-align: center;
     text-align-last: center;
   }
 
-  option {
+  select option {
     background: white;
     text-align: left;
+  }
+  .customerInputSelect {
+    width: calc(var(--inputBox-width) - var(--buttons-widthAndHight));
+    height: var(--buttons-widthAndHight);
   }
 
   input:hover,
   .searchButton:hover,
-  .addProjectButton:hover {
+  .addProjectButton:hover,
+  .addCustomerButton:hover {
     box-shadow: 0px 8px 12px 0;
   }
 
   .addProjectButton:active,
-  .searchButton:active {
+  .searchButton:active,
+  .addCustomerButton:active {
     outline: solid 3px rgb(86, 228, 10, 0.5);
   }
 
@@ -127,7 +140,13 @@
     align-items: center;
   }
 
-  .buttons-addProject {
+  .customerInputSection {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+  }
+
+  .buttonsSection {
     display: flex;
     flex-direction: row;
     align-items: center;

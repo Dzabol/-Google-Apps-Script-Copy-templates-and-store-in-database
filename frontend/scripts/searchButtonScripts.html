@@ -19,11 +19,12 @@
       if (strCodeIndexNumberInDataTable.some((val) => val !== -1)) {
         websiteElements.projectNameInputBox.value =
           projectsInformations[1][strCodeIndexNumberInDataTable[1]];
+        websiteElements.customerInputBox.value =
+          projectsInformations[2][strCodeIndexNumberInDataTable[1]];
       } else {
         websiteElements.alertsWindow.textContent =
           "Can't find STR Code: " + '"' + strCodeValue + '"' + " in database";
       }
-      console.log(strCodeIndexNumberInDataTable);
     }
   }
   /* **************************************************************************** */
@@ -43,7 +44,7 @@
     if (!strCodeField.value) {
       strCodeField.classList.add("is-invalid");
       websiteElements.alertsWindow.textContent =
-        "Please fullfiel all fields marked on red";
+        "To Search project you must put the STR Code number";
       return false;
     } else {
       strCodeField.classList.remove("is-invalid");

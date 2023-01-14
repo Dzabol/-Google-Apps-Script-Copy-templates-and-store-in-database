@@ -41,7 +41,7 @@ function getDataFromGoogleSheet_() {
 function getProjectsInformation() {
 
     const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
-    const tabWithData = spreadsheetWithData.getSheetByName(projectsInformationTb);
+    const tabWithData = spreadsheetWithData.getSheetByName(projectsInformationTab);
 
     let dataFromSheet = [];
     let values = [];

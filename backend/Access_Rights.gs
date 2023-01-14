@@ -61,7 +61,7 @@ function serversAccesInformation() {
  * Function check if user has an acces to all servers
  * ***************************************************************************** 
  * @serversInformation {array} array with server informations: Server name, Template folder ID, Source folder ID
- * @return {boolean} 
+ * @returns {boolean} 
  */
 
 function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
