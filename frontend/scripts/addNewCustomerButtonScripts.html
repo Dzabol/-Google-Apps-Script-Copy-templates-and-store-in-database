@@ -1,31 +1,85 @@
 <script>
-  function afterButtonAddCustomerSubmit() {
+  function afterButtonAddCustomerSubmit(e) {
     e.preventDefault();
-
-    websiteElements.alertsWindow.textContent = "Add Customer";
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.remove("hide-window");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+  function submitNewCustomer(e) {
+    let validationPassed = true;
+    e.preventDefault();
+    validationPassed = validateNewCustomerinputBox();
+    return validationPassed;
   }
 
-  // Otwórz modal
-  document.getElementById("addCustomerButton").onclick = function () {
-    document.getElementById("addCustomerModal").style.display = "block";
-  };
-
-  // Zamykanie modala
-  document.getElementsByClassName("close")[0].onclick = function () {
-    document.getElementById("addCustomerModal").style.display = "none";
-  };
-
-  // Obsługa przycisku OK
-  document.getElementById("okButton").onclick = function () {
-    var customerName = document.getElementById("customerName").value;
-    if (customerName != "") {
-      // tutaj możesz dodać kod do przetwarzania nowego klienta
-      document.getElementById("addCustomerModal").style.display = "none";
+  function exitFromWindowAddNewCustomer(e) {
+    e.preventDefault();
+    clearInputBox("addNewCustomerWindow");
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.add("hide-window");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+  function afterButtonSubmitInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+      exitFromWindowAddNewCustomer(e);
     }
-  };
+  }
 
-  // Obsługa przycisku Cancel
-  document.getElementById("cancelButton").onclick = function () {
-    document.getElementById("addCustomerModal").style.display = "none";
-  };
+  function afterButtonApplyInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+    }
+  }
+
+  function afterButtonExitInAddNewCustomer(e) {
+    e.preventDefault();
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.add("hide-window");
+    clearInputBox("addNewCustomerWindow");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+  function validateNewCustomerinputBox() {
+    let fieldsToCheck = document
+      .getElementById("addNewCustomerWindow")
+      .querySelectorAll("[required]");
+
+    let invalidFields = Array.from(fieldsToCheck).filter(function (element) {
+      element.classList.remove("is-invalid");
+      return !element.value;
+    });
+
+    invalidFields.forEach(function (element) {
+      element.classList.add("is-invalid");
+    });
+
+    if (invalidFields.length) return false;
+
+    return true;
+  }
+
+  /* ------------------------------------------------------------------------------------------ */
+  /**
+   * EVENT LISTENERS
+   */
+  document
+    .getElementById("Submit-button")
+    .addEventListener("click", afterButtonSubmitInAddNewCustomer);
+
+  document
+    .getElementById("cancelAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  document
+    .getElementById("applyAddNewCustomer-button")
+    .addEventListener("click", submitNewCustomer);
+
+  document
+    .getElementById("exitAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  /* ------------------------------------------------------------------------------------------ */
 </script>

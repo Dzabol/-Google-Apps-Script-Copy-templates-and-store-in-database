@@ -1,18 +1,36 @@
-<!-- Modal HTML -->
-<div id="addCustomerModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Dodaj nowego klienta</h2>
-    <label for="customerName">Nazwa klienta:</label>
-    <input type="text" id="customerName" placeholder="Wprowadź nazwę klienta" />
-    <div class="modal-buttons">
-      <button id="okButton" class="addCustomerButton">OK</button>
-      <button id="cancelButton" class="cancelButton">Cancel</button>
+<form id="addNewCustomerWindow" class="addNewCustomerWindow hide-window">
+  <div class="customerInputWindow">
+    <div class="inputBox-content">
+      <div class="addNewCustomer-buttonsContainer exit">
+        <button
+          id="exitAddNewCustomer-button"
+          class="exitAddNewCustomer-button"
+        >
+          X
+        </button>
+      </div>
+
+      <div class="inputbox-container">
+        <label for="newCustomer-inputBox" class="newCustomerLable">
+          Customer Name
+        </label>
+        <input
+          id="newCustomer-inputBox"
+          class="inputBox-NewCustomer"
+          type="text"
+          required
+          placeholder="Please Insert name of the new customer..."
+        />
+      </div>
+      <div class="addNewCustomer-buttonsContainer">
+        <button id="Submit-button" class="buttonForNewCustomer">Submit</button>
+        <button id="cancelAddNewCustomer-button" class="buttonForNewCustomer">
+          Cancel
+        </button>
+        <button id="applyAddNewCustomer-button" class="buttonForNewCustomer">
+          Apply
+        </button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Przycisk do otwierania modala -->
-<button id="addCustomerButton" class="addCustomerButton">
-  <span class="material-symbols-outlined"> add </span>
-</button>
+</form>

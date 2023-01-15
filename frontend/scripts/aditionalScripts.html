@@ -6,6 +6,13 @@
     }, 2500);
   }
 
+  /**************************************************************************************/
+  function clearInputBox(sectionIDnameToClear) {
+    var element = document.getElementById(sectionIDnameToClear);
+    console.log(element);
+    element.reset();
+  }
+
   /* ------------------------------------------------------------------------------------------ */
   function runGoogleScriptWithPromises(serverFunctionName, variables = "") {
     return new Promise((resolve, reject) => {

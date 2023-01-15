@@ -4,7 +4,7 @@
     let inputValues = getDataFromImputBox();
 
     if (validateFormFields()) {
-      clearInputBox();
+      clearInputBox("userForm");
     }
   }
 
@@ -15,11 +15,6 @@
       projectName: websiteElements.projectNameInputBox.value.toString(),
       customer: websiteElements.customerInputBox.value.toString(),
     });
-  }
-  /**************************************************************************************/
-  function clearInputBox() {
-    var element = document.getElementById("userForm");
-    element.reset();
   }
   /**************************************************************************************/
   function validateFormFields() {

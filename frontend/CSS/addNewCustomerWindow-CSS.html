@@ -1,14 +1,136 @@
 <style>
-  #addCustomerModal {
-    position: fixed; /* pozycja stała */
-    width: 300px; /* szerokość */
-    height: 200px; /* wysokość */
-    top: 50%; /* pozycja pozioma */
-    left: 50%; /* pozycja pionowa */
-    transform: translate(-50%, -50%); /* pozycja środkowa */
-    background-color: white; /* kolor tła */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* cień */
-    border-radius: 8px; /* zaokrąglenie krawędzi */
-    z-index: 1;
+  .addNewCustomerWindow {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: rgba(128, 128, 128, 0.9);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .customerInputWindow {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    z-index: 50;
+  }
+
+  .inputBox-content {
+    margin: 30px;
+  }
+
+  .inputbox-container {
+    display: flex;
+    width: 280px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .newCustomerLable {
+    position: relative;
+    font-weight: bold;
+    left: 0;
+    top: 0;
+    margin-bottom: 3px;
+  }
+
+  .inputBox-NewCustomer {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 0px;
+    display: inline-block;
+
+    border-radius: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: left;
+    text-align-last: left;
+  }
+
+  .inputBox-NewCustomer:focus {
+    outline: solid 3px rgb(86, 228, 10, 0.5);
+  }
+
+  .addNewCustomer-buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttonForNewCustomer,
+  .exitAddNewCustomer-button {
+    width: 80px;
+    padding: 12px 20px;
+    margin: 0 5px;
+    border: rgba(204, 204, 204, 1);
+    border-radius: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 5px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .exitAddNewCustomer-button {
+    width: auto;
+    height: auto;
+    margin: 2px;
+    padding: 5px 10px;
+  }
+
+  #Submit-button:hover,
+  #cancelAddNewCustomer-button:hover,
+  #applyAddNewCustomer-button:hover,
+  .exitAddNewCustomer-button:hover {
+    box-shadow: 0px 2px 2px 0;
+  }
+
+  #Submit-button:active {
+    background-color: rgb(52, 235, 52, 0.5);
+    color: white;
+  }
+
+  #cancelAddNewCustomer-button:active {
+    background-color: rgba(235, 52, 52, 0.5);
+    color: white;
+  }
+
+  #applyAddNewCustomer-button:active {
+    background-color: rgba(52, 147, 235, 0.5);
+    color: white;
+  }
+
+  .exitAddNewCustomer-button:active {
+    background-color: grey;
+    color: white;
+  }
+
+  .hide-window {
+    display: none;
+  }
+
+  .show-window {
+    display: block;
+  }
+
+  .exit {
+    position: absolute;
+    top: 15px;
+    right: 15px;
   }
 </style>
