@@ -1,9 +1,9 @@
 <script>
   /* ------------------------------------------------------------------------------------------ */
-  function clearAlerts(element) {
+  function clearAlerts(element, differentTime = 2500) {
     setTimeout(() => {
       element.textContent = "";
-    }, 2500);
+    }, differentTime);
   }
 
   /**************************************************************************************/

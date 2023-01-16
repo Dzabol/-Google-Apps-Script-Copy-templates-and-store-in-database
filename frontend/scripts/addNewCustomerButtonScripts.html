@@ -1,6 +1,13 @@
 <script>
   function afterButtonAddCustomerSubmit(e) {
     e.preventDefault();
+
+    try {
+    } catch (error) {
+      websiteElements.customerInputBoxAllertWindow = error;
+      clearAlerts(websiteElements.customerInputBoxAllertWindow, 6000);
+    }
+
     document
       .getElementById("addNewCustomerWindow")
       .classList.remove("hide-window");
@@ -9,6 +16,7 @@
   function submitNewCustomer(e) {
     let validationPassed = true;
     e.preventDefault();
+
     validationPassed = validateNewCustomerinputBox();
     return validationPassed;
   }
@@ -16,6 +24,7 @@
   function exitFromWindowAddNewCustomer(e) {
     e.preventDefault();
     clearInputBox("addNewCustomerWindow");
+    clearInvalidObject("addNewCustomerWindow");
     document
       .getElementById("addNewCustomerWindow")
       .classList.add("hide-window");
@@ -34,13 +43,6 @@
     }
   }
 
-  function afterButtonExitInAddNewCustomer(e) {
-    e.preventDefault();
-    document
-      .getElementById("addNewCustomerWindow")
-      .classList.add("hide-window");
-    clearInputBox("addNewCustomerWindow");
-  }
   /* ------------------------------------------------------------------------------------------ */
   function validateNewCustomerinputBox() {
     let fieldsToCheck = document
@@ -59,6 +61,16 @@
     if (invalidFields.length) return false;
 
     return true;
+  }
+
+  function clearInvalidObject(sectionNameToRemoveValidation) {
+    let fieldsToRemoveValidation = document
+      .getElementById(sectionNameToRemoveValidation)
+      .querySelectorAll("[required]");
+
+    fieldsToRemoveValidation.forEach(function (element) {
+      element.classList.remove("is-invalid");
+    });
   }
 
   /* ------------------------------------------------------------------------------------------ */
