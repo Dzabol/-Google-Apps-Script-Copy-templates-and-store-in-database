@@ -31,7 +31,7 @@ let serversInformation = [
 */
 
 const projectsSpreadSheetURL =
-    "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=0";
+    "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880";
 const dataTabName = "Skawina";
 const tabWithAditionalInformations = "Sheet_Information";
 const projectsInformationTab = "DataFromStr";

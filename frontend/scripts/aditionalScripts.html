@@ -56,4 +56,20 @@
       });
     }
   }
+
+  /**
+   * *****************************************************************************
+   * Run or Close Loader 360 window
+   * *****************************************************************************
+   * @param boolToRunOrCloseLoaderWindow {bool} True - to run loader window, False - to close loader window
+   *
+   */
+
+  function runOrCloseLoaderWindow(boolToRunOrCloseLoaderWindow) {
+    if (!boolToRunOrCloseLoaderWindow) {
+      document.getElementById("loader-wrapper").style.display = "none";
+    } else {
+      document.getElementById("loader-wrapper").style.display = "flex";
+    }
+  }
 </script>

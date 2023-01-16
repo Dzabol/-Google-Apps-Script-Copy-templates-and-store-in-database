@@ -1,0 +1,13 @@
+<script>
+  async function pageLoad() {
+    //loadData(); //projects table underconstruction
+    getServerAccesInformationForTheUser();
+    projectsInformations = await runGoogleScriptWithPromises(
+      "getProjectsInformation"
+    );
+    customerList = await runGoogleScriptWithPromises(
+      "getListOfTheAllCustomers"
+    );
+    console.log(customerList);
+  }
+</script>

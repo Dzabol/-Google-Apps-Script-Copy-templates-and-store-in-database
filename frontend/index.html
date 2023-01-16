@@ -158,6 +158,12 @@
       websiteElements.projectNameInputBox =
         document.getElementById("projectName");
       websiteElements.customerInputBox = document.getElementById("customer");
+      websiteElements.newCustomerInputBox = document.getElementById(
+        "newCustomer-inputBox"
+      );
+      websiteElements.newCustomerAllertWindow = document.getElementById(
+        "AllertMessageForNewCustomerWindow"
+      );
 
       /* ------------------------------------------------------------------------------------------ */
       async function pageLoad() {
@@ -181,7 +187,7 @@
        */
       document
         .getElementById("addCustomerButton")
-        .addEventListener("click", afterButtonAddCustomerSubmit);
+        .addEventListener("click", afterButtonAddCustomerSubmitOnMainPage);
 
       document
         .getElementById("addProjectButton")

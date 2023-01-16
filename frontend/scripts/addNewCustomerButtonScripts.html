@@ -1,49 +1,69 @@
 <script>
-  function afterButtonAddCustomerSubmit(e) {
+  /**
+      *********************************************************************
+                                 EVENT LISTENERS
+      *********************************************************************
+     */
+  document
+    .getElementById("Submit-button")
+    .addEventListener("click", afterButtonSubmitInAddNewCustomer);
+
+  document
+    .getElementById("cancelAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  document
+    .getElementById("applyAddNewCustomer-button")
+    .addEventListener("click", submitNewCustomer);
+
+  document
+    .getElementById("exitAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  /* ------------------------------------------------------------------------------------------ */
+
+  function afterButtonAddCustomerSubmitOnMainPage(e) {
     e.preventDefault();
-
-    try {
-    } catch (error) {
-      websiteElements.customerInputBoxAllertWindow = error;
-      clearAlerts(websiteElements.customerInputBoxAllertWindow, 6000);
-    }
-
     document
       .getElementById("addNewCustomerWindow")
       .classList.remove("hide-window");
   }
   /* ------------------------------------------------------------------------------------------ */
-  function submitNewCustomer(e) {
-    let validationPassed = true;
+
+  async function submitNewCustomer(e) {
     e.preventDefault();
-
-    validationPassed = validateNewCustomerinputBox();
-    return validationPassed;
-  }
-
-  function exitFromWindowAddNewCustomer(e) {
-    e.preventDefault();
-    clearInputBox("addNewCustomerWindow");
-    clearInvalidObject("addNewCustomerWindow");
-    document
-      .getElementById("addNewCustomerWindow")
-      .classList.add("hide-window");
-  }
-  /* ------------------------------------------------------------------------------------------ */
-  function afterButtonSubmitInAddNewCustomer(e) {
-    if (submitNewCustomer(e)) {
-      clearInputBox("addNewCustomerWindow");
-      exitFromWindowAddNewCustomer(e);
+    runOrCloseLoaderWindow(true);
+    const customerNameFromInputBox = websiteElements.newCustomerInputBox.value;
+    if (!validateNewCustomerinputBox(customerNameFromInputBox)) {
+      return;
     }
-  }
 
-  function afterButtonApplyInAddNewCustomer(e) {
-    if (submitNewCustomer(e)) {
+    const newCustomerName = createCorrectNameOfTheCustomer(
+      customerNameFromInputBox
+    );
+    try {
+      await runGoogleScriptWithPromises(
+        "addNewCustomerToDataBase",
+        newCustomerName
+      );
+      websiteElements.newCustomerAllertWindow.textContent = `New Customer: ${newCustomerName} has been added to the data base`;
       clearInputBox("addNewCustomerWindow");
+      clearAlerts(websiteElements.newCustomerAllertWindow, 3000);
+    } catch (error) {
+      websiteElements.newCustomerAllertWindow.textContent = `Can't add new customer ${error}`;
     }
+    runOrCloseLoaderWindow(false);
   }
 
   /* ------------------------------------------------------------------------------------------ */
+
+  function createCorrectNameOfTheCustomer(inputText) {
+    let temporaryText = inputText.toString().trim();
+    return (correctName =
+      temporaryText.slice(0, 1).toUpperCase() + temporaryText.slice(1));
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
   function validateNewCustomerinputBox() {
     let fieldsToCheck = document
       .getElementById("addNewCustomerWindow")
@@ -62,6 +82,7 @@
 
     return true;
   }
+  /* ------------------------------------------------------------------------------------------ */
 
   function clearInvalidObject(sectionNameToRemoveValidation) {
     let fieldsToRemoveValidation = document
@@ -74,24 +95,35 @@
   }
 
   /* ------------------------------------------------------------------------------------------ */
-  /**
-   * EVENT LISTENERS
-   */
-  document
-    .getElementById("Submit-button")
-    .addEventListener("click", afterButtonSubmitInAddNewCustomer);
 
-  document
-    .getElementById("cancelAddNewCustomer-button")
-    .addEventListener("click", exitFromWindowAddNewCustomer);
+  function exitFromWindowAddNewCustomer(e) {
+    e.preventDefault();
 
-  document
-    .getElementById("applyAddNewCustomer-button")
-    .addEventListener("click", submitNewCustomer);
-
-  document
-    .getElementById("exitAddNewCustomer-button")
-    .addEventListener("click", exitFromWindowAddNewCustomer);
-
+    clearInvalidObject("addNewCustomerWindow");
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.add("hide-window");
+  }
   /* ------------------------------------------------------------------------------------------ */
+
+  function afterButtonSubmitInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+      setTimeout(() => {
+        exitFromWindowAddNewCustomer(e);
+      }, 4000);
+    }
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function afterButtonApplyInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+    }
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function addNewCustomerTotheDatabase() {
+    websiteElements.newCustomerAllertWindow.textContent = newCustomerName;
+  }
 </script>

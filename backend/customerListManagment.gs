@@ -31,28 +31,25 @@ function getListOfTheAllCustomers() {
  * Function adds new customer to the list
  * ***************************************************************************** 
  * @param {string} newCustomerName 
- * @returns {boolean} true if sucesfully added
- */
+ *  
+ * */
 
 function addNewCustomerToDataBase(newCustomerName) {
     const spreadsheetWithCustomerList = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
     const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(tabWithAditionalInformations);
+    const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, columnNameWithAllCustomers);
+    const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, columnNameWithAllCustomers) + 1;
+
     let customers = [];
     customers = getListOfTheAllCustomers();
+    newCustomerName = newCustomerName.toString();
+    customers.push(newCustomerName);
+    customers = customers.filter(String).sort();
 
-    if (customers.length !== 0) {
-        const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, columnNameWithAllCustomers);
-        const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, columnNameWithAllCustomers) + 1;
-
-        sheetWithCustomerList.getRange(
-            firstLineWithCustomers,
-            columnNumberWithAllCustomers,
-            customers.length,
-            1
-        )
-            .setValues(customers);
-        return true
-    }
-    return false;
+    sheetWithCustomerList.getRange(
+        firstLineWithCustomers,
+        columnNumberWithAllCustomers,
+        customers.length,
+        1
+    ).setValues(customers.map(c => [c]));
 }
-
