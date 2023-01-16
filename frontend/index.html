@@ -135,6 +135,7 @@
 
     <!-- separate files with scripts -->
 
+    <?!=includeExternalFile("frontend/scripts/scriptsOnPageLoad") ?>
     <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
     <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
     <?!=includeExternalFile("frontend/scripts/subbmitButtonScripts") ?>
@@ -164,22 +165,6 @@
       websiteElements.newCustomerAllertWindow = document.getElementById(
         "AllertMessageForNewCustomerWindow"
       );
-
-      /* ------------------------------------------------------------------------------------------ */
-      async function pageLoad() {
-        //loadData(); //projects table underconstruction
-        getServerAccesInformationForTheUser();
-        projectsInformations = await runGoogleScriptWithPromises(
-          "getProjectsInformation"
-        );
-        customerList = await runGoogleScriptWithPromises(
-          "getListOfTheAllCustomers"
-        );
-
-        populateDropDownCustomerList(customerList);
-
-        console.log(customerList);
-      }
 
       /* ------------------------------------------------------------------------------------------ */
       /**

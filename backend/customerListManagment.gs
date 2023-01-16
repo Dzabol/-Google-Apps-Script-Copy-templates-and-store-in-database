@@ -20,8 +20,11 @@ function getListOfTheAllCustomers() {
             1
         )
             .getValues();
+        customers = Array.from(new Set(customers.flat()));
+        customers = customers.map(c => [c]);
         customers = customers.filter(String);
         customers.sort();
+
     }
     return customers;
 }
@@ -39,12 +42,18 @@ function addNewCustomerToDataBase(newCustomerName) {
     const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(tabWithAditionalInformations);
     const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, columnNameWithAllCustomers);
     const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, columnNameWithAllCustomers) + 1;
+    let message;
 
     let customers = [];
     customers = getListOfTheAllCustomers();
     newCustomerName = newCustomerName.toString();
+    customers = Array.from(new Set(customers.flat()));
+    customers = customers.filter(String);
+
+    if (customers.flat().indexOf(newCustomerName) !== -1) return message = "Customer exists in Your database";
+
     customers.push(newCustomerName);
-    customers = customers.filter(String).sort();
+    customers = customers.sort();
 
     sheetWithCustomerList.getRange(
         firstLineWithCustomers,
@@ -52,4 +61,6 @@ function addNewCustomerToDataBase(newCustomerName) {
         customers.length,
         1
     ).setValues(customers.map(c => [c]));
+
+    return message = 'New Customer: ' + newCustomerName + ', has been aded to your database';
 }

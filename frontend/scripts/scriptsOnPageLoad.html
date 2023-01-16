@@ -5,9 +5,12 @@
     projectsInformations = await runGoogleScriptWithPromises(
       "getProjectsInformation"
     );
+
     customerList = await runGoogleScriptWithPromises(
       "getListOfTheAllCustomers"
     );
-    console.log(customerList);
+
+    populateDropDownCustomerList(customerList);
+    await runOrCloseLoaderWindow(false);
   }
 </script>

@@ -42,17 +42,21 @@
       customerNameFromInputBox
     );
     try {
-      await runGoogleScriptWithPromises(
+      let message = await runGoogleScriptWithPromises(
         "addNewCustomerToDataBase",
         newCustomerName
       );
-      websiteElements.newCustomerAllertWindow.textContent = `New Customer: ${newCustomerName} has been added to the data base`;
+      websiteElements.newCustomerAllertWindow.textContent = message;
       clearInputBox("addNewCustomerWindow");
       clearAlerts(websiteElements.newCustomerAllertWindow, 3000);
     } catch (error) {
       websiteElements.newCustomerAllertWindow.textContent = `Can't add new customer ${error}`;
     }
     runOrCloseLoaderWindow(false);
+    customerList = await runGoogleScriptWithPromises(
+      "getListOfTheAllCustomers"
+    );
+    populateDropDownCustomerList(customerList);
   }
 
   /* ------------------------------------------------------------------------------------------ */
