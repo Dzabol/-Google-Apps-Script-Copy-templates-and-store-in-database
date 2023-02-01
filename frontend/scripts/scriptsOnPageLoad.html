@@ -1,16 +1,53 @@
 <script>
   async function pageLoad() {
     //loadData(); //projects table underconstruction
-    getServerAccesInformationForTheUser();
-    projectsInformations = await runGoogleScriptWithPromises(
-      "getProjectsInformation"
-    );
+    let numberOfErrors = 0;
+    let errors = [];
 
-    customerList = await runGoogleScriptWithPromises(
-      "getListOfTheAllCustomers"
-    );
+    try {
+      getServerAccesInformationForTheUser();
+    } catch (error) {
+      websiteElements.alertsWindow.textContent = error;
+      errors.push(error);
+      numberOfErrors += 1;
+    }
 
-    populateDropDownCustomerList(customerList);
-    await runOrCloseLoaderWindow(false);
+    try {
+      projectsInformations = await runGoogleScriptWithPromises(
+        "getProjectsInformation"
+      );
+    } catch (error) {
+      websiteElements.alertsWindow.textContent = error;
+      errors.push(error);
+      numberOfErrors += 1;
+    }
+
+    try {
+      customerList = await runGoogleScriptWithPromises(
+        "getListOfTheAllCustomers"
+      );
+    } catch (error) {
+      websiteElements.alertsWindow.textContent = error;
+      errors.push(error);
+      numberOfErrors += 1;
+    }
+
+    try {
+      populateDropDownCustomerList(customerList);
+    } catch (error) {
+      websiteElements.alertsWindow.textContent = error;
+      errors.push(error);
+      numberOfErrors += 1;
+    }
+
+    if (numberOfErrors == 0) {
+      await runOrCloseLoaderWindow(false);
+    } else {
+      let errorMessage =
+        "Please contact with Sebastian Jablecki because there is something wrong with the aplication";
+      window.alert(errorMessage);
+
+      console.log(errors);
+    }
   }
 </script>

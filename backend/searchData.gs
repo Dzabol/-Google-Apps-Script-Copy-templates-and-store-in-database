@@ -54,7 +54,7 @@ function findRowNumberByName(sheetToSearch, textToFind) {
 
 /**
  * ******************************************************************************************** 
- * Find Text in required sheet and return the Row number if text exists
+ * Find STRCode and return row number
  * ********************************************************************************************
  * @param arrayWithData {array} insert array with data to serch 
  * @param strCodeToFind {string} insert STR code

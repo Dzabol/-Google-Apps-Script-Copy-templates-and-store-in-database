@@ -50,28 +50,53 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
   try {
 
     const template = DriveApp.getFolderById(sourceFolderID);
-    const customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
-    let allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
+    let customerFolderID;
+    let allProjectsInDataBase;
 
-    let existenceOfProjectInDataBase = allProjectsInDataBase.indexOf(folderAndFileNamePrefix) ? false : true;
+    try {
+      customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
+    } catch (e) {
+      message = "Error while setting up customer folder: " + e.message;
+      Logger.log(e.stack);
+      return message;
+    }
+
+    try {
+      allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
+    } catch (e) {
+      message = "Error while getting all projects in database: " + e.message;
+      Logger.log(e.stack);
+      return message;
+    }
+
+    let existenceOfProjectInDataBase = allProjectsInDataBase.includes(folderAndFileNamePrefix);
 
     if (!existenceOfProjectInDataBase) {
-      const projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
+      let projectFolderID;
+
+      try {
+        projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
+      } catch (e) {
+        message = "Error while setting up project folder: " + e.message;
+        Logger.log(e.stack);
+        return message;
+      }
+
       const folderToSetDataFromTemplate = DriveApp.getFolderById(projectFolderID);
-
       copyFoldersAndFiles_(template, folderToSetDataFromTemplate, folderAndFileNamePrefix, "Yes", true);
-
-      message = "New Project has been added to the data base";
+      return message = "New Project has been added to the data base";
     }
 
     if (existenceOfProjectInDataBase) {
-      message = "This Project exists in your database";
+      return message = "This Project exists in your database";
     }
   } catch (e) {
-    message = "Something went wrong, please contact with my master Sebastian Jablecki \n Error Message: \n" + e.stack;
     Logger.log(e.stack);
+    return message = "Error while setting up project folder: " + e.stack;
+
   }
-  return message;
+
+
 }
 
 

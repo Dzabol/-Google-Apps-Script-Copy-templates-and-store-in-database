@@ -1,0 +1,76 @@
+<script>
+  async function afterButtonAddNewProjectSubmit(e) {
+    e.preventDefault();
+    let message = "";
+    let projectInformation = getDataFromImputBox();
+
+    if (validateFormFields()) {
+      runOrCloseLoaderWindow(true);
+
+      let prefixName = await runGoogleScriptWithPromises(
+        "setPrefixNameForFoldersAndFiles",
+        projectInformation
+      );
+      let serversInformation = await runGoogleScriptWithPromises(
+        "transferServersInformationToHTML"
+      );
+      let numberOfServers = serversInformation.length;
+
+      try {
+        for (
+          let serverNumber = 0;
+          serverNumber < numberOfServers;
+          serverNumber++
+        ) {
+          message = await runGoogleScriptWithPromises(
+            "createNewProject",
+            projectInformation,
+            prefixName,
+            serverNumber
+          );
+          websiteElements.alertsWindow.textContent =
+            "Created " + (serverNumber + 1) + "/" + numberOfServers;
+        }
+        websiteElements.alertsWindow.textContent =
+          "New Project has been added to the data base";
+      } catch (error) {
+        websiteElements.alertsWindow.textContent = error;
+      }
+      clearInputBox("userForm");
+      runOrCloseLoaderWindow(false);
+
+      clearAlerts(websiteElements.alertsWindow);
+    }
+  }
+
+  /**************************************************************************************/
+  function getDataFromImputBox() {
+    return (inputValues = {
+      strCode: websiteElements.strCodeInputBox.value.toString().trim(),
+      projectName: websiteElements.projectNameInputBox.value.toString().trim(),
+      customerName: websiteElements.customerInputBox.value.toString().trim(),
+    });
+  }
+  /**************************************************************************************/
+  function validateFormFields() {
+    let fieldsToCheck = document
+      .getElementById("userForm")
+      .querySelectorAll("[required]");
+
+    let invalidFields = Array.from(fieldsToCheck).filter(function (element) {
+      element.classList.remove("is-invalid");
+      return !element.value;
+    });
+
+    invalidFields.forEach(function (element) {
+      element.classList.add("is-invalid");
+    });
+
+    if (invalidFields.length) {
+      websiteElements.alertsWindow.textContent =
+        "Please fullfiel all fields marked on red";
+      return false;
+    }
+    return true;
+  }
+</script>

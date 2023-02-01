@@ -6,8 +6,8 @@
  */
 
 function getDataFromGoogleSheet_() {
-    const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
-    const dataTab = spreadsheetWithData.getSheetByName(dataTabName);
+    const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheet.SpreadSheetURL);
+    const dataTab = spreadsheetWithData.getSheetByName(projectsSpreadSheet.dataTabName);
 
     const headerRowPosition = 2;
     const numberOfEmptyRows = 2;
@@ -40,14 +40,14 @@ function getDataFromGoogleSheet_() {
 
 function getProjectsInformation() {
 
-    const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
-    const tabWithData = spreadsheetWithData.getSheetByName(projectsInformationTab);
+    const spreadsheetWithData = SpreadsheetApp.openByUrl(projectsSpreadSheet.SpreadSheetURL);
+    const tabWithData = spreadsheetWithData.getSheetByName(projectsSpreadSheet.strDataTabName);
 
     let dataFromSheet = [];
     let values = [];
     let oneDimensionalArray = [];
 
-    let dataToCollect = projectBasicInformations;
+    let dataToCollect = projectsSpreadSheet.projectBasicInformations;
     let numberOfColumnsToCollect = dataToCollect.length;
     const headerPosition = findRowNumberByName(spreadsheetWithData, dataToCollect[0]);
     let numberOfRownsWithData = tabWithData.getLastRow();

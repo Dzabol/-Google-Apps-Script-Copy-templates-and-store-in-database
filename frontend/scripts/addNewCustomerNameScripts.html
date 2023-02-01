@@ -9,6 +9,10 @@
     .addEventListener("click", afterButtonSubmitInAddNewCustomer);
 
   document
+    .getElementById("exitAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  document
     .getElementById("cancelAddNewCustomer-button")
     .addEventListener("click", exitFromWindowAddNewCustomer);
 
@@ -16,13 +20,9 @@
     .getElementById("applyAddNewCustomer-button")
     .addEventListener("click", submitNewCustomer);
 
-  document
-    .getElementById("exitAddNewCustomer-button")
-    .addEventListener("click", exitFromWindowAddNewCustomer);
+  /* *********************************************************************** */
 
-  /* ------------------------------------------------------------------------------------------ */
-
-  function afterButtonAddCustomerSubmitOnMainPage(e) {
+  function afterButtonAddNewCustomerOnMainPage(e) {
     e.preventDefault();
     document
       .getElementById("addNewCustomerWindow")
@@ -30,9 +30,35 @@
   }
   /* ------------------------------------------------------------------------------------------ */
 
+  function afterButtonSubmitInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+      setTimeout(() => {
+        exitFromWindowAddNewCustomer(e);
+      }, 4000);
+    }
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function exitFromWindowAddNewCustomer(e) {
+    e.preventDefault();
+
+    clearInvalidObject("addNewCustomerWindow");
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.add("hide-window");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+  function createCorrectNameOfTheCustomer(inputText) {
+    let temporaryText = inputText.toString().trim();
+    return (correctName =
+      temporaryText.slice(0, 1).toUpperCase() + temporaryText.slice(1));
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
   async function submitNewCustomer(e) {
     e.preventDefault();
-    runOrCloseLoaderWindow(true);
+
     const customerNameFromInputBox = websiteElements.newCustomerInputBox.value;
     if (!validateNewCustomerinputBox(customerNameFromInputBox)) {
       return;
@@ -42,6 +68,7 @@
       customerNameFromInputBox
     );
     try {
+      runOrCloseLoaderWindow(true);
       let message = await runGoogleScriptWithPromises(
         "addNewCustomerToDataBase",
         newCustomerName
@@ -50,6 +77,7 @@
       clearInputBox("addNewCustomerWindow");
       clearAlerts(websiteElements.newCustomerAllertWindow, 3000);
     } catch (error) {
+      runOrCloseLoaderWindow(false);
       websiteElements.newCustomerAllertWindow.textContent = `Can't add new customer ${error}`;
     }
     runOrCloseLoaderWindow(false);
@@ -59,13 +87,6 @@
     populateDropDownCustomerList(customerList);
   }
 
-  /* ------------------------------------------------------------------------------------------ */
-
-  function createCorrectNameOfTheCustomer(inputText) {
-    let temporaryText = inputText.toString().trim();
-    return (correctName =
-      temporaryText.slice(0, 1).toUpperCase() + temporaryText.slice(1));
-  }
   /* ------------------------------------------------------------------------------------------ */
 
   function validateNewCustomerinputBox() {
@@ -99,35 +120,4 @@
   }
 
   /* ------------------------------------------------------------------------------------------ */
-
-  function exitFromWindowAddNewCustomer(e) {
-    e.preventDefault();
-
-    clearInvalidObject("addNewCustomerWindow");
-    document
-      .getElementById("addNewCustomerWindow")
-      .classList.add("hide-window");
-  }
-  /* ------------------------------------------------------------------------------------------ */
-
-  function afterButtonSubmitInAddNewCustomer(e) {
-    if (submitNewCustomer(e)) {
-      clearInputBox("addNewCustomerWindow");
-      setTimeout(() => {
-        exitFromWindowAddNewCustomer(e);
-      }, 4000);
-    }
-  }
-  /* ------------------------------------------------------------------------------------------ */
-
-  function afterButtonApplyInAddNewCustomer(e) {
-    if (submitNewCustomer(e)) {
-      clearInputBox("addNewCustomerWindow");
-    }
-  }
-  /* ------------------------------------------------------------------------------------------ */
-
-  function addNewCustomerTotheDatabase() {
-    websiteElements.newCustomerAllertWindow.textContent = newCustomerName;
-  }
 </script>

@@ -5,14 +5,14 @@
  * @returns {array} list of the all customers in database
  */
 function getListOfTheAllCustomers() {
-    const spreadsheetWithCustomerList = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
-    const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(tabWithAditionalInformations);
-    const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, columnNameWithAllCustomers);
+    const spreadsheetWithCustomerList = SpreadsheetApp.openByUrl(projectsSpreadSheet.SpreadSheetURL);
+    const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(projectsSpreadSheet.tabWithAditionalInformations);
+    const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers);
 
     let customers = [];
 
     if (columnNumberWithAllCustomers !== -1) {
-        const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, columnNameWithAllCustomers) + 1;
+        const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers) + 1;
         customers = sheetWithCustomerList.getRange(
             firstLineWithCustomers,
             columnNumberWithAllCustomers,
@@ -38,10 +38,10 @@ function getListOfTheAllCustomers() {
  * */
 
 function addNewCustomerToDataBase(newCustomerName) {
-    const spreadsheetWithCustomerList = SpreadsheetApp.openByUrl(projectsSpreadSheetURL);
-    const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(tabWithAditionalInformations);
-    const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, columnNameWithAllCustomers);
-    const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, columnNameWithAllCustomers) + 1;
+    const spreadsheetWithCustomerList = SpreadsheetApp.openByUrl(projectsSpreadSheet.SpreadSheetURL);
+    const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(projectsSpreadSheet.tabWithAditionalInformations);
+    const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers);
+    const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers) + 1;
     let message;
 
     let customers = [];

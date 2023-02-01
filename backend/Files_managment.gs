@@ -1,5 +1,18 @@
 /**
  * *****************************************************************************
+ * Function prpares prefix name for all folders and files
+ * *****************************************************************************
+ * @param {string} strCode StrCode 
+ * @param {string} projectName Project Name
+ * @returns {string} prefix for all files and folders
+ */
+
+function setPrefixNameForFoldersAndFiles(projectInformation) {
+  return filesAndFoldersPrefix = projectInformation.strCode + " - " + projectInformation.projectName;
+}
+
+/**
+ * *****************************************************************************
  * Function copy all files from sorce folder to new localization
  * *****************************************************************************
  * @param sourceFolder {folder} Source folder with files

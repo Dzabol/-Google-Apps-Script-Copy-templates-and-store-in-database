@@ -14,7 +14,7 @@
   }
 
   /* ------------------------------------------------------------------------------------------ */
-  function runGoogleScriptWithPromises(serverFunctionName, variables = "") {
+  function runGoogleScriptWithPromises(serverFunctionName, ...variables) {
     return new Promise((resolve, reject) => {
       google.script.run
         .withSuccessHandler((data) => {
@@ -23,7 +23,7 @@
         .withFailureHandler((er) => {
           reject(er);
         })
-        [serverFunctionName](variables);
+        [serverFunctionName](...variables);
     });
   }
 

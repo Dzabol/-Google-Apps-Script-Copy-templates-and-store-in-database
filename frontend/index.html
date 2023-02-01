@@ -138,10 +138,10 @@
     <?!=includeExternalFile("frontend/scripts/scriptsOnPageLoad") ?>
     <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
     <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
-    <?!=includeExternalFile("frontend/scripts/subbmitButtonScripts") ?>
+    <?!=includeExternalFile("frontend/scripts/addNewProjectButtonScripts") ?>
     <?!=includeExternalFile("frontend/scripts/searchButtonScripts") ?>
     <?!=includeExternalFile("frontend/scripts/aditionalScripts") ?>
-    <?!=includeExternalFile("frontend/scripts/addNewCustomerButtonScripts") ?>
+    <?!=includeExternalFile("frontend/scripts/addNewCustomerNameScripts") ?>
 
     <!----------------------------------------------------------------->
 
@@ -172,11 +172,11 @@
        */
       document
         .getElementById("addCustomerButton")
-        .addEventListener("click", afterButtonAddCustomerSubmitOnMainPage);
+        .addEventListener("click", afterButtonAddNewCustomerOnMainPage);
 
       document
         .getElementById("addProjectButton")
-        .addEventListener("click", afterButtonAddSubmit);
+        .addEventListener("click", afterButtonAddNewProjectSubmit);
 
       document
         .getElementById("searchButton")
