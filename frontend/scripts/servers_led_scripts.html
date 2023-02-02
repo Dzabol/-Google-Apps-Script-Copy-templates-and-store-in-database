@@ -20,8 +20,6 @@
       if (!allFoldersAccessRights) {
         websiteElements.alertsWindow.textContent =
           "You can't add new project to the database because you don't have an read/write rights to all servers";
-      } else {
-        clearAlerts(websiteElements.alertsWindow);
       }
     } catch (error) {
       "Can't load server information" + "\n\n" + error;
@@ -29,7 +27,7 @@
   }
 
   /* ------------------------------------------------------------------*/
-  function populateServersAcces_Led(serversInformation) {
+  async function populateServersAcces_Led(serversInformation) {
     let numberOfServers = serversInformation.length;
     let serversSectionTemplateName = "ledBox-template";
     let sectionNameInHTMLToSetTemplate = "servers-box";
@@ -64,7 +62,44 @@
         templatesLed.className = "led-red";
       }
 
+      let serversIDs = [];
+      runGoogleScriptWithPromises("transferServersInformationToHTML").then(
+        (object) => {
+          serversIDs = object;
+
+          setUrlToRequiredSection(
+            serversIDs[index].sourceFolderID,
+            templateFilesClass,
+            ".serverWithTemplatesDescription",
+            "Template Folder"
+          );
+
+          setUrlToRequiredSection(
+            serversIDs[index].targetFolderID,
+            serverFileClass,
+            ".serverWithFilesDescription",
+            "Projects Folder"
+          );
+        }
+      );
+
       sectionToInsertTemplate.appendChild(copyOfTemplate);
+    });
+  }
+
+  function setUrlToRequiredSection(
+    folderID,
+    serverFileClass,
+    className,
+    urlDescription
+  ) {
+    runGoogleScriptWithPromises("getURLfromFileID", folderID).then((url) => {
+      let el = serverFileClass.querySelector("" + className + "");
+      if (el) {
+        el.innerHTML = `<a href="${url}" target="_blank">${urlDescription}</a>`;
+      } else {
+        console.error("Element not found!");
+      }
     });
   }
 </script>

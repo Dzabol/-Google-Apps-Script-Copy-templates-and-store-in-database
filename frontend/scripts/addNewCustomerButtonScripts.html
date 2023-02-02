@@ -1,0 +1,123 @@
+<script>
+  /**
+      *********************************************************************
+                                 EVENT LISTENERS
+      *********************************************************************
+     */
+  document
+    .getElementById("Submit-button")
+    .addEventListener("click", afterButtonSubmitInAddNewCustomer);
+
+  document
+    .getElementById("exitAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  document
+    .getElementById("cancelAddNewCustomer-button")
+    .addEventListener("click", exitFromWindowAddNewCustomer);
+
+  document
+    .getElementById("applyAddNewCustomer-button")
+    .addEventListener("click", submitNewCustomer);
+
+  /* *********************************************************************** */
+
+  function afterButtonAddNewCustomerOnMainPage(e) {
+    e.preventDefault();
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.remove("hide-window");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function afterButtonSubmitInAddNewCustomer(e) {
+    if (submitNewCustomer(e)) {
+      clearInputBox("addNewCustomerWindow");
+      setTimeout(() => {
+        exitFromWindowAddNewCustomer(e);
+      }, 4000);
+    }
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function exitFromWindowAddNewCustomer(e) {
+    e.preventDefault();
+
+    clearInvalidObject("addNewCustomerWindow");
+    document
+      .getElementById("addNewCustomerWindow")
+      .classList.add("hide-window");
+  }
+  /* ------------------------------------------------------------------------------------------ */
+  function createCorrectNameOfTheCustomer(inputText) {
+    let temporaryText = inputText.toString().trim();
+    return (correctName =
+      temporaryText.slice(0, 1).toUpperCase() + temporaryText.slice(1));
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  async function submitNewCustomer(e) {
+    e.preventDefault();
+
+    const customerNameFromInputBox = websiteElements.newCustomerInputBox.value;
+    if (!validateNewCustomerinputBox(customerNameFromInputBox)) {
+      return;
+    }
+
+    const newCustomerName = createCorrectNameOfTheCustomer(
+      customerNameFromInputBox
+    );
+    try {
+      runOrCloseLoaderWindow(true);
+      let message = await runGoogleScriptWithPromises(
+        "addNewCustomerToDataBase",
+        newCustomerName
+      );
+      websiteElements.newCustomerAllertWindow.textContent = message;
+      clearInputBox("addNewCustomerWindow");
+      clearAlerts(websiteElements.newCustomerAllertWindow, 3000);
+    } catch (error) {
+      runOrCloseLoaderWindow(false);
+      websiteElements.newCustomerAllertWindow.textContent = `Can't add new customer ${error}`;
+    }
+    runOrCloseLoaderWindow(false);
+    customerList = await runGoogleScriptWithPromises(
+      "getListOfTheAllCustomers"
+    );
+    populateDropDownCustomerList(customerList);
+  }
+
+  /* ------------------------------------------------------------------------------------------ */
+
+  function validateNewCustomerinputBox() {
+    let fieldsToCheck = document
+      .getElementById("addNewCustomerWindow")
+      .querySelectorAll("[required]");
+
+    let invalidFields = Array.from(fieldsToCheck).filter(function (element) {
+      element.classList.remove("is-invalid");
+      return !element.value;
+    });
+
+    invalidFields.forEach(function (element) {
+      element.classList.add("is-invalid");
+    });
+
+    if (invalidFields.length) return false;
+
+    return true;
+  }
+  /* ------------------------------------------------------------------------------------------ */
+
+  function clearInvalidObject(sectionNameToRemoveValidation) {
+    let fieldsToRemoveValidation = document
+      .getElementById(sectionNameToRemoveValidation)
+      .querySelectorAll("[required]");
+
+    fieldsToRemoveValidation.forEach(function (element) {
+      element.classList.remove("is-invalid");
+    });
+  }
+
+  /* ------------------------------------------------------------------------------------------ */
+</script>

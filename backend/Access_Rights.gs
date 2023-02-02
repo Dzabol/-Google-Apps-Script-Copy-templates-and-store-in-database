@@ -28,6 +28,49 @@ function checkAccesToFolder_(folderID) {
 
 /**
  * *****************************************************************************
+ * Get ID to the file or folder from the URL
+ * ***************************************************************************** 
+ * @param {string} url 
+ * @returns {string} ID
+ */
+
+function getIdFromUrl(url) {
+  const match = url.match(/[\w-_]{15,}/);
+  return match ? match[0] : undefined;
+}
+
+/**
+ * *****************************************************************************
+ * Get URL to the file or folder from the ID
+ * ***************************************************************************** 
+ * @param {string} iDnumber Id of the file or folder 
+ * @returns {string} URL
+ */
+function getURLfromFileID(iDnumber) {
+  console.log("ID: " + iDnumber);
+  let file = DriveApp.getFileById(iDnumber);
+  let url = file.getUrl();
+  console.log("URL: " + url);
+  return url;
+}
+
+/**
+ * * *****************************************************************************
+ * Check user permisions to acces a folder and files basing on the URL
+ * ***************************************************************************** 
+ * @param {string} fileURL FIle or folder URL 
+ * @returns {boolean} True or False
+ */
+
+function checkAccesToFileByURL(fileURL) {
+  let fileID = getIdFromUrl(fileURL);
+  Logger.log(fileID);
+
+  return checkAccesToFolder_(fileID);
+}
+
+/**
+ * *****************************************************************************
  * Function check acces rights on desired servers
  * ***************************************************************************** 
  * @serversInformation {arr} array with server informations: Server name, Template folder ID, Source folder ID
