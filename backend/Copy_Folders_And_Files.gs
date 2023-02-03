@@ -64,7 +64,7 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
     try {
       allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
     } catch (e) {
-      message = "Error while getting all projects in database: " + e.message;
+      message = "Error while getting all projects from database: " + e.message;
       Logger.log(e.stack);
       return message;
     }

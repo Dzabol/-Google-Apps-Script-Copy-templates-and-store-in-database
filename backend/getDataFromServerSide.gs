@@ -1,5 +1,45 @@
 /**
  * *****************************************************************************
+ * Collect all customers and projects in data base 
+ * and store it in global variable - serversInformation
+ * ***************************************************************************** 
+ */
+
+function getProjectsListFromTheServers() {
+    let numberOfServers = serversInformation.length;
+
+    for (let i = 0; i < numberOfServers; i++) {
+        let customersFolder = DriveApp.getFolderById(serversInformation[i].targetFolderID);
+        let customerFoldersIteratior = customersFolder.getFolders();
+
+        while (customerFoldersIteratior.hasNext()) {
+            let customerFolder = customerFoldersIteratior.next();
+            let projectsIterator = customerFolder.getFolders();
+            let projects = [];
+
+            while (projectsIterator.hasNext()) {
+                let projectFolder = projectsIterator.next();
+                projects.push({
+                    projectName: projectFolder.getName(),
+                    projectFolderUrl: projectFolder.getUrl(),
+                })
+            }
+
+            serversInformation[i].projectsList.push({
+                customerName: customerFolder.getName(),
+                customerFolderUrl: customerFolder.getUrl(),
+                projectList: projects,
+            });
+        }
+    }
+}
+
+
+
+
+
+/**
+ * *****************************************************************************
  * Collect all data from google sheet
  * *****************************************************************************  
  * @returns 
