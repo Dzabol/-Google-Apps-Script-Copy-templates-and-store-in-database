@@ -40,14 +40,22 @@ function copyFoldersAndFiles_(
  * @param folderAndFileNamePrefix {string} prefix which will be added to all files and project folder
  * @param sourceFolderID {string} ID of the folder with templates 
  * @param targetMainFolderID {string} ID of the folder where project will be added
- * @return {string} message with information if the files where created correctly
+ * @return {object} 
  */
 
 function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, sourceFolderID, targetMainFolderID) {
 
-  let message = "";
+  let projectData =
+  {
+    "serverName": "",
+    "projectName": "",
+    "projectFolderUrl": "",
+    "customerName": "",
+    "message": "Project added to the data base",
+    "succesfullyCreated": false,
+  };
 
-  try {
+   try {
 
     const template = DriveApp.getFolderById(sourceFolderID);
     let customerFolderID;
@@ -56,17 +64,19 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
     try {
       customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
     } catch (e) {
-      message = "Error while setting up customer folder: " + e.message;
+      projectData.message = "Error while setting up customer folder: " + e.message;
+      projectData.succesfullyCreated = false;
       Logger.log(e.stack);
-      return message;
+      return projectData;
     }
 
     try {
       allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
     } catch (e) {
-      message = "Error while getting all projects from database: " + e.message;
+      projectData.message = "Error while getting all projects from database: " + e.message;
+      projectData.succesfullyCreated = false;
       Logger.log(e.stack);
-      return message;
+      return projectData;
     }
 
     let existenceOfProjectInDataBase = allProjectsInDataBase.includes(folderAndFileNamePrefix);
@@ -77,26 +87,37 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
       try {
         projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
       } catch (e) {
-        message = "Error while setting up project folder: " + e.message;
+        projectData.message = "Error while setting up project folder: " + e.message;
+        projectData.succesfullyCreated = false;
         Logger.log(e.stack);
-        return message;
+        return projectData;
       }
 
       const folderToSetDataFromTemplate = DriveApp.getFolderById(projectFolderID);
       copyFoldersAndFiles_(template, folderToSetDataFromTemplate, folderAndFileNamePrefix, "Yes", true);
-      return message = "New Project has been added to the data base";
+
+      projectData.customerName = customerName;
+      projectData.projectName = folderAndFileNamePrefix;
+      projectData.projectFolderUrl = returFileOrFolderURLfromID(projectFolderID);
+      projectData.succesfullyCreated = true;
+      projectData.message = "New Project has been added to the data base";
+      console.log(projectData);
+      return projectData;
     }
 
     if (existenceOfProjectInDataBase) {
-      return message = "This Project exists in your database";
+      projectData.message = "This Project exists in your database";
+      projectData.succesfullyCreated = false;
+      return projectData;
     }
   } catch (e) {
     Logger.log(e.stack);
-    return message = "Error while setting up project folder: " + e.stack;
-
+    projectData.message = "Error while setting up project folder: " + e.stack;
+    projectData.succesfullyCreated = false;
+    return projectData;
   }
 
-
+  return projectData;
 }
 
 

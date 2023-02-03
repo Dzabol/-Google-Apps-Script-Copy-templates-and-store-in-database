@@ -1,7 +1,7 @@
 <script>
   async function afterButtonAddNewProjectSubmit(e) {
     e.preventDefault();
-    let message = "";
+    let projectData = [];
     let projectInformation = getDataFromImputBox();
 
     if (validateFormFields()) {
@@ -22,12 +22,16 @@
           serverNumber < numberOfServers;
           serverNumber++
         ) {
-          message = await runGoogleScriptWithPromises(
-            "createNewProject",
-            projectInformation,
-            prefixName,
-            serverNumber
+          projectData.push(
+            await runGoogleScriptWithPromises(
+              "createNewProject",
+              projectInformation,
+              prefixName,
+              serverNumber
+            )
           );
+          console.log(projectData);
+          console.log("Zrobione");
           websiteElements.alertsWindow.textContent =
             "Created " + (serverNumber + 1) + "/" + numberOfServers;
         }
@@ -40,6 +44,7 @@
       runOrCloseLoaderWindow(false);
 
       clearAlerts(websiteElements.alertsWindow);
+      console.log(projectData);
     }
   }
 

@@ -1,12 +1,13 @@
 async function createNewProject(projectInformation, prefixName, serverNumberToCreatePackage) {
 
-  return createPackageOfFoldersAndFiles_(
+  let projectData = createPackageOfFoldersAndFiles_(
     projectInformation.customerName,
     prefixName,
     serversInformation[serverNumberToCreatePackage].sourceFolderID,
     serversInformation[serverNumberToCreatePackage].targetFolderID
   );
 
+  return projectData;
 }
 
 
