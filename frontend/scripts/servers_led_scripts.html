@@ -68,14 +68,14 @@
           serversIDs = object;
 
           setUrlToRequiredSection(
-            serversIDs[index].sourceFolderID,
+            serversIDs[index].sourceFolderUrl,
             templateFilesClass,
             ".serverWithTemplatesDescription",
             "Template Folder"
           );
 
           setUrlToRequiredSection(
-            serversIDs[index].targetFolderID,
+            serversIDs[index].targetFolderUrl,
             serverFileClass,
             ".serverWithFilesDescription",
             "Projects Folder"
@@ -88,18 +88,16 @@
   }
 
   function setUrlToRequiredSection(
-    folderID,
+    folderUrl,
     serverFileClass,
     className,
     urlDescription
   ) {
-    runGoogleScriptWithPromises("getURLfromFileID", folderID).then((url) => {
-      let el = serverFileClass.querySelector("" + className + "");
-      if (el) {
-        el.innerHTML = `<a href="${url}" target="_blank">${urlDescription}</a>`;
-      } else {
-        console.error("Element not found!");
-      }
-    });
+    let el = serverFileClass.querySelector("" + className + "");
+    if (el) {
+      el.innerHTML = `<a href="${folderUrl}" target="_blank">${urlDescription}</a>`;
+    } else {
+      console.error("Element not found!");
+    }
   }
 </script>

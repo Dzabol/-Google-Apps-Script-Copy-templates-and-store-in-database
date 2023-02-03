@@ -35,9 +35,6 @@ function getProjectsListFromTheServers() {
 }
 
 
-
-
-
 /**
  * *****************************************************************************
  * Collect all data from google sheet

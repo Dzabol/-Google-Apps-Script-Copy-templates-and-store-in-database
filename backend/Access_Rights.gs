@@ -28,19 +28,6 @@ function checkAccesToFolder_(folderID) {
 
 /**
  * *****************************************************************************
- * Get ID to the file or folder from the URL
- * ***************************************************************************** 
- * @param {string} url 
- * @returns {string} ID
- */
-
-function getIdFromUrl(url) {
-  const match = url.match(/[\w-_]{15,}/);
-  return match ? match[0] : undefined;
-}
-
-/**
- * *****************************************************************************
  * Get URL to the file or folder from the ID
  * ***************************************************************************** 
  * @param {string} iDnumber Id of the file or folder 
