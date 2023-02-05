@@ -27,21 +27,6 @@ function checkAccesToFolder_(folderID) {
 }
 
 /**
- * *****************************************************************************
- * Get URL to the file or folder from the ID
- * ***************************************************************************** 
- * @param {string} iDnumber Id of the file or folder 
- * @returns {string} URL
- */
-function getURLfromFileID(iDnumber) {
-  console.log("ID: " + iDnumber);
-  let file = DriveApp.getFileById(iDnumber);
-  let url = file.getUrl();
-  console.log("URL: " + url);
-  return url;
-}
-
-/**
  * * *****************************************************************************
  * Check user permisions to acces a folder and files basing on the URL
  * ***************************************************************************** 
@@ -73,8 +58,8 @@ function serversAccesInformation() {
 
   for (var i = 0; i < arrayWithServers.length; i++) {
 
-    accesInformationTemplate = checkAccesToFolder_(arrayWithServers[i].sourceFolderID);
-    accesinformationTargetFolder = checkAccesToFolder_(arrayWithServers[i].targetFolderID);
+    accesInformationTemplate = checkAccesToFolder_(getIdFromUrl(arrayWithServers[i].sourceFolderUrl));
+    accesinformationTargetFolder = checkAccesToFolder_(getIdFromUrl(arrayWithServers[i].targetFolderUrl));
     accesRightsToFolders.push(
       {
         "serverName": arrayWithServers[i].serverName,
@@ -95,6 +80,7 @@ function serversAccesInformation() {
  */
 
 function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
+  console.log(accesToServersInformation);
   let numberOfServers = accesToServersInformation.length;
   console.log("ilosc serv: " + numberOfServers);
   console.log(accesToServersInformation);
@@ -105,6 +91,20 @@ function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
     }
   }
   return true;
+}
+
+/**
+ * *****************************************************************************
+ * Function gets data about user
+ * ***************************************************************************** 
+ * @returns 
+ */
+
+function getActiveUserInformation() {
+  let userDataInformation = {};
+  userDataInformation.email = Session.getActiveUser().getEmail();
+
+  return userDataInformation;
 }
 
 

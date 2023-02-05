@@ -3,8 +3,8 @@ async function createNewProject(projectInformation, prefixName, serverNumberToCr
   let projectData = createPackageOfFoldersAndFiles_(
     projectInformation.customerName,
     prefixName,
-    serversInformation[serverNumberToCreatePackage].sourceFolderID,
-    serversInformation[serverNumberToCreatePackage].targetFolderID
+    getIdFromUrl(serversInformation[serverNumberToCreatePackage].sourceFolderUrl),
+    getIdFromUrl(serversInformation[serverNumberToCreatePackage].targetFolderUrl)
   );
 
   return projectData;

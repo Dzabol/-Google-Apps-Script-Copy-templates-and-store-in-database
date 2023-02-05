@@ -55,7 +55,7 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
     "succesfullyCreated": false,
   };
 
-   try {
+  try {
 
     const template = DriveApp.getFolderById(sourceFolderID);
     let customerFolderID;
@@ -98,7 +98,7 @@ function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, 
 
       projectData.customerName = customerName;
       projectData.projectName = folderAndFileNamePrefix;
-      projectData.projectFolderUrl = returFileOrFolderURLfromID(projectFolderID);
+      projectData.projectFolderUrl = getURLfromFileID(projectFolderID);
       projectData.succesfullyCreated = true;
       projectData.message = "New Project has been added to the data base";
       console.log(projectData);

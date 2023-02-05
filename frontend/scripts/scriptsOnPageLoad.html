@@ -5,34 +5,19 @@
     let errors = [];
 
     try {
-      getServerAccesInformationForTheUser();
-    } catch (error) {
-      websiteElements.alertsWindow.textContent = error;
-      errors.push(error);
-      numberOfErrors += 1;
-    }
+      runGoogleScriptWithPromises("getActiveUserInformation").then((object) => {
+        websiteElements.userEmailWindow.textContent = `welcome: ${object.email}`;
+      });
+      await getServerAccesInformationForTheUser();
 
-    try {
-      projectsInformations = await runGoogleScriptWithPromises(
+      let projectsInformations = await runGoogleScriptWithPromises(
         "getProjectsInformation"
       );
-    } catch (error) {
-      websiteElements.alertsWindow.textContent = error;
-      errors.push(error);
-      numberOfErrors += 1;
-    }
 
-    try {
-      customerList = await runGoogleScriptWithPromises(
+      let customerList = await runGoogleScriptWithPromises(
         "getListOfTheAllCustomers"
       );
-    } catch (error) {
-      websiteElements.alertsWindow.textContent = error;
-      errors.push(error);
-      numberOfErrors += 1;
-    }
 
-    try {
       populateDropDownCustomerList(customerList);
     } catch (error) {
       websiteElements.alertsWindow.textContent = error;

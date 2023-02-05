@@ -1,5 +1,9 @@
 <script>
-  /* ------------------------------------------------------------------*/
+  /**
+   * *****************************************************************************
+   * Get information if user can acces to all servers
+   * *****************************************************************************
+   */
   async function getServerAccesInformationForTheUser() {
     websiteElements.alertsWindow.textContent =
       "Please wait, loading server access information...";
@@ -26,7 +30,12 @@
     }
   }
 
-  /* ------------------------------------------------------------------*/
+  /**
+   * *****************************************************************************
+   * Generate Leds and hiperlinks to all servers
+   * *****************************************************************************
+   */
+
   async function populateServersAcces_Led(serversInformation) {
     let numberOfServers = serversInformation.length;
     let serversSectionTemplateName = "ledBox-template";
@@ -39,6 +48,10 @@
     const templateFromHTML = document.getElementById(
       serversSectionTemplateName
     ).content;
+
+    let serversIDs = await runGoogleScriptWithPromises(
+      "transferServersInformationToHTML"
+    );
 
     serversInformation.forEach((server, index) => {
       let copyOfTemplate = document.importNode(templateFromHTML, true);
@@ -62,30 +75,29 @@
         templatesLed.className = "led-red";
       }
 
-      let serversIDs = [];
-      runGoogleScriptWithPromises("transferServersInformationToHTML").then(
-        (object) => {
-          serversIDs = object;
+      setUrlToRequiredSection(
+        serversIDs[index].sourceFolderUrl,
+        templateFilesClass,
+        ".serverWithTemplatesDescription",
+        "Template Folder"
+      );
 
-          setUrlToRequiredSection(
-            serversIDs[index].sourceFolderUrl,
-            templateFilesClass,
-            ".serverWithTemplatesDescription",
-            "Template Folder"
-          );
-
-          setUrlToRequiredSection(
-            serversIDs[index].targetFolderUrl,
-            serverFileClass,
-            ".serverWithFilesDescription",
-            "Projects Folder"
-          );
-        }
+      setUrlToRequiredSection(
+        serversIDs[index].targetFolderUrl,
+        serverFileClass,
+        ".serverWithFilesDescription",
+        "Projects Folder"
       );
 
       sectionToInsertTemplate.appendChild(copyOfTemplate);
     });
   }
+
+  /**
+   * *****************************************************************************
+   * Set URL to Project and template folder
+   * *****************************************************************************
+   */
 
   function setUrlToRequiredSection(
     folderUrl,
@@ -95,7 +107,7 @@
   ) {
     let el = serverFileClass.querySelector("" + className + "");
     if (el) {
-      el.innerHTML = `<a href="${folderUrl}" target="_blank">${urlDescription}</a>`;
+      el.innerHTML = `<a class = "server-description" href="${folderUrl}" target="_blank">${urlDescription}</a>`;
     } else {
       console.error("Element not found!");
     }
