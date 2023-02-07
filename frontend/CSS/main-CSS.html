@@ -60,7 +60,8 @@
     align-items: center;
   }
 
-  .addCustomer-container {
+  .addCustomer-container,
+  .searchButton-container {
     margin: 0;
   }
 
@@ -113,19 +114,22 @@
     width: var(--inputBox-width);
     transition: box-shadow 0.3s outline 0.3s;
     text-align: center;
+    height: var(--buttons-widthAndHight);
   }
 
   select option {
     background: white;
     text-align: left;
   }
-  .customerInputSelect {
+  .customerInputSelect,
+  .strInputBox {
     width: calc(var(--inputBox-width) - var(--buttons-widthAndHight));
     height: var(--buttons-widthAndHight);
     margin-right: 3px;
   }
 
   input:hover,
+  select:hover,
   .searchButton:hover,
   .addProjectButton:hover,
   .addCustomerButton:hover {
@@ -154,10 +158,10 @@
     align-items: center;
   }
 
-  .customerInputSection {
+  .InputSection {
     display: flex;
     flex-direction: row;
-    align-items: left;
+    align-items: center;
   }
 
   .buttonsSection {
@@ -194,6 +198,26 @@
     border-radius: 10px;
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
     padding: 5px;
+  }
+  .sheetDataAcces {
+    padding: 5px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    align-items: center;
+  }
+  .sheetDataAcces {
+    position: relative;
+    align-items: center;
+  }
+  .sheetData-text {
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
   }
 
   .servers-box {
@@ -246,7 +270,8 @@
     margin-left: 5px;
   }
 
-  .server-description :-webkit-any-link {
+  .server-description :-webkit-any-link,
+  .sheetData-text:-webkit-any-link {
     text-decoration: none;
     color: black;
     font-weight: bold;

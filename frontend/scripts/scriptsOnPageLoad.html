@@ -1,39 +1,75 @@
 <script>
   async function pageLoad() {
-    //loadData(); //projects table underconstruction
-    let numberOfErrors = 0;
-    let errors = [];
-
     try {
-      runGoogleScriptWithPromises("getActiveUserInformation").then((object) => {
-        websiteElements.userEmailWindow.textContent = `welcome: ${object.email}`;
-      });
-      await getServerAccesInformationForTheUser();
+      runOrCloseLoaderWindow(true);
+      await Promise.all([
+        loadUserInformation(),
+        checkAccessRights(),
+        loadDatabaseInformation(),
+      ]);
 
-      let projectsInformations = await runGoogleScriptWithPromises(
-        "getProjectsInformation"
-      );
-
-      let customerList = await runGoogleScriptWithPromises(
-        "getListOfTheAllCustomers"
-      );
-
-      populateDropDownCustomerList(customerList);
+      if (allFoldersAccessRights) {
+        await loadProjectsAndCustomers();
+      } else {
+        websiteElements.alertsWindow.textContent =
+          "You can't add new project to the database because you don't have an read/write rights to all servers";
+      }
     } catch (error) {
       websiteElements.alertsWindow.textContent = error;
       errors.push(error);
       numberOfErrors += 1;
     }
 
-    if (numberOfErrors == 0) {
-      await runOrCloseLoaderWindow(false);
-    } else {
+    if (numberOfErrors == 0 && allFoldersAccessRights) {
+      clearAlerts(websiteElements.alertsWindow);
+    }
+    if (numberOfErrors != 0) {
+      console.log("error: " + numberOfErrors);
       let errorMessage =
         "Please contact with Sebastian Jablecki because there is something wrong with the aplication";
       window.alert(errorMessage);
-
       console.log(errors);
     }
-    clearAlerts(websiteElements.alertsWindow);
+
+    await runOrCloseLoaderWindow(false);
+  }
+
+  /****************************************************************************************************/
+
+  async function loadUserInformation() {
+    return await runGoogleScriptWithPromises("getActiveUserInformation").then(
+      (object) => {
+        userInformation = object;
+        websiteElements.userEmailWindow.textContent = `welcome: ${userInformation.email}`;
+      }
+    );
+  }
+
+  async function loadDatabaseInformation() {
+    return await runGoogleScriptWithPromises(
+      "googleDataBaseAccesInformation"
+    ).then((object) => {
+      sheetDataBaseInformation = object;
+      return getServerAccesInformationForTheUserAndLoadLeds(object);
+    });
+  }
+
+  async function checkAccessRights() {
+    return (allFoldersAccessRights = await runGoogleScriptWithPromises(
+      "checkIfOtherFunctionsCanBeRun",
+      serverAccesInformation
+    ));
+  }
+
+  async function loadProjectsAndCustomers() {
+    projectsInformations = await runGoogleScriptWithPromises(
+      "getProjectsInformation"
+    );
+
+    customerList = await runGoogleScriptWithPromises(
+      "getListOfTheAllCustomers"
+    );
+
+    return populateDropDownCustomerList(customerList);
   }
 </script>

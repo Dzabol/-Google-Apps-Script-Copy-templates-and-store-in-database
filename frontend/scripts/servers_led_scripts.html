@@ -4,7 +4,9 @@
    * Get information if user can acces to all servers
    * *****************************************************************************
    */
-  async function getServerAccesInformationForTheUser() {
+  async function getServerAccesInformationForTheUserAndLoadLeds(
+    sheetDataBaseInformation
+  ) {
     websiteElements.alertsWindow.textContent =
       "Please wait, loading server access information...";
     try {
@@ -16,18 +18,35 @@
         "Server information successfully loaded";
 
       populateServersAcces_Led(serverAccesInformation);
-      allFoldersAccessRights = await runGoogleScriptWithPromises(
-        "checkIfOtherFunctionsCanBeRun",
-        serverAccesInformation
-      );
 
-      if (!allFoldersAccessRights) {
-        websiteElements.alertsWindow.textContent =
-          "You can't add new project to the database because you don't have an read/write rights to all servers";
-      }
+      await generateLedForSheetData(sheetDataBaseInformation);
     } catch (error) {
       "Can't load server information" + "\n\n" + error;
     }
+  }
+
+  /**
+   * *****************************************************************************
+   * Generate Leds and hiperlinks to all servers
+   * *****************************************************************************
+   */
+  async function generateLedForSheetData(sheetDataBaseInformation) {
+    let ledSection = document.getElementById("sheetDataLed");
+    let descriptionSection = document.getElementById("sheetDataAcces");
+
+    if (sheetDataBaseInformation.userAccesRights) {
+      ledSection.className = "led-green";
+    } else {
+      ledSection.className = "led-red";
+    }
+
+    let link = document.createElement("a");
+    link.className = "sheetData-text";
+    link.href = sheetDataBaseInformation.SpreadSheetURL;
+    link.target = "_blank";
+    link.textContent = "Projects Database";
+
+    descriptionSection.appendChild(link);
   }
 
   /**

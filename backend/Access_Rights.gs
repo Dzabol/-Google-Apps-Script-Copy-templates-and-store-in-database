@@ -51,10 +51,11 @@ function checkAccesToFileByURL(fileURL) {
 
 function serversAccesInformation() {
 
-  let arrayWithServers = serversInformation
+  let arrayWithServers = serversInformation;
   let accesRightsToFolders = [];
   let accesInformationTemplate;
   let accesinformationTargetFolder;
+
 
   for (var i = 0; i < arrayWithServers.length; i++) {
 
@@ -72,6 +73,19 @@ function serversAccesInformation() {
 }
 
 /**
+  * *****************************************************************************
+ * Function check acces rights to sheet database
+ * ***************************************************************************** 
+ * @returns {object} returns Sheet Objects and saves server acces to projectsSpreadSheet.userAccesRights
+ */
+
+function googleDataBaseAccesInformation() {
+  let accesRights = checkAccesToFileByURL(projectsSpreadSheet.SpreadSheetURL);
+  projectsSpreadSheet.userAccesRights = accesRights;
+  return projectsSpreadSheet;
+}
+
+/**
  * *****************************************************************************
  * Function check if user has an acces to all servers
  * ***************************************************************************** 
@@ -80,17 +94,16 @@ function serversAccesInformation() {
  */
 
 function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
-  console.log(accesToServersInformation);
+  googleDataBaseAccesInformation();
   let numberOfServers = accesToServersInformation.length;
-  console.log("ilosc serv: " + numberOfServers);
-  console.log(accesToServersInformation);
   for (let i = 0; i < numberOfServers; i++) {
-    console.log("jestem");
-    if ((accesToServersInformation[i].sourceFolder == false) || (accesToServersInformation[i].targetFolder == false)) {
+
+    if ((accesToServersInformation[i].sourceFolder === false) || (accesToServersInformation[i].targetFolder === false)) {
       return false;
     }
   }
-  return true;
+  if (projectsSpreadSheet.userAccesRights) return true;
+  else return false;
 }
 
 /**

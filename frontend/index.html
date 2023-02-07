@@ -40,18 +40,23 @@
       <div class="addNewProject-container">
         <div class="newProjectInformation">
           <div class="projectImputs-container">
+            <!---->
             <div class="form_input-container">
-              <label for="strCode">STR Code</label>
-              <input id="strCode" type="text" required />
+              <div class="InputSection">
+                <label for="strCode">STR Code</label>
+                <input class="strInputBox" id="strCode" type="text" required />
+
+                <div class="searchButton-container">
+                  <button id="searchButton" class="searchButton">
+                    <span class="material-symbols-outlined"> search </span>
+                  </button>
+                </div>
+              </div>
             </div>
 
+            <!---->
             <div class="form_input-container">
-              <label for="projectName">Project Name</label>
-              <input id="projectName" type="text" required />
-            </div>
-
-            <div class="form_input-container">
-              <div class="customerInputSection">
+              <div class="InputSection">
                 <label for="customer">Customer</label>
                 <select
                   name="customer"
@@ -69,17 +74,18 @@
                 </div>
               </div>
             </div>
+            <!---->
+            <div class="form_input-container">
+              <label for="projectName">Project Name</label>
+              <input id="projectName" type="text" required />
+            </div>
+            <!---->
           </div>
           <div class="buttonsSection">
-            <div class="searchButton-container">
-              <button id="searchButton" class="searchButton">
-                <span class="material-symbols-outlined"> search </span>
-              </button>
-            </div>
-
             <div class="addProjectButton-container">
               <button id="addProjectButton" class="addProjectButton">
-                <span class="material-symbols-outlined"> docs_add_on </span>
+                <!--<span class="material-symbols-outlined"> docs_add_on </span>-->
+                <p>Add new Project</p>
               </button>
             </div>
           </div>
@@ -118,6 +124,9 @@
             </template>
             <!------------------------------------------------>
           </div>
+          <div class="sheetDataAcces" id="sheetDataAcces">
+            <div class="led" id="sheetDataLed"></div>
+          </div>
         </div>
       </div>
       <div id="projectList-container" class="projectList-container">
@@ -140,6 +149,7 @@
 
     <!-- separate files with scripts -->
 
+    <?!=includeExternalFile("frontend/scripts/!globalVariables") ?>
     <?!=includeExternalFile("frontend/scripts/scriptsOnPageLoad") ?>
     <?!=includeExternalFile("frontend/scripts/ProjectList") ?>
     <?!=includeExternalFile("frontend/scripts/servers_led_scripts") ?>
@@ -151,12 +161,6 @@
     <!----------------------------------------------------------------->
 
     <script>
-      let allFoldersAccessRights = false;
-      let serverAccesInformation = [];
-      const websiteElements = {};
-      let projectsInformations = [];
-      let customerList = [];
-
       document.addEventListener("DOMContentLoaded", pageLoad);
 
       websiteElements.alertsWindow = document.getElementById("alertsWindow");
