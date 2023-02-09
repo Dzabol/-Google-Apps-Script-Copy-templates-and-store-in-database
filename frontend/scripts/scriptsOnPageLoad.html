@@ -8,6 +8,8 @@
         loadDatabaseInformation(),
       ]);
 
+      runGoogleScriptWithPromises("getProjectsListFromTheServers");
+
       if (allFoldersAccessRights) {
         await loadProjectsAndCustomers();
       } else {
@@ -32,7 +34,7 @@
     }
 
     await runOrCloseLoaderWindow(false);
-    console.log(customerList);
+    console.log(projectsInformations);
   }
 
   /****************************************************************************************************/
