@@ -37,8 +37,8 @@ let serversInformation = [
 *********************************************************************
 */
 let projectsSpreadSheet = {
-    "SpreadSheetURL": "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880",//https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880
-    "dataTabName": "Skawina",//https://docs.google.com/spreadsheets/d/1_q11caQVRR7T2tfqKfYYE2jHgTz5tz007A3hxmLOevI/edit#gid=406425204
+    "SpreadSheetURL": "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880",
+    "dataTabName": "Skawina",
     "tabWithAditionalInformations": "Sheet_Information",
     "strDataTabName": "DataFromStr",
     "columnNameWithAllCustomers": "Customer",
