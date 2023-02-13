@@ -2,19 +2,16 @@
   async function pageLoad() {
     try {
       runOrCloseLoaderWindow(true);
-      await Promise.all([
-        loadUserInformation(),
-        checkAccessRights(),
-        loadDatabaseInformation(),
-      ]);
+      await Promise.all([loadUserInformation(), checkAccessRights()]);
 
       runGoogleScriptWithPromises("getProjectsListFromTheServers");
 
       if (allFoldersAccessRights) {
         await loadProjectsAndCustomers();
       } else {
+        inputFieldsIfAllRequirementsAreNotMeet();
         websiteElements.alertsWindow.textContent =
-          "You can't add new project to the database because you don't have an read/write rights to all servers";
+          "Unfortunately, you are unable to add a new project to the database as you do not have read/write permissions on all servers.";
       }
     } catch (error) {
       websiteElements.alertsWindow.textContent = error;
@@ -32,9 +29,7 @@
       window.alert(errorMessage);
       console.log(errors);
     }
-
     await runOrCloseLoaderWindow(false);
-    console.log(projectsInformations);
   }
 
   /****************************************************************************************************/
@@ -48,20 +43,20 @@
     );
   }
 
-  async function loadDatabaseInformation() {
-    return await runGoogleScriptWithPromises(
-      "googleDataBaseAccesInformation"
-    ).then((object) => {
-      sheetDataBaseInformation = object;
-      return getServerAccesInformationForTheUserAndLoadLeds(object);
-    });
-  }
-
   async function checkAccessRights() {
-    return (allFoldersAccessRights = await runGoogleScriptWithPromises(
+    sheetDataBaseInformation = await runGoogleScriptWithPromises(
+      "googleDataBaseAccesInformation"
+    );
+    await getServerAccesInformationForTheUserAndLoadLeds(
+      sheetDataBaseInformation
+    );
+    serverAccesInformation = await runGoogleScriptWithPromises(
+      "serversAccesInformation"
+    );
+    allFoldersAccessRights = await runGoogleScriptWithPromises(
       "checkIfOtherFunctionsCanBeRun",
       serverAccesInformation
-    ));
+    );
   }
 
   async function loadProjectsAndCustomers() {
@@ -74,5 +69,25 @@
     );
 
     return populateDropDownCustomerList(customerList);
+  }
+
+  function inputFieldsIfAllRequirementsAreNotMeet() {
+    const fieldsToValidate = [
+      "strCode",
+      "customer",
+      "projectName",
+      "searchButton",
+      "addCustomerButton",
+      "addProjectButton",
+    ];
+    let numberOfFields = fieldsToValidate.length;
+
+    for (let i = 0; i < numberOfFields; i++) {
+      console.log(fieldsToValidate[i]);
+      let object = document.getElementById(fieldsToValidate[i]);
+      console.log(object);
+      object.disabled = true;
+      object.style.background = "rgb(114, 112, 112, 0.2)";
+    }
   }
 </script>

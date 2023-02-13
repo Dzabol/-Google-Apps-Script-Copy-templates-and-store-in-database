@@ -95,10 +95,12 @@ function googleDataBaseAccesInformation() {
 
 function checkIfOtherFunctionsCanBeRun(accesToServersInformation) {
   googleDataBaseAccesInformation();
+  console.log(accesToServersInformation)
   let numberOfServers = accesToServersInformation.length;
   for (let i = 0; i < numberOfServers; i++) {
+    console.log("Server :" + i + " - " + accesToServersInformation[i].sourceFolder)
+    if ((accesToServersInformation[i].sourceFolder == false) || (accesToServersInformation[i].targetFolder == false)) {
 
-    if ((accesToServersInformation[i].sourceFolder === false) || (accesToServersInformation[i].targetFolder === false)) {
       return false;
     }
   }
