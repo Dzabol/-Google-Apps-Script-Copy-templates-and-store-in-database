@@ -43,81 +43,47 @@ function copyFoldersAndFiles_(
  * @return {object} 
  */
 
-function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, sourceFolderID, targetMainFolderID) {
-
-  let projectData =
-  {
-    "serverName": "",
-    "projectName": "",
-    "projectFolderUrl": "",
-    "customerName": "",
-    "message": "Project added to the data base",
-    "succesfullyCreated": false,
+function createPackageOfFoldersAndFiles_(customerName, folderAndFileNamePrefix, sourceFolderID, targetMainFolderID, serverName) {
+  
+  const projectData = {
+    serverName: serverName,
+    projectName: "",
+    projectFolderUrl: "",
+    customerName: customerName,
+    foldersAndFiles: {},
+    message: "",
+    successfullyCreated: false
   };
 
   try {
+    const templateFolder = DriveApp.getFolderById(sourceFolderID);
+    const customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
+    const allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
 
-    const template = DriveApp.getFolderById(sourceFolderID);
-    let customerFolderID;
-    let allProjectsInDataBase;
-
-    try {
-      customerFolderID = setFolderToSetData_(customerName, targetMainFolderID);
-    } catch (e) {
-      projectData.message = "Error while setting up customer folder: " + e.message;
-      projectData.succesfullyCreated = false;
-      Logger.log(e.stack);
+    if (allProjectsInDataBase.includes(folderAndFileNamePrefix)) {
+      projectData.message = "This project already exists in the database.";
       return projectData;
     }
 
-    try {
-      allProjectsInDataBase = getAllFoldersNamesInReqiredFolder_(customerFolderID);
-    } catch (e) {
-      projectData.message = "Error while getting all projects from database: " + e.message;
-      projectData.succesfullyCreated = false;
-      Logger.log(e.stack);
-      return projectData;
-    }
+    const projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
+    const projectFolder = DriveApp.getFolderById(projectFolderID);
+    projectData.projectFolderUrl = getURLfromFileID(projectFolderID);
+    projectData.projectName = projectFolder.getName();
 
-    let existenceOfProjectInDataBase = allProjectsInDataBase.includes(folderAndFileNamePrefix);
+    copyFoldersAndFiles_(templateFolder, projectFolder, folderAndFileNamePrefix, "Yes", true);
 
-    if (!existenceOfProjectInDataBase) {
-      let projectFolderID;
+    projectData.customerName = customerName;
+    projectData.projectName = folderAndFileNamePrefix;
+    projectData.successfullyCreated = true;
+    projectData.foldersAndFiles = getAllFilesNamesAndUrl(projectData.projectFolderUrl);
+    projectData.message = "New project has been added to the database.";
 
-      try {
-        projectFolderID = setFolderToSetData_(folderAndFileNamePrefix, customerFolderID);
-      } catch (e) {
-        projectData.message = "Error while setting up project folder: " + e.message;
-        projectData.succesfullyCreated = false;
-        Logger.log(e.stack);
-        return projectData;
-      }
-
-      const folderToSetDataFromTemplate = DriveApp.getFolderById(projectFolderID);
-      copyFoldersAndFiles_(template, folderToSetDataFromTemplate, folderAndFileNamePrefix, "Yes", true);
-
-      projectData.customerName = customerName;
-      projectData.projectName = folderAndFileNamePrefix;
-      projectData.projectFolderUrl = getURLfromFileID(projectFolderID);
-      projectData.succesfullyCreated = true;
-      projectData.message = "New Project has been added to the data base";
-      console.log(projectData);
-      return projectData;
-    }
-
-    if (existenceOfProjectInDataBase) {
-      projectData.message = "This Project exists in your database";
-      projectData.succesfullyCreated = false;
-      return projectData;
-    }
+    return projectData;
   } catch (e) {
     Logger.log(e.stack);
-    projectData.message = "Error while setting up project folder: " + e.stack;
-    projectData.succesfullyCreated = false;
+    projectData.message = `Error while setting up project folder: ${e.message}`;
     return projectData;
   }
-
-  return projectData;
 }
 
 

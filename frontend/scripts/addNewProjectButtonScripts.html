@@ -11,12 +11,15 @@
         "setPrefixNameForFoldersAndFiles",
         projectInformation
       );
+      //Get from backend global variables for servers
       let serversInformation = await runGoogleScriptWithPromises(
         "transferServersInformationToHTML"
       );
       let numberOfServers = serversInformation.length;
 
       try {
+        websiteElements.alertsWindow.textContent =
+          "Created 0/" + numberOfServers;
         for (
           let serverNumber = 0;
           serverNumber < numberOfServers;
@@ -30,8 +33,6 @@
               serverNumber
             )
           );
-          console.log(projectData);
-          console.log("Zrobione");
           websiteElements.alertsWindow.textContent =
             "Created " + (serverNumber + 1) + "/" + numberOfServers;
         }

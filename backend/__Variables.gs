@@ -11,6 +11,31 @@ let serversInformation = [
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
+        "dataToTransferToGoogleSheets": [
+            {
+                "name": "Product Plan",
+                "fileType": "file",
+                "cellAddressToSetData": "A1"
+            },
+            {
+                "name": " System FDP",
+                "fileType": "file",
+                "cellAddressToSetData": "A2"
+            },
+            {
+                "name": "R&D Hours Estimates",
+                "fileType": "file",
+                "cellAddressToSetData": "A3"
+            },
+
+        ],
+        "dataToSetInBOM": [
+            {
+                "name": "Technical Description",
+                "fileType": "folder",
+                "cellAddressToSetData": "A9"
+            }
+        ]
     },
     {
         "serverName": "Mechanical",
@@ -19,14 +44,60 @@ let serversInformation = [
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
+        "dataToTransferToGoogleSheets": [],
+        "dataToSetInBOM": [
+            {
+                "name": "Blade and Rubber Design Toolkit",
+                "fileType": "file",
+                "cellAddressToSetData": "A1"
+            },
+            {
+                "name": "FWS Linkage Pre-Sizing Tool",
+                "fileType": "file",
+                "cellAddressToSetData": "A2"
+            },
+            {
+                "name": "VWS System Sizing",
+                "fileType": "file",
+                "cellAddressToSetData": "A3"
+            },
+            {
+                "name": "04. VD",
+                "fileType": "folder",
+                "cellAddressToSetData": "A4"
+            },
+            {
+                "name": "05. Arm Calculations",
+                "fileType": "folder",
+                "cellAddressToSetData": "A5"
+            },
+            {
+                "name": "Grease Quantity Calculation",
+                "fileType": "file",
+                "cellAddressToSetData": "A6"
+            },
+            {
+                "name": "07. Stack-up",
+                "fileType": "folder",
+                "cellAddressToSetData": "A7"
+            },
+        ],
     },
     {
         "serverName": "Simulation",
-        "sourceFolderUrl": "https://drive.google.com/drive/folders/1TSHa6EobXBVhL42sveH8TU16iU25pDUd", //https://drive.google.com/drive/folders/1ptZ4G8YKg3D7o6Yh9sQNO8_-nTGvSw4Q
+        "sourceFolderUrl": "https://drive.google.com/drive/folders/1ptZ4G8YKg3D7o6Yh9sQNO8_-nTGvSw4Q",
         "targetFolderUrl": "https://drive.google.com/drive/folders/1mnnYO33h1vtEbQTIHM2tfI5nD2Xd6Oor",
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
+        "dataToTransferToGoogleSheets": [],
+        "dataToSetInBOM": [
+            {
+                "name": "SIMULATION-PLAN",
+                "fileType": "folder",
+                "cellAddressToSetData": "A8"
+            },
+        ],
     }
 ];
 
@@ -45,6 +116,7 @@ let projectsSpreadSheet = {
     "projectBasicInformations": ["Project_Code", "Project_Name", "Customer"],
     "userAccesRights": "",
 }
+
 
 
 async function transferServersInformationToHTML() {

@@ -4,7 +4,8 @@ async function createNewProject(projectInformation, prefixName, serverNumberToCr
     projectInformation.customerName,
     prefixName,
     getIdFromUrl(serversInformation[serverNumberToCreatePackage].sourceFolderUrl),
-    getIdFromUrl(serversInformation[serverNumberToCreatePackage].targetFolderUrl)
+    getIdFromUrl(serversInformation[serverNumberToCreatePackage].targetFolderUrl),
+    serversInformation[serverNumberToCreatePackage].serverName
   );
 
   return projectData;
