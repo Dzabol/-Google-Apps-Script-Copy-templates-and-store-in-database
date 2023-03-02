@@ -15,17 +15,17 @@ let serversInformation = [
             {
                 "name": "Product Plan",
                 "fileType": "file",
-                "cellAddressToSetData": "A1"
+                "ColumnNumberToSetData": 15
             },
             {
                 "name": " System FDP",
                 "fileType": "file",
-                "cellAddressToSetData": "A2"
+                "ColumnNumberToSetData": 14
             },
             {
                 "name": "R&D Hours Estimates",
                 "fileType": "file",
-                "cellAddressToSetData": "A3"
+                "ColumnNumberToSetData": 13
             },
 
         ],
@@ -33,7 +33,7 @@ let serversInformation = [
             {
                 "name": "Technical Description",
                 "fileType": "folder",
-                "cellAddressToSetData": "A9"
+                "cellAddressToSetData": 11
             }
         ]
     },

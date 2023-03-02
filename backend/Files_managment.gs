@@ -65,17 +65,15 @@ function copyAllFilesInFolder_(sourceFolder, destinationFolder, prefixforTheFile
 
 function setNewFileName_(file, prefixforTheFileName) {
 
-  let templateEndString = "-template";
-  let imputFileName = "";
-  let fileName = "";
+  const templateEndString = "-template";
 
-  imputFileName = file.getName();
+  let inputFileName = file.getName().trim();
 
-  if (imputFileName.match(templateEndString) != null) {
-    imputFileName = imputFileName.replace(templateEndString, "");
+  const templateIndex = inputFileName.toLowerCase().lastIndexOf(templateEndString.toLowerCase());
+  if (templateIndex !== -1 && templateIndex === inputFileName.length - templateEndString.length) {
+    inputFileName = inputFileName.substring(0, templateIndex);
   }
-
-  fileName = prefixforTheFileName + " - " + imputFileName;
+  const fileName = `${prefixforTheFileName} - ${inputFileName}`;
 
   return fileName;
 }

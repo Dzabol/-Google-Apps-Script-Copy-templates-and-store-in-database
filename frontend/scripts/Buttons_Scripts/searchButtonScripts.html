@@ -1,0 +1,71 @@
+<script>
+  function afterButtonSearchSubmit(e) {
+    e.preventDefault();
+    let strCodeIndexNumberInDataTable = [];
+    let allFieldsFilledFromDataBase = true;
+
+    if (validateSTRinputBox()) {
+      websiteElements.alertsWindow.textContent = "";
+      let strCodeValue = document
+        .getElementById("strCode")
+        .value.trim()
+        .toString();
+
+      strCodeIndexNumberInDataTable = findIndexNumberOfStrCode(
+        projectsInformations,
+        strCodeValue
+      );
+
+      if (strCodeIndexNumberInDataTable.some((val) => val !== -1)) {
+        websiteElements.projectNameInputBox.value =
+          projectsInformations[1][strCodeIndexNumberInDataTable[1]];
+        websiteElements.customerInputBox.value =
+          projectsInformations[2][strCodeIndexNumberInDataTable[1]];
+      } else {
+        websiteElements.alertsWindow.textContent =
+          "Can't find STR Code: " + '"' + strCodeValue + '"' + " in database";
+      }
+    }
+  }
+  /* **************************************************************************** */
+
+  function validateSTRinputBox() {
+    let fieldsToClearFromValidation = document
+      .getElementById("userForm")
+      .querySelectorAll("[required]");
+
+    let invalidFields = Array.from(fieldsToClearFromValidation).filter(
+      function (element) {
+        element.classList.remove("is-invalid");
+      }
+    );
+
+    const strCodeField = document.getElementById("strCode");
+    if (!strCodeField.value) {
+      strCodeField.classList.add("is-invalid");
+      websiteElements.alertsWindow.textContent =
+        "To Search project you must put the STR Code number";
+      return false;
+    } else {
+      strCodeField.classList.remove("is-invalid");
+      return true;
+    }
+  }
+
+  /* **************************************************************************** */
+  function findIndexNumberOfStrCode(arrayWithData, strCodeToFind) {
+    let indexNumber = [-1, -1];
+    let i = 0;
+    console.log(arrayWithData);
+    i = arrayWithData.findIndex((subArray) =>
+      subArray.some((value, j) => {
+        if (value === strCodeToFind) {
+          indexNumber = [i, j];
+          return true;
+        }
+      })
+    );
+
+    return indexNumber;
+  }
+</script>

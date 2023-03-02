@@ -6,16 +6,16 @@
  * @return Array with names of all folders in destination folder
  */
 function getAllFoldersNamesInReqiredFolder_(destinationFolderID) {
-    let destinationFolder = DriveApp.getFolderById(destinationFolderID);
-    let allFoldersNames = [];
-    let allFoldersIterator = destinationFolder.getFolders();
+  let destinationFolder = DriveApp.getFolderById(destinationFolderID);
+  let allFoldersNames = [];
+  let allFoldersIterator = destinationFolder.getFolders();
 
-    while (allFoldersIterator.hasNext()) {
-        let folder = allFoldersIterator.next();
-        allFoldersNames.unshift(folder.getName());
-    }
+  while (allFoldersIterator.hasNext()) {
+    let folder = allFoldersIterator.next();
+    allFoldersNames.unshift(folder.getName());
+  }
 
-    return allFoldersNames;
+  return allFoldersNames;
 }
 
 
@@ -26,7 +26,7 @@ function getAllFoldersNamesInReqiredFolder_(destinationFolderID) {
  * *****************************************************************************
  * @param folderName {string} Folder Name to get id
  * @param mainFolderID {string} Main folder ID to set data
- * @return {string} ID of the folder where new BOM is going to be stored
+ * @return {string} ID of the folder where files is going to be stored
  */
 function setFolderToSetData_(folderName, mainFolderID) {
   let mainFolder = DriveApp.getFolderById(mainFolderID);
@@ -38,7 +38,7 @@ function setFolderToSetData_(folderName, mainFolderID) {
   while (folders.hasNext()) {
     folder = folders.next();
 
-    if (folder.getName() == folderName) {
+    if (folder.getName().toLowerCase() == folderName.toLowerCase()) {
       folderID = folder.getId();
       return folderID; // existing folder ID
     }

@@ -42,25 +42,28 @@ function addNewCustomerToDataBase(newCustomerName) {
     const sheetWithCustomerList = spreadsheetWithCustomerList.getSheetByName(projectsSpreadSheet.tabWithAditionalInformations);
     const columnNumberWithAllCustomers = findColumnByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers);
     const firstLineWithCustomers = findRowNumberByName(sheetWithCustomerList, projectsSpreadSheet.columnNameWithAllCustomers) + 1;
+
     let message;
 
-    let customers = [];
-    customers = getListOfTheAllCustomers();
-    newCustomerName = newCustomerName.toString();
-    customers = Array.from(new Set(customers.flat()));
-    customers = customers.filter(String);
+    let customers = getListOfTheAllCustomers().flat().filter(Boolean)
+    let customersNameUpperCase = customers.map(c => c.toUpperCase());
+    const newCustomerNameUpperCase = newCustomerName.toString().toUpperCase();
 
-    if (customers.flat().indexOf(newCustomerName) !== -1) return message = "Customer exists in Your database";
+    if (customersNameUpperCase.includes(newCustomerNameUpperCase)) {
+        message = "Customer exists in your database";
+    } else {
+        customers.push(newCustomerName);
+        customers.sort();
 
-    customers.push(newCustomerName);
-    customers = customers.sort();
+        sheetWithCustomerList.getRange(
+            firstLineWithCustomers,
+            columnNumberWithAllCustomers,
+            customers.length,
+            1
+        ).setValues(customers.map(c => [c]));
 
-    sheetWithCustomerList.getRange(
-        firstLineWithCustomers,
-        columnNumberWithAllCustomers,
-        customers.length,
-        1
-    ).setValues(customers.map(c => [c]));
+        message = `New customer ${newCustomerName} has been added to your database`;
+    }
 
-    return message = 'New Customer: ' + newCustomerName + ', has been aded to your database';
+    return message;
 }

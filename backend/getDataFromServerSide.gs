@@ -64,13 +64,15 @@ function getProjectsInformation() {
     let values = [];
     let oneDimensionalArray = [];
 
-    let dataToCollect = projectsSpreadSheet.projectBasicInformations;
+    let dataToCollect = projectsSpreadSheet.projectBasicInformations; //data to collect stated on global variables
     let numberOfColumnsToCollect = dataToCollect.length;
-    const headerPosition = findRowNumberByName(spreadsheetWithData, dataToCollect[0]);
+
+    const headerPosition = findRowNumberByName(tabWithData, dataToCollect[0]);
     let numberOfRownsWithData = tabWithData.getLastRow();
 
     for (let i = 0; i < numberOfColumnsToCollect; i++) {
-        columnPosition = findColumnByName(spreadsheetWithData, dataToCollect[i]);
+        columnPosition = findColumnByName(tabWithData, dataToCollect[i]);
+        console.log("Nazwa: " + dataToCollect[i]);
         //if there is no data in google sheet
         if (columnPosition == -1) {
             values = Array.from({ length: numberOfRownsWithData }, () => null);
