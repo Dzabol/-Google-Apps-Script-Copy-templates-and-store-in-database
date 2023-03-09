@@ -17,10 +17,14 @@
       );
 
       if (strCodeIndexNumberInDataTable.some((val) => val !== -1)) {
-        websiteElements.projectNameInputBox.value =
+        let projectNameFromDataBase =
           projectsInformations[1][strCodeIndexNumberInDataTable[1]];
-        websiteElements.customerInputBox.value =
-          projectsInformations[2][strCodeIndexNumberInDataTable[1]];
+        let allStrings = projectNameFromDataBase.split("-");
+        let customer = allStrings[2].trim();
+
+        //export to input box
+        websiteElements.projectNameInputBox.value = projectNameFromDataBase;
+        websiteElements.customerInputBox.value = customer;
       } else {
         websiteElements.alertsWindow.textContent =
           "Can't find STR Code: " + '"' + strCodeValue + '"' + " in database";

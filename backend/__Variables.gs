@@ -11,31 +11,6 @@ let serversInformation = [
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
-        "dataToTransferToGoogleSheets": [
-            {
-                "name": "Product Plan",
-                "fileType": "file",
-                "ColumnNumberToSetData": 15
-            },
-            {
-                "name": " System FDP",
-                "fileType": "file",
-                "ColumnNumberToSetData": 14
-            },
-            {
-                "name": "R&D Hours Estimates",
-                "fileType": "file",
-                "ColumnNumberToSetData": 13
-            },
-
-        ],
-        "dataToSetInBOM": [
-            {
-                "name": "Technical Description",
-                "fileType": "folder",
-                "cellAddressToSetData": 11
-            }
-        ]
     },
     {
         "serverName": "Mechanical",
@@ -44,44 +19,6 @@ let serversInformation = [
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
-        "dataToTransferToGoogleSheets": [],
-        "dataToSetInBOM": [
-            {
-                "name": "Blade and Rubber Design Toolkit",
-                "fileType": "file",
-                "cellAddressToSetData": "A1"
-            },
-            {
-                "name": "FWS Linkage Pre-Sizing Tool",
-                "fileType": "file",
-                "cellAddressToSetData": "A2"
-            },
-            {
-                "name": "VWS System Sizing",
-                "fileType": "file",
-                "cellAddressToSetData": "A3"
-            },
-            {
-                "name": "04. VD",
-                "fileType": "folder",
-                "cellAddressToSetData": "A4"
-            },
-            {
-                "name": "05. Arm Calculations",
-                "fileType": "folder",
-                "cellAddressToSetData": "A5"
-            },
-            {
-                "name": "Grease Quantity Calculation",
-                "fileType": "file",
-                "cellAddressToSetData": "A6"
-            },
-            {
-                "name": "07. Stack-up",
-                "fileType": "folder",
-                "cellAddressToSetData": "A7"
-            },
-        ],
     },
     {
         "serverName": "Simulation",
@@ -90,16 +27,118 @@ let serversInformation = [
         "sourceFolderID": "",
         "targetFolderID": "",
         "projectsList": [],
-        "dataToTransferToGoogleSheets": [],
-        "dataToSetInBOM": [
-            {
-                "name": "SIMULATION-PLAN",
-                "fileType": "folder",
-                "cellAddressToSetData": "A8"
-            },
-        ],
     }
 ];
+
+/* 
+*********************************************************************
+                      Data to set in BOM and Data Sheet
+*********************************************************************
+*/
+
+let dataToExportToBOM = [
+    {
+        "name": "Mechanical",
+        "fileType": "folder",
+        "cellAddressToSetData": "F29",
+        "URL": ""
+    },
+    {
+        "name": "RD",
+        "fileType": "folder",
+        "cellAddressToSetData": "F30",
+        "URL": ""
+    },
+    {
+        "name": "Simulation",
+        "fileType": "folder",
+        "cellAddressToSetData": "F31",
+        "URL": ""
+    },
+    {
+        "name": "Technical Description",
+        "fileType": "folder",
+        "cellAddressToSetData": "F32",
+        "URL": ""
+    },
+    {
+        "name": "Blade and Rubber Design Toolkit",
+        "fileType": "file",
+        "cellAddressToSetData": "F36",
+        "URL": ""
+    },
+    {
+        "name": "Arm Design Toolkit",
+        "fileType": "file",
+        "cellAddressToSetData": "F39",
+        "URL": ""
+    },
+    {
+        "name": "04. VD",
+        "fileType": "folder",
+        "cellAddressToSetData": "F40",
+        "URL": ""
+    },
+    {
+        "name": "VWS System Sizing",
+        "fileType": "file",
+        "cellAddressToSetData": "F41",
+        "URL": ""
+    },
+    {
+        "name": "FWS Linkage Pre-Sizing Tool",
+        "fileType": "file",
+        "cellAddressToSetData": "F42",
+        "URL": ""
+    },
+    {
+        "name": "Grease Quantity Calculation",
+        "fileType": "file",
+        "cellAddressToSetData": "F43",
+        "URL": ""
+    },
+    {
+        "name": "Simulation Plan",
+        "fileType": "file",
+        "cellAddressToSetData": "F41",
+        "URL": ""
+    },
+    {
+        "name": "SIMULATION-INPUT DATA",
+        "fileType": "folder",
+        "cellAddressToSetData": "F44",
+        "URL": ""
+    },
+    {
+        "name": "05. Arm Calculations",
+        "fileType": "folder",
+        "cellAddressToSetData": "F45",
+        "URL": ""
+    },
+]
+
+let dataToExportToProjectList = [
+    {
+        "name": "Product Plan",
+        "fileType": "file",
+        "ColumnNumberToSetData": 15,
+        "URL": ""
+    },
+    {
+        "name": " System FDP",
+        "fileType": "file",
+        "ColumnNumberToSetData": 14,
+        "URL": ""
+    },
+    {
+        "name": "R&D Hours Estimates",
+        "fileType": "file",
+        "ColumnNumberToSetData": 13,
+        "URL": ""
+    },
+
+]
+
 
 
 /* 
@@ -126,4 +165,22 @@ async function transferServersInformationToHTML() {
 
 async function transferProjectsSpreadSheetToHTML() {
     return projectsSpreadSheet;
+}
+
+/* 
+*********************************************************************
+                      BOM TEMPLATE
+*********************************************************************
+*/
+
+let bomTemplateSpreadSheet = {
+    "folderURLWithAllBOMS": "https://drive.google.com/drive/u/0/folders/1Pcu56BlVMxglH99qQWfage2WXmOwDkK5",
+    "templateURL": "https://docs.google.com/spreadsheets/d/1D_ZTEOrPG7S3Cy40bsP2QWlEloj4UsLlUbREu1gTZM8/edit#gid=134104279",
+    "tabNameToSetBasicData": "MAIN SHEET",
+    "tabNameWithAllTemplates": "TEMPLATE",
+    "tabNameWithaditionalInformations": "Sheet information",
+    "rowToKeepInTemplate": "MAIN SYSTEM END",
+    "cellToSetProjectName": "A1",
+    "cellToSetProjectCode": "E16",
+
 }
