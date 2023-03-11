@@ -75,14 +75,14 @@ function findIndexNumberOfStrCode(arrayWithData, strCodeToFind) {
     return indexNumber;
 }
 
-function searchObjectByName(name, objectToSearch) {
-    for (let i = 0; i < objectToSearch.length; i++) {
-        if (objectToSearch[i].name === name) {
-            return {
-                cellAddressToSetData: objectToSearch[i].cellAddressToSetData,
-                URL: objectToSearch[i].URL
-            };
-        }
+
+
+function searchObjectByNameAndSetURLadres(nameOfTheObject, allObjects, urlAddress) {
+    for (let i = 0; i < allObjects.length; i++) {
+        if (allObjects[i].name === nameOfTheObject) {
+            allObjects[i].URL = urlAddress
+        };
     }
-    return null;
 }
+
+

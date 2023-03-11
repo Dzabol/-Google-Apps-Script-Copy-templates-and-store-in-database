@@ -74,52 +74,59 @@ let dataToExportToBOM = [
         "URL": ""
     },
     {
-        "name": "04. VD",
+        "name": "05. Arm Calculations",
         "fileType": "folder",
         "cellAddressToSetData": "F40",
         "URL": ""
     },
     {
-        "name": "VWS System Sizing",
-        "fileType": "file",
+        "name": "04. VD",
+        "fileType": "folder",
         "cellAddressToSetData": "F41",
         "URL": ""
     },
     {
-        "name": "FWS Linkage Pre-Sizing Tool",
+        "name": "VWS System Sizing",
         "fileType": "file",
         "cellAddressToSetData": "F42",
         "URL": ""
     },
     {
-        "name": "Grease Quantity Calculation",
+        "name": "FWS Linkage Pre-Sizing Tool",
         "fileType": "file",
         "cellAddressToSetData": "F43",
         "URL": ""
     },
     {
-        "name": "Simulation Plan",
-        "fileType": "file",
-        "cellAddressToSetData": "F41",
-        "URL": ""
-    },
-    {
-        "name": "SIMULATION-INPUT DATA",
+        "name": "06. Grease Calculations",
         "fileType": "folder",
         "cellAddressToSetData": "F44",
         "URL": ""
     },
     {
-        "name": "05. Arm Calculations",
-        "fileType": "folder",
+        "name": "Simulation Plan",
+        "fileType": "file",
         "cellAddressToSetData": "F45",
         "URL": ""
     },
+    {
+        "name": "SIMULATION-INPUT DATA",
+        "fileType": "folder",
+        "cellAddressToSetData": "F46",
+        "URL": ""
+    },
+
 ]
 
 let dataToExportToProjectList = [
     {
-        "name": "Product Plan",
+        "name": "BOM",
+        "fileType": "file",
+        "ColumnNumberToSetData": 6,
+        "URL": ""
+    },
+    {
+        "name": "R&D Hours Estimates",
         "fileType": "file",
         "ColumnNumberToSetData": 15,
         "URL": ""
@@ -127,16 +134,15 @@ let dataToExportToProjectList = [
     {
         "name": " System FDP",
         "fileType": "file",
-        "ColumnNumberToSetData": 14,
+        "ColumnNumberToSetData": 16,
         "URL": ""
     },
     {
-        "name": "R&D Hours Estimates",
+        "name": "Product Plan",
         "fileType": "file",
-        "ColumnNumberToSetData": 13,
+        "ColumnNumberToSetData": 17,
         "URL": ""
     },
-
 ]
 
 

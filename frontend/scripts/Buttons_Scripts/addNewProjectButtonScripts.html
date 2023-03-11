@@ -7,6 +7,9 @@
     if (validateFormFields()) {
       runOrCloseLoaderWindow(true);
 
+      //clear all addresses used in BOM from previous folder creation
+      runGoogleScriptWithPromises("clearURLaddressesInBOMexportData");
+
       let prefixName = await runGoogleScriptWithPromises(
         "setPrefixNameForFoldersAndFiles",
         projectInformation
@@ -19,12 +22,14 @@
 
       try {
         websiteElements.alertsWindow.textContent =
-          "Created 0/" + numberOfServers;
+          "Duplicated templates 0/" + numberOfServers;
         for (
           let serverNumber = 0;
           serverNumber < numberOfServers;
           serverNumber++
         ) {
+          //Duplicate folders form template, rename it and get all names and URLs of the
+          //all new files and folders
           projectData.push(
             await runGoogleScriptWithPromises(
               "createNewProject",
@@ -34,14 +39,21 @@
             )
           );
           websiteElements.alertsWindow.textContent =
-            "Created " + (serverNumber + 1) + "/" + numberOfServers;
+            "Duplicated templates " +
+            (serverNumber + 1) +
+            "/" +
+            numberOfServers;
         }
-        console.log("Front end" + sheetDataBaseInformation);
+        websiteElements.alertsWindow.textContent =
+          "Please wait New BOM Creation";
+        //Create BOM
         await runGoogleScriptWithPromises(
-          "populateBOMandGoogleSheetWithDataFromServer",
+          "createBOMwithLinks",
           prefixName,
-          projectData,
-          serversInformation
+          projectInformation.customerName,
+          projectInformation.projectName,
+          projectInformation.strCode,
+          projectData
         );
 
         websiteElements.alertsWindow.textContent =

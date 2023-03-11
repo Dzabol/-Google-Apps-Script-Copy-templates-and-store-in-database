@@ -1,30 +1,28 @@
-function createNewBom(prefixName, customerName, projectName, dataToSetInBOM) {
+/**
+ * *****************************************************************************
+ * Function Creates new BOM from template and populate Main Sheet with
+ * the links with newly created files/folders on servers
+ * ***************************************************************************** 
+ * @param {string} prefixName 
+ * @param {string} customerName 
+ * @param {string} projectName 
+ * @param {string} strCode 
+ */
+async function createNewBom(prefixName, customerName, projectName, strCode) {
     let bomName = `${prefixName} - BOM`;
     let folderToSetBOM = setFolderToSetData(customerName);
     let bomURL = duplicateBOMtemplate(folderToSetBOM, bomName);
+    //save BOM link to global variables 
+    searchObjectByNameAndSetURLadres("BOM", dataToExportToProjectList, bomURL);
+    //Clear template and set links from server
     cleanNewBOMtemplateTab(bomURL);
-
-    return bomURL;
+    setDataInBOM(bomURL, projectName, strCode);
 }
 
 
 /**
-* *****************************************************************************
- * Create name for the new BOM
  * *****************************************************************************
- * @param {Object} projectInformation strCode / projectName
- * @returns {string} correct name for the BOM
- */
-
-function setNewBomDescription(projectInformation) {
-    let bomName = `${projectInformation.strCode} - ${projectInformation.projectName} - BOM`;
-
-    return bomName;
-}
-
-/**
- * *****************************************************************************
- * Create new BOM
+ * Duplicate BOM Template
  * *****************************************************************************
  * @param {string} folderURL folder URL to set new BOM 
  * @param {string} bomName new bom name
@@ -103,7 +101,7 @@ function setFolderToSetData(customerName) {
  */
 
 function setDataInBOM(bomUrl, projectName, strCode) {
-
+    console.log(dataToExportToBOM);
     let bomSheet = SpreadsheetApp.openByUrl(bomUrl);
     let sheetToSetData = bomSheet.getSheetByName(bomTemplateSpreadSheet.tabNameToSetBasicData);
 
@@ -120,4 +118,23 @@ function setURLsInBOM(sheetToSetData, objectInformation) {
     for (let i = 0; i < objectInformation.length; i++) {
         sheetToSetData.getRange(objectInformation[i].cellAddressToSetData).setValue(objectInformation[i].URL);
     }
+}
+
+
+/**
+ * *****************************************************************************
+ * Function clears all URL addresses in object used to populate a BOM
+ * main sheet
+ * ***************************************************************************** 
+ */
+function clearURLaddressesInBOMexportData() {
+
+    for (let obj of dataToExportToBOM) {
+        obj.URL = "";
+    }
+
+    for (let obj of dataToExportToProjectList) {
+        obj.URL = "";
+    }
+
 }
