@@ -85,4 +85,21 @@ function searchObjectByNameAndSetURLadres(nameOfTheObject, allObjects, urlAddres
     }
 }
 
+/**
+* ******************************************************************************************** 
+ * Find URL adress for required object
+ * ******************************************************************************************** 
+ * @param {object} arrayWithObjects 
+ * @param {string} nameToFind name of the object to find
+ * @returns {string} url addres to the object or NULL if can't find
+ */
 
+function findRequiredObjectAndReturnURL(arrayWithObjects, nameToFind) {
+    const object = arrayWithObjects.find(obj => obj.name = nameToFind);
+
+    if (object) {
+        return object.URL;
+    }
+
+    return null;
+}

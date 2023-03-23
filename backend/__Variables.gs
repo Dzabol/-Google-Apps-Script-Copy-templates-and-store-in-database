@@ -32,11 +32,63 @@ let serversInformation = [
 
 /* 
 *********************************************************************
+                      DATA SHEET
+*********************************************************************
+*/
+let projectsSpreadSheet = {
+    "SpreadSheetURL": "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880",
+    "dataTabName": "Skawina",
+    "tabWithAditionalInformations": "Sheet_Information",
+    "strDataTabName": "DataFromStr",
+    "columnNameWithAllCustomers": "Customer",
+    "projectBasicInformations": ["Project_Code", "Project_Name", "Customer"],
+    "userAccesRights": "",
+    "creationDateColumnName": "Created_Package",
+}
+
+
+
+async function transferServersInformationToHTML() {
+    generateIDsforServersFromURL();
+    return serversInformation;
+}
+
+async function transferProjectsSpreadSheetToHTML() {
+    return projectsSpreadSheet;
+}
+
+/* 
+*********************************************************************
+                      BOM TEMPLATE
+*********************************************************************
+*/
+
+let bomTemplateSpreadSheet = {
+    "folderURLWithAllBOMS": "https://drive.google.com/drive/u/0/folders/1Pcu56BlVMxglH99qQWfage2WXmOwDkK5",
+    "templateURL": "https://docs.google.com/spreadsheets/d/1D_ZTEOrPG7S3Cy40bsP2QWlEloj4UsLlUbREu1gTZM8/edit#gid=134104279",
+    "tabNameToSetBasicData": "MAIN SHEET",
+    "tabNameWithAllTemplates": "TEMPLATE",
+    "tabNameWithaditionalInformations": "Sheet information",
+    "rowToKeepInTemplate": "MAIN SYSTEM END",
+    "cellToSetProjectName": "A1",
+    "cellToSetProjectCode": "E15",
+    "cellToSetProjectSheetURL": "F28",
+
+}
+
+/* 
+*********************************************************************
                       Data to set in BOM and Data Sheet
 *********************************************************************
 */
 
 let dataToExportToBOM = [
+    {
+        "name": "Projects Informations",
+        "fileType": "file",
+        "cellAddressToSetData": "F28",
+        "URL": projectsSpreadSheet.SpreadSheetURL
+    },
     {
         "name": "Mechanical",
         "fileType": "folder",
@@ -132,7 +184,7 @@ let dataToExportToProjectList = [
         "URL": ""
     },
     {
-        "name": " System FDP",
+        "name": "System FDP",
         "fileType": "file",
         "ColumnNumberToSetData": 16,
         "URL": ""
@@ -147,46 +199,6 @@ let dataToExportToProjectList = [
 
 
 
-/* 
-*********************************************************************
-                      DATA SHEET
-*********************************************************************
-*/
-let projectsSpreadSheet = {
-    "SpreadSheetURL": "https://docs.google.com/spreadsheets/d/1mYZbt3pHHh1teoka1m0J61OS-m4JGO0SupSeZpQCJ3E/edit#gid=1646998880",
-    "dataTabName": "Skawina",
-    "tabWithAditionalInformations": "Sheet_Information",
-    "strDataTabName": "DataFromStr",
-    "columnNameWithAllCustomers": "Customer",
-    "projectBasicInformations": ["Project_Code", "Project_Name", "Customer"],
-    "userAccesRights": "",
-}
 
 
 
-async function transferServersInformationToHTML() {
-    generateIDsforServersFromURL();
-    return serversInformation;
-}
-
-async function transferProjectsSpreadSheetToHTML() {
-    return projectsSpreadSheet;
-}
-
-/* 
-*********************************************************************
-                      BOM TEMPLATE
-*********************************************************************
-*/
-
-let bomTemplateSpreadSheet = {
-    "folderURLWithAllBOMS": "https://drive.google.com/drive/u/0/folders/1Pcu56BlVMxglH99qQWfage2WXmOwDkK5",
-    "templateURL": "https://docs.google.com/spreadsheets/d/1D_ZTEOrPG7S3Cy40bsP2QWlEloj4UsLlUbREu1gTZM8/edit#gid=134104279",
-    "tabNameToSetBasicData": "MAIN SHEET",
-    "tabNameWithAllTemplates": "TEMPLATE",
-    "tabNameWithaditionalInformations": "Sheet information",
-    "rowToKeepInTemplate": "MAIN SYSTEM END",
-    "cellToSetProjectName": "A1",
-    "cellToSetProjectCode": "E16",
-
-}

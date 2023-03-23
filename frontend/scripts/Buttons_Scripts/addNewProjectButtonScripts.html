@@ -22,7 +22,7 @@
 
       try {
         websiteElements.alertsWindow.textContent =
-          "Duplicated templates 0/" + numberOfServers;
+          "Copied templates 0/" + numberOfServers;
         for (
           let serverNumber = 0;
           serverNumber < numberOfServers;
@@ -39,13 +39,10 @@
             )
           );
           websiteElements.alertsWindow.textContent =
-            "Duplicated templates " +
-            (serverNumber + 1) +
-            "/" +
-            numberOfServers;
+            "Copied templates " + (serverNumber + 1) + "/" + numberOfServers;
         }
         websiteElements.alertsWindow.textContent =
-          "Please wait New BOM Creation";
+          "Setting up new BOM template";
         //Create BOM
         await runGoogleScriptWithPromises(
           "createBOMwithLinks",
@@ -56,10 +53,15 @@
           projectData
         );
 
+        websiteElements.alertsWindow.textContent = "Setting up ShortCuts";
+        //Create short cuts to folders and BOM
+        await runGoogleScriptWithPromises("createShortcutsOnTheDrives");
+
         websiteElements.alertsWindow.textContent =
           "New Project has been added to the data base";
       } catch (error) {
         websiteElements.alertsWindow.textContent = error;
+        errors.push(error);
         console.log(error);
       }
       clearInputBox("userForm");

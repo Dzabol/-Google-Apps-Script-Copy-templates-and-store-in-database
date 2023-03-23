@@ -108,6 +108,8 @@ function setDataInBOM(bomUrl, projectName, strCode) {
     //set project name and STR code
     sheetToSetData.getRange(bomTemplateSpreadSheet.cellToSetProjectName).setValue(projectName); //set project name
     sheetToSetData.getRange(bomTemplateSpreadSheet.cellToSetProjectCode).setValue(strCode); //set STR code
+    sheetToSetData.getRange(bomTemplateSpreadSheet.cellToSetProjectSheetURL).setValue(projectsSpreadSheet.SpreadSheetURL); //set URL to sheet with all projects
+
 
     //set main folders data
     setURLsInBOM(sheetToSetData, dataToExportToBOM);

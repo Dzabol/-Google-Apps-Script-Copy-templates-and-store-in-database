@@ -25,6 +25,7 @@ async function createNewProject(projectInformation, prefixName, serverNumberToCr
 async function createBOMwithLinks(prefixName, customerName, projectName, strCode, objectWithCreatedDataOnTheServer) {
   await exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, prefixName);
   await createNewBom(prefixName, customerName, projectName, strCode)
+  await addNewProjectToMasterSheet(strCode);
 }
 
 
@@ -149,3 +150,106 @@ function removePrefix(textToRemoveString, prefix) {
   return textToRemoveString.replace(regex, '').trim();
 }
 
+
+/**
+ * *****************************************************************************
+ * Create Shortcuts to Files and folders 
+ * ***************************************************************************** 
+ */
+async function createShortcutsOnTheDrives() {
+
+  let urlBOM = dataToExportToProjectList.find(obj => obj.name === 'BOM').URL;
+
+  let urlFolderMechanical = dataToExportToBOM.find(obj => obj.name === 'Mechanical').URL;
+  let urlFolderRD = dataToExportToBOM.find(obj => obj.name === 'RD').URL;
+  let urlFolderSimulation = dataToExportToBOM.find(obj => obj.name === 'Simulation').URL;
+
+
+  //BOM Shortcuts
+  createShortCutsToBOM(urlBOM, urlFolderMechanical, urlFolderRD);
+
+  /* ------------- Mechanical Folder -----------------*/
+  //create shortcut to RD folder at Mechanical server
+  createShortCutToFolder(urlFolderMechanical, "02. R&D", urlFolderRD);
+  //create shortcut to Simulation folder at Mechanical server
+  createShortCutToFolder(urlFolderMechanical, "03. Simulation", urlFolderSimulation);
+
+  /* ------------- RD Folder -----------------*/
+  //create shortcut to Mechanical folder at RD server
+  createShortCutToFolder(urlFolderRD, "03. Mechanical", urlFolderMechanical);
+  //create shortcut to Simulation folder at RD server
+  createShortCutToFolder(urlFolderRD, "04. Simulation", urlFolderSimulation);
+}
+
+
+/**
+ * *****************************************************************************
+ * Create Shortcuts to BOM at required server
+ * *****************************************************************************  
+ * @param {string} bomURL URL address to BOM
+ * @param  {string} mainFolders URL addres to main folder to set shortcut to BOM
+ */
+function createShortCutsToBOM(bomURL, ...mainFolders) {
+
+  let nameBOMfolder = "01. E_BOM";
+  let ids = [];
+
+  //Find or create Folder to set BOM Shortcut
+  for (let url of mainFolders) {
+    let mainFolder = DriveApp.getFolderById(getIdFromUrl(url))
+    let folders = mainFolder.getFolders();
+    let folderID = getIDToRequiredFolder(folders, nameBOMfolder);
+
+    if (folderID === null) {
+      folderID = mainFolder.createFolder(nameBOMfolder).getId();
+    }
+    ids.push(folderID);
+  }
+
+  //Create shortcuts of the BOM
+  let idBOM = getIdFromUrl(bomURL);
+  let bomName = DriveApp.getFileById(idBOM).getName();
+
+  for (let idOfTheFolder of ids) {
+    createShortcut(idBOM, bomName, idOfTheFolder);
+  }
+}
+
+/**
+ * *****************************************************************************
+ * Create Shortcut to folder at server 
+ * *****************************************************************************   
+ * @param {string} mainFolderURL URL adress where the shortcut to folder will be set
+ * @param {string} shortcutFolderName Name of the ShortCut 
+ * @param {string} urlOfTheShortCutFolder URL adress of the folder to create shortcut
+ */
+function createShortCutToFolder(mainFolderURL, shortcutFolderName, urlOfTheShortCutFolder) {
+  let allFoldersInMainFolder = DriveApp.getFolderById(getIdFromUrl(mainFolderURL)).getFolders();
+  let folderID = getIDToRequiredFolder(allFoldersInMainFolder, shortcutFolderName);
+  let folderIDforShortcut = getIdFromUrl(urlOfTheShortCutFolder);
+
+  if (folderID !== null) {
+    DriveApp.getFolderById(folderID).setTrashed(true);
+  }
+  createShortcut(folderIDforShortcut, shortcutFolderName, getIdFromUrl(mainFolderURL));
+}
+
+
+/**
+* *****************************************************************************
+ * Get ID to folder at servis
+ * *****************************************************************************  
+ * @param {folders} folders All folders at server
+ * @param {string} nameToFind Name of the folder to find
+ * @returns ID addres or null if can't find folder
+ */
+function getIDToRequiredFolder(folders, nameToFind) {
+  while (folders.hasNext()) {
+    let folder = folders.next();
+    let folderName = folder.getName();
+    if (folderName === nameToFind) {
+      return folder.getId();
+    }
+  }
+  return null;
+}

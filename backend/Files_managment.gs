@@ -2,13 +2,14 @@
  * *****************************************************************************
  * Function prpares prefix name for all folders and files
  * *****************************************************************************
- * @param {string} strCode StrCode 
+ * @param {string} strCode StrCode
  * @param {string} projectName Project Name
  * @returns {string} prefix for all files and folders
  */
 
 function setPrefixNameForFoldersAndFiles(projectInformation) {
-  return filesAndFoldersPrefix = projectInformation.strCode + " - " + projectInformation.projectName;
+  return (filesAndFoldersPrefix =
+    projectInformation.strCode + " - " + projectInformation.projectName);
 }
 
 /**
@@ -23,8 +24,12 @@ function setPrefixNameForFoldersAndFiles(projectInformation) {
 
 /* */
 
-function copyAllFilesInFolder_(sourceFolder, destinationFolder, prefixforTheFileName, duplicateFileFromShortcut = "No") {
-
+function copyAllFilesInFolder_(
+  sourceFolder,
+  destinationFolder,
+  prefixforTheFileName,
+  duplicateFileFromShortcut = "No"
+) {
   let fileName = "";
   const allFilesInFolder = sourceFolder.getFiles();
 
@@ -35,18 +40,21 @@ function copyAllFilesInFolder_(sourceFolder, destinationFolder, prefixforTheFile
       //Duplicate shortcuts
       fileName = file.getName();
       file.makeCopy(fileName, destinationFolder);
-    }
-
-    else {
+    } else {
       //copy for nomal file
       fileName = setNewFileName_(file, prefixforTheFileName);
       file.makeCopy(fileName, destinationFolder);
     }
 
-    if ((file.getMimeType() == MimeType.SHORTCUT) && (duplicateFileFromShortcut == "Yes")) {
+    if (
+      file.getMimeType() == MimeType.SHORTCUT &&
+      duplicateFileFromShortcut == "Yes"
+    ) {
       //duplicate file from shortcut
       let parentFileFromShortcutID = file.getTargetId();
-      let parentFileFromShortcut = DriveApp.getFileById(parentFileFromShortcutID);
+      let parentFileFromShortcut = DriveApp.getFileById(
+        parentFileFromShortcutID
+      );
 
       fileName = setNewFileName_(file, prefixforTheFileName);
       parentFileFromShortcut.makeCopy(fileName, destinationFolder);
@@ -64,16 +72,22 @@ function copyAllFilesInFolder_(sourceFolder, destinationFolder, prefixforTheFile
  */
 
 function setNewFileName_(file, prefixforTheFileName) {
-
-  const templateEndString = "-template";
-
   let inputFileName = file.getName().trim();
+  const templateEndString = "-template";
+  const fileNameInLowerCase = inputFileName.toLocaleLowerCase();
+  const positionOfTemplateName = fileNameInLowerCase.indexOf(templateEndString);
 
-  const templateIndex = inputFileName.toLowerCase().lastIndexOf(templateEndString.toLowerCase());
-  if (templateIndex !== -1 && templateIndex === inputFileName.length - templateEndString.length) {
-    inputFileName = inputFileName.substring(0, templateIndex);
+  let fileName = inputFileName;
+
+  if (positionOfTemplateName !== -1) {
+    const trimmedInputFileName = inputFileName.substring(0, positionOfTemplateName).trim();
+    //If there is aditional string after template TBC if needed
+    //const stringToBeAdded = inputFileName.substring(positionOfTemplateName + templateEndString.length);
+    //fileName = `${prefixforTheFileName} - ${trimmedInputFileName}${stringToBeAdded}`;
+    fileName = `${prefixforTheFileName} - ${trimmedInputFileName}`;
+  } else {
+    fileName = `${prefixforTheFileName} - ${fileName}`;
   }
-  const fileName = `${prefixforTheFileName} - ${inputFileName}`;
 
   return fileName;
 }
@@ -87,9 +101,8 @@ function setNewFileName_(file, prefixforTheFileName) {
  */
 
 function getFileIDfromShortcut_(file) {
-
-  let fileID = file.getMimeType() == MimeType.SHORTCUT ? file.getTargetId() : file.getId();
+  let fileID =
+    file.getMimeType() == MimeType.SHORTCUT ? file.getTargetId() : file.getId();
 
   return fileID;
 }
-
