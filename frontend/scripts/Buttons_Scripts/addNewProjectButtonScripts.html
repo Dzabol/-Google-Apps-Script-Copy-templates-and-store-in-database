@@ -8,7 +8,7 @@
       runOrCloseLoaderWindow(true);
 
       //clear all addresses used in BOM from previous folder creation
-      runGoogleScriptWithPromises("clearURLaddressesInBOMexportData");
+      await runGoogleScriptWithPromises("clearURLaddressesInBOMexportData");
 
       let prefixName = await runGoogleScriptWithPromises(
         "setPrefixNameForFoldersAndFiles",
@@ -44,6 +44,7 @@
         websiteElements.alertsWindow.textContent =
           "Setting up new BOM template";
         //Create BOM
+        
         await runGoogleScriptWithPromises(
           "createBOMwithLinks",
           prefixName,
@@ -53,9 +54,6 @@
           projectData
         );
 
-        websiteElements.alertsWindow.textContent = "Setting up ShortCuts";
-        //Create short cuts to folders and BOM
-        await runGoogleScriptWithPromises("createShortcutsOnTheDrives");
 
         websiteElements.alertsWindow.textContent =
           "New Project has been added to the data base";

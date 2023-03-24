@@ -129,7 +129,7 @@ function setURLsInBOM(sheetToSetData, objectInformation) {
  * main sheet
  * ***************************************************************************** 
  */
-function clearURLaddressesInBOMexportData() {
+async function clearURLaddressesInBOMexportData() {
 
     for (let obj of dataToExportToBOM) {
         obj.URL = "";

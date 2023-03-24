@@ -24,11 +24,10 @@ async function createNewProject(projectInformation, prefixName, serverNumberToCr
 
 async function createBOMwithLinks(prefixName, customerName, projectName, strCode, objectWithCreatedDataOnTheServer) {
   await exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, prefixName);
-  await createNewBom(prefixName, customerName, projectName, strCode)
+  await createNewBom(prefixName, customerName, projectName, strCode);
+  await createShortcutsOnTheDrives();
   await addNewProjectToMasterSheet(strCode);
 }
-
-
 
 /**
 * *****************************************************************************
@@ -40,11 +39,11 @@ async function createBOMwithLinks(prefixName, customerName, projectName, strCode
  * @param {string} prefixName 
  */
 async function exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, prefixName) {
-  let allLinksAndFilesOnTheServer = prepareAllNecessaryLinksForExportToSpreadsheets(objectWithCreatedDataOnTheServer, prefixName);
+  let allLinksAndFilesOnTheServer = await prepareAllNecessaryLinksForExportToSpreadsheets(objectWithCreatedDataOnTheServer, prefixName);
   //export links to object which will be used to populate a BOM
-  exportRequiredLinksToObject(allLinksAndFilesOnTheServer, dataToExportToBOM);
+  await exportRequiredLinksToObject(allLinksAndFilesOnTheServer, dataToExportToBOM);
   //export links to object wchich will be uset to populate a master Sheet with all projects
-  exportRequiredLinksToObject(allLinksAndFilesOnTheServer, dataToExportToProjectList);
+  await exportRequiredLinksToObject(allLinksAndFilesOnTheServer, dataToExportToProjectList);
 }
 
 
@@ -57,7 +56,7 @@ async function exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, 
  * @param {object} objectWithLinks object with all files (type, URL) on the server
  * @param {object} objectToExportLinks Object where Link will be exported 
  */
-function exportRequiredLinksToObject(objectWithLinks, objectToExportLinks) {
+async function exportRequiredLinksToObject(objectWithLinks, objectToExportLinks) {
   for (let [objectInBom, obj] of Object.entries(objectToExportLinks)) {
     let { name, fileType } = obj;
     let objectWithLinksProps = objectWithLinks[name];
@@ -77,7 +76,7 @@ function exportRequiredLinksToObject(objectWithLinks, objectToExportLinks) {
  * @returns {object} all files and folders in one object
  */
 
-function prepareAllNecessaryLinksForExportToSpreadsheets(serverData, prefixName) {
+async function prepareAllNecessaryLinksForExportToSpreadsheets(serverData, prefixName) {
   //asemble all files and links on the server
   let allFilesAndFoldersAtServer = importAllFilesAndFoldersToOneObject(serverData);
   //remove all prefixes from files names to 
@@ -94,7 +93,7 @@ function prepareAllNecessaryLinksForExportToSpreadsheets(serverData, prefixName)
  * @param {object} serverData 
  * @returns 
  */
-function importAllFilesAndFoldersToOneObject(serverData) {
+async function importAllFilesAndFoldersToOneObject(serverData) {
   let newObject = {};
 
   serverData.forEach((server) => {
@@ -157,12 +156,16 @@ function removePrefix(textToRemoveString, prefix) {
  * ***************************************************************************** 
  */
 async function createShortcutsOnTheDrives() {
+  console.log(dataToExportToProjectList);
+  let urlBOM = dataToExportToProjectList.find(obj => obj.name === "BOM").URL;
+  console.log("Link BOM: " +  urlBOM);
 
-  let urlBOM = dataToExportToProjectList.find(obj => obj.name === 'BOM').URL;
-
-  let urlFolderMechanical = dataToExportToBOM.find(obj => obj.name === 'Mechanical').URL;
-  let urlFolderRD = dataToExportToBOM.find(obj => obj.name === 'RD').URL;
-  let urlFolderSimulation = dataToExportToBOM.find(obj => obj.name === 'Simulation').URL;
+  let urlFolderMechanical = dataToExportToBOM.find(obj => obj.name === "Mechanical").URL;
+  console.log("Link Mechanical: " + urlFolderMechanical);
+  let urlFolderRD = dataToExportToBOM.find(obj => obj.name === "RD").URL;
+  console.log("URL RD: " + urlFolderRD);
+  let urlFolderSimulation = dataToExportToBOM.find(obj => obj.name === "Simulation").URL;
+  console.log("URL Simulation: " + urlFolderSimulation);
 
 
   //BOM Shortcuts
@@ -181,6 +184,16 @@ async function createShortcutsOnTheDrives() {
   createShortCutToFolder(urlFolderRD, "04. Simulation", urlFolderSimulation);
 }
 
+function testowanko(){
+   let urlBOM = dataToExportToProjectList.find(obj => obj.name === "BOM").URL;
+  console.log("Link BOM: " +  urlBOM);
+  console.log(dataToExportToProjectList);
+}
+
+function wyswietlanie(){
+  console.log(dataToExportToBOM);
+  console.log(dataToExportToProjectList)
+}
 
 /**
  * *****************************************************************************
