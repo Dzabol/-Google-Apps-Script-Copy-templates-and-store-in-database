@@ -47,6 +47,8 @@ async function exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, 
 }
 
 
+
+
 /**
  * *****************************************************************************
  * Function Checks if on the serves is a file which is required by the user
@@ -78,9 +80,9 @@ async function exportRequiredLinksToObject(objectWithLinks, objectToExportLinks)
 
 async function prepareAllNecessaryLinksForExportToSpreadsheets(serverData, prefixName) {
   //asemble all files and links on the server
-  let allFilesAndFoldersAtServer = importAllFilesAndFoldersToOneObject(serverData);
-  //remove all prefixes from files names to 
-  let allFilesAndFoldersAtServerWithoutPrefix = removeAllPrefixesInObject(allFilesAndFoldersAtServer, prefixName);
+  let allFilesAndFoldersAtServer = await importAllFilesAndFoldersToOneObject(serverData);
+   //remove all prefixes from files names to 
+  let allFilesAndFoldersAtServerWithoutPrefix = await removeAllPrefixesInObject(allFilesAndFoldersAtServer, prefixName);
 
   return allFilesAndFoldersAtServerWithoutPrefix;
 }
@@ -127,11 +129,12 @@ function removeAllPrefixesInObject(objectWithData, prefixName) {
 
   for (const [key, value] of Object.entries(objectWithData)) {
     if (key.startsWith(prefixName)) {
+      
       const newName = removePrefix(key, prefixName);
       objectWithData[newName] = value;
       delete objectWithData[key];
     }
-  }
+     }
 
   return objectWithData;
 }
@@ -158,7 +161,7 @@ function removePrefix(textToRemoveString, prefix) {
 async function createShortcutsOnTheDrives() {
   console.log(dataToExportToProjectList);
   let urlBOM = dataToExportToProjectList.find(obj => obj.name === "BOM").URL;
-  console.log("Link BOM: " +  urlBOM);
+  console.log("Link BOM: " + urlBOM);
 
   let urlFolderMechanical = dataToExportToBOM.find(obj => obj.name === "Mechanical").URL;
   console.log("Link Mechanical: " + urlFolderMechanical);
@@ -184,13 +187,13 @@ async function createShortcutsOnTheDrives() {
   createShortCutToFolder(urlFolderRD, "04. Simulation", urlFolderSimulation);
 }
 
-function testowanko(){
-   let urlBOM = dataToExportToProjectList.find(obj => obj.name === "BOM").URL;
-  console.log("Link BOM: " +  urlBOM);
+function testowanko() {
+  let urlBOM = dataToExportToProjectList.find(obj => obj.name === "BOM").URL;
+  console.log("Link BOM: " + urlBOM);
   console.log(dataToExportToProjectList);
 }
 
-function wyswietlanie(){
+function wyswietlanie() {
   console.log(dataToExportToBOM);
   console.log(dataToExportToProjectList)
 }

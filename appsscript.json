@@ -1,48 +1,53 @@
 {
   "timeZone": "Europe/Warsaw",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
   "dependencies": {
     "enabledAdvancedServices": [
       {
         "userSymbol": "Drive",
-        "version": "v2",
-        "serviceId": "drive"
-      },
-      {
-        "userSymbol": "DriveActivity",
-        "version": "v2",
-        "serviceId": "driveactivity"
+        "serviceId": "drive",
+        "version": "v2"
       },
       {
         "userSymbol": "Docs",
-        "version": "v1",
-        "serviceId": "docs"
+        "serviceId": "docs",
+        "version": "v1"
       },
       {
         "userSymbol": "Slides",
-        "version": "v1",
-        "serviceId": "slides"
+        "serviceId": "slides",
+        "version": "v1"
       },
       {
         "userSymbol": "Sheets",
-        "version": "v4",
-        "serviceId": "sheets"
+        "serviceId": "sheets",
+        "version": "v4"
+      },
+      {
+        "userSymbol": "drivelabels",
+        "serviceId": "drivelabels",
+        "version": "v2beta"
       }
     ]
   },
-  "exceptionLogging": "STACKDRIVER",
+  "webapp": {
+    "executeAs": "USER_ACCESSING",
+    "access": "DOMAIN"
+  },
   "oauthScopes": [
     "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive.appdata",
     "https://www.googleapis.com/auth/drive.readonly",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/script.external_request",
     "https://www.googleapis.com/auth/spreadsheets"
   ],
   "urlFetchWhitelist": [
-    "https://script.googleapis.com/"
-  ],
-  "runtimeVersion": "V8",
-  "webapp": {
-    "executeAs": "USER_ACCESSING",
-    "access": "ANYONE"
-  }
+    "https://script.google.com/",
+    "https://drive.google.com/",
+    "https://script.googleapis.com/",
+    "https://drive.google.com/drive/folders/"
+  ]
 }

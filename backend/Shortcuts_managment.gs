@@ -16,9 +16,11 @@ function createShortcut(fileIdToCreateShortcut, nameOfTheShortcut, folderIdToIns
     shortcutDetails: { targetId: fileIdToCreateShortcut },
     title: nameOfTheShortcut,
     mimeType: "application/vnd.google-apps.shortcut",
-    supportsTeamDrives: true,
     parents: [{ id: folderIdToInsertShortCut }]
   };
 
-  const shortcut = Drive.Files.insert(resource);
+  const options = { supportsAllDrives: true };
+
+  const shortcut = Drive.Files.insert(resource,null,options);
 }
+

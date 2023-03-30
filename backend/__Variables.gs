@@ -71,7 +71,7 @@ let bomTemplateSpreadSheet = {
     "tabNameWithaditionalInformations": "Sheet information",
     "rowToKeepInTemplate": "MAIN SYSTEM END",
     "cellToSetProjectName": "A1",
-    "cellToSetProjectCode": "E15",
+    "cellToSetProjectCode": "E14",
     "cellToSetProjectSheetURL": "F28",
 
 }
@@ -120,7 +120,7 @@ let dataToExportToBOM = [
         "URL": ""
     },
     {
-        "name": "Arm Design Toolkit",
+        "name": "FRONT ARM ASSEMBLY TOOLKIT",
         "fileType": "file",
         "cellAddressToSetData": "F39",
         "URL": ""

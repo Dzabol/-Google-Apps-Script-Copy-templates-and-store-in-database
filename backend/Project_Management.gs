@@ -56,13 +56,15 @@ function getAllFilesNamesAndUrl(urlAddress) {
   let allFiles = mainFolder.getFiles();
   while (allFiles.hasNext()) {
     let file = allFiles.next();
+    if(file.getMimeType() !== MimeType.SHORTCUT){
+   
     let fileName = file.getName();
     let fileURL = file.getUrl();
 
     const fileObjest = { name: fileName, url: fileURL, type: 'file' }
     dataObject.push(fileObjest);
-  }
- 
+    }
+  }  
   return dataObject;
 }
 
