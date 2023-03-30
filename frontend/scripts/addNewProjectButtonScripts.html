@@ -40,6 +40,7 @@
           "New Project has been added to the data base";
       } catch (error) {
         websiteElements.alertsWindow.textContent = error;
+        runGoogleScriptWithPromises("saveErrorLog",error);
       }
       clearInputBox("userForm");
       runOrCloseLoaderWindow(false);

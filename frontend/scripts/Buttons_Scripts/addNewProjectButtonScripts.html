@@ -61,6 +61,7 @@
         websiteElements.alertsWindow.textContent = error;
         errors.push(error);
         console.log(error);
+        runGoogleScriptWithPromises("saveErrorLog",error);
       }
       clearInputBox("userForm");
       runOrCloseLoaderWindow(false);

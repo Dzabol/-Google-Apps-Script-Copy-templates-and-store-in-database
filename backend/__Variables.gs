@@ -1,3 +1,6 @@
+const scriptVersion = "1.0.9";
+const scriptOwner = "sebastian.jablecki@gmail.com"
+
 /* 
 *********************************************************************
                       IMPUT AND OUTPUT FOLDERS 
@@ -44,6 +47,7 @@ let projectsSpreadSheet = {
     "projectBasicInformations": ["Project_Code", "Project_Name", "Customer"],
     "userAccesRights": "",
     "creationDateColumnName": "Created_Package",
+    "erorLogTabName": "ErrorLogs"
 }
 
 

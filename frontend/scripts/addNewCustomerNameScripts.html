@@ -79,6 +79,7 @@
     } catch (error) {
       runOrCloseLoaderWindow(false);
       websiteElements.newCustomerAllertWindow.textContent = `Can't add new customer ${error}`;
+      runGoogleScriptWithPromises("saveErrorLog",error);
     }
     runOrCloseLoaderWindow(false);
     customerList = await runGoogleScriptWithPromises(

@@ -1,4 +1,4 @@
-async function addNewProjectToMasterSheet(strCode) {
+async function addNewProjectToMasterSheet(strCode, projectName) {
     const masterSheet = SpreadsheetApp.openByUrl(projectsSpreadSheet.SpreadSheetURL);
     const tabToSetData = masterSheet.getSheetByName(projectsSpreadSheet.dataTabName);
 
@@ -16,17 +16,14 @@ async function addNewProjectToMasterSheet(strCode) {
 
     //AddValues
     tabToSetData.getRange(lastRowNumber + 1, 1).setValue(strCode);
+    tabToSetData.getRange(lastRowNumber + 1, 3).setValue(projectName);
     setURLsInMasterSheet(tabToSetData, (lastRowNumber + 1), dataToExportToProjectList);
 
     //add package creation date
     let columnPositionToSetCreationDate = findColumnByName(tabToSetData, projectsSpreadSheet.creationDateColumnName)
     let cellToSetCreationDate = tabToSetData.getRange(lastRowNumber + 1, columnPositionToSetCreationDate);
 
-    let currentDate = new Date();
-    let currentTimeZone = Session.getScriptTimeZone();
-    let formatedDate = Utilities.formatDate(currentDate, currentTimeZone, "yyyy-MM-dd");
-
-    cellToSetCreationDate.setValue(formatedDate);
+    cellToSetCreationDate.setValue(getCurrentDateAndTime());
 }
 
 
@@ -35,4 +32,11 @@ function setURLsInMasterSheet(sheetToSetData, rownumber, objectInformation) {
     for (let i = 0; i < objectInformation.length; i++) {
         sheetToSetData.getRange(rownumber, objectInformation[i].ColumnNumberToSetData).setValue(objectInformation[i].URL);
     }
+}
+
+function getCurrentDateAndTime(withTime = false) {
+    const format = withTime ? "yyyy-MM-dd' - 'HH:mm:ss" : "yyyy-MM-dd";
+    const currentDate = new Date();
+    const currentTimeZone = Session.getScriptTimeZone();
+    return Utilities.formatDate(currentDate, currentTimeZone, format);
 }

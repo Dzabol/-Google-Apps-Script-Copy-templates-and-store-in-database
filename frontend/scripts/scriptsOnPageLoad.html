@@ -14,6 +14,7 @@
           "Unfortunately, you are unable to add a new project to the database as you do not have read/write permissions on all servers.";
       }
     } catch (error) {
+      runGoogleScriptWithPromises("saveErrorLog",error);
       websiteElements.alertsWindow.textContent = error;
       errors.push(error);
       numberOfErrors += 1;

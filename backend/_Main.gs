@@ -26,7 +26,7 @@ async function createBOMwithLinks(prefixName, customerName, projectName, strCode
   await exportLinksFromServerToObjects(objectWithCreatedDataOnTheServer, prefixName);
   await createNewBom(prefixName, customerName, projectName, strCode);
   await createShortcutsOnTheDrives();
-  await addNewProjectToMasterSheet(strCode);
+  await addNewProjectToMasterSheet(strCode, projectName);
 }
 
 /**
@@ -81,7 +81,7 @@ async function exportRequiredLinksToObject(objectWithLinks, objectToExportLinks)
 async function prepareAllNecessaryLinksForExportToSpreadsheets(serverData, prefixName) {
   //asemble all files and links on the server
   let allFilesAndFoldersAtServer = await importAllFilesAndFoldersToOneObject(serverData);
-   //remove all prefixes from files names to 
+  //remove all prefixes from files names to 
   let allFilesAndFoldersAtServerWithoutPrefix = await removeAllPrefixesInObject(allFilesAndFoldersAtServer, prefixName);
 
   return allFilesAndFoldersAtServerWithoutPrefix;
@@ -129,12 +129,12 @@ function removeAllPrefixesInObject(objectWithData, prefixName) {
 
   for (const [key, value] of Object.entries(objectWithData)) {
     if (key.startsWith(prefixName)) {
-      
+
       const newName = removePrefix(key, prefixName);
       objectWithData[newName] = value;
       delete objectWithData[key];
     }
-     }
+  }
 
   return objectWithData;
 }

@@ -21,7 +21,8 @@
 
       await generateLedForSheetData(sheetDataBaseInformation);
     } catch (error) {
-      "Can't load server information" + "\n\n" + error;
+      runGoogleScriptWithPromises("saveErrorLog",error);
+      console.log("Can't load server information" + "\n\n" + error);
     }
   }
 
